@@ -17,13 +17,16 @@
     <string name="lbl_edit">Edit</string>
     <string name="lbl_services">Services</string>
     <string name="lbl_staff">Staff</string>
+    <string name="lbl_location">Location</string>
     <string name="lbl_business_details">Business Details</string>
     <string name="lbl_customer_details">Customer Details</string>
     <string name="lbl_no_services">No Services</string>
     <string name="lbl_no_staff">No Staff</string>
+    <string name="lbl_no_businesses">No Businesses</string>
     <string name="lbl_salons">Salons</string>
     <string name="lbl_barbershop">Barbershops</string>
-    <string name="lbl_"/>
+    <string name="lbl_current_location">Current Location</string>
+    <string name="lbl_"></string>
 
 
 

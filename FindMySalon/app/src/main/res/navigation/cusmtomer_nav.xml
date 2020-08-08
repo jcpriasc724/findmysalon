@@ -11,11 +11,11 @@
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_type_business" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_reg_business"-->
-<!--        android:name="com.findmysalon.view.fragments.RegisterBusinessFragment"-->
-<!--        android:label="@string/sign_up"-->
-<!--        tools:layout="@layout/fragment_register_business" />-->
+    <fragment
+        android:id="@+id/nav_list_business"
+        android:name="com.findmysalon.view.fragments.ListBusinessFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_list_business" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/nav_reg_business_services"-->

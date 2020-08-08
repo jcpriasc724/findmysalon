@@ -12,11 +12,28 @@ public class Business {
     private String password;
     private String lat;
     private String lng;
+    private Float rating;
 
     private Date createdAt;
     private Date updatedAt;
 
     public Business() {
+    }
+
+
+    public Business(String businessName, String phoneNumber, String address, Float rating) {
+        this.businessName = businessName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.rating = rating;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
     }
 
     public Date getCreatedAt() {

@@ -34,7 +34,7 @@ public class TypeBusinessFragment extends Fragment {
         cardSalon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navigation.findNavController(v).navigate(R.id.nav_reg_business);
+                Navigation.findNavController(v).navigate(R.id.nav_list_business);
 
             }
         });
@@ -42,7 +42,7 @@ public class TypeBusinessFragment extends Fragment {
         cardBarbershop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navigation.findNavController(v).navigate(R.id.nav_reg_customer);
+                Navigation.findNavController(v).navigate(R.id.nav_list_business);
             }
         });
     }
