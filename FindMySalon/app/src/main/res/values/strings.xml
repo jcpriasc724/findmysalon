@@ -23,8 +23,8 @@
     <string name="lbl_no_services">No Services</string>
     <string name="lbl_no_staff">No Staff</string>
     <string name="lbl_no_businesses">No Businesses</string>
-    <string name="lbl_salons">Salons</string>
-    <string name="lbl_barbershop">Barbershops</string>
+    <string name="lbl_salons">Hair Salon</string>
+    <string name="lbl_barbershop">Barbershop</string>
     <string name="lbl_current_location">Current Location</string>
     <string name="lbl_"></string>
 
