@@ -1,5 +1,6 @@
 package com.findmysalon.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Category {
@@ -9,11 +10,21 @@ public class Category {
     private String description;
     private Date createdAt;
     private Date updatedAt;
+    private ArrayList<Service> listServices;
 
-    public Category(String nameCategory, String order, String description) {
+    public Category(String nameCategory, String order, String description, ArrayList<Service> listServices) {
         this.nameCategory = nameCategory;
         this.order = order;
         this.description = description;
+        this.listServices = listServices;
+    }
+
+    public ArrayList<Service> getListServices() {
+        return listServices;
+    }
+
+    public void setListServices(ArrayList<Service> listServices) {
+        this.listServices = listServices;
     }
 
     public Date getCreatedAt() {

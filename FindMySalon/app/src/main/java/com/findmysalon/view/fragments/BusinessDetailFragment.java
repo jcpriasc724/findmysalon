@@ -29,7 +29,7 @@ public class BusinessDetailFragment extends Fragment {
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_business_detail);
+                Navigation.findNavController(v).navigate(R.id.nav_list_services_by_category);
             }
         });
 

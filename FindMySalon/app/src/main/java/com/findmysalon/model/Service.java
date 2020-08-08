@@ -24,6 +24,13 @@ public class Service {
         this.description = description;
     }
 
+    public Service(String nameService, Double price, Long duration, String description) {
+        this.nameService = nameService;
+        this.price = price;
+        this.duration = duration;
+        this.description = description;
+    }
+
     public String getNameService() {
         return nameService;
     }
