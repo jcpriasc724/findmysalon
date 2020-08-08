@@ -17,11 +17,11 @@
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_list_business" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_reg_business_services"-->
-<!--        android:name="com.findmysalon.view.fragments.ServicesFragment"-->
-<!--        android:label="@string/sign_up"-->
-<!--        tools:layout="@layout/fragment_list_services" />-->
+    <fragment
+        android:id="@+id/nav_business_detail"
+        android:name="com.findmysalon.view.fragments.BusinessDetailFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_business_detail" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/nav_reg_customer"-->

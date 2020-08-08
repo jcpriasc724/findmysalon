@@ -8,6 +8,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
@@ -39,6 +40,12 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
         holder.txtAddress.setText(list.get(position).getAddress());
         holder.txtPhoneNumber.setText(list.get(position).getPhoneNumber());
         holder.rtbBusiness.setRating(list.get(position).getRating());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_business_detail);
+            }
+        });
 
     }
 
@@ -47,7 +54,7 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
         return list.size();
     }
 
-    class BusinessHolder extends RecyclerView.ViewHolder {
+    class BusinessHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txtNameBusiness, txtAddress, txtPhoneNumber;
         RatingBar rtbBusiness;
@@ -59,6 +66,11 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
             txtAddress = (TextView) itemView.findViewById(R.id.txt_address);
             txtPhoneNumber = (TextView) itemView.findViewById(R.id.txt_phone_number);
             rtbBusiness = (RatingBar) itemView.findViewById(R.id.rtb_business);
+
+        }
+
+        @Override
+        public void onClick(View v) {
 
         }
     }

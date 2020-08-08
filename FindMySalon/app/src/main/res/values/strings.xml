@@ -5,6 +5,7 @@
     <string name="lbl_business">Business</string>
     <string name="lbl_customer">Customer</string>
     <string name="lbl_upload_photo">Upload photo</string>
+    <string name="lbl_book">Book now</string>
     <string name="lbl_type_business">Type of Business</string>
     <string name="lbl_business_name">Business Name</string>
     <string name="lbl_first_name">First Name</string>
