@@ -1,5 +1,30 @@
 <resources>
     <string name="app_name">Find My Salon</string>
+    <string name="lbl_signIn">Sign In</string>
+    <string name="lbl_signUp">Sign Up</string>
+    <string name="lbl_business">Business</string>
+    <string name="lbl_customer">Customer</string>
+    <string name="lbl_upload_photo">Upload photo</string>
+    <string name="lbl_type_business">Type of Business</string>
+    <string name="lbl_business_name">Business Name</string>
+    <string name="lbl_email">E-mail</string>
+    <string name="lbl_address">Address</string>
+    <string name="lbl_phone_number">Phone Number</string>
+    <string name="lbl_password">Password</string>
+    <string name="lbl_retype_password">Re-type Password</string>
+    <string name="lbl_edit">Edit</string>
+    <string name="lbl_services">Services</string>
+    <string name="lbl_staff">Staff</string>
+    <string name="lbl_business_details">Business Details</string>
+    <string name="lbl_no_services">No Services</string>
+    <string name="lbl_no_staff">No Staff</string>
+    <string name="lbl_"></string>
+
+
+
+
+
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -16,4 +41,13 @@
     <string name="registration">Registration</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+    <string name="title_activity_registration_business">RegistrationBusinessActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
