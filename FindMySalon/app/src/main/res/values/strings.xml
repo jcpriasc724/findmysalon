@@ -21,7 +21,9 @@
     <string name="lbl_customer_details">Customer Details</string>
     <string name="lbl_no_services">No Services</string>
     <string name="lbl_no_staff">No Staff</string>
-    <string name="lbl_"></string>
+    <string name="lbl_salons">Salons</string>
+    <string name="lbl_barbershop">Barbershops</string>
+    <string name="lbl_"/>
 
 
 

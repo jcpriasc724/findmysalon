@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_customer"
+    app:startDestination="@+id/nav_type_business">
+
+    <fragment
+        android:id="@+id/nav_type_business"
+        android:name="com.findmysalon.view.fragments.TypeBusinessFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_type_business" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_reg_business"-->
+<!--        android:name="com.findmysalon.view.fragments.RegisterBusinessFragment"-->
+<!--        android:label="@string/sign_up"-->
+<!--        tools:layout="@layout/fragment_register_business" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_reg_business_services"-->
+<!--        android:name="com.findmysalon.view.fragments.ServicesFragment"-->
+<!--        android:label="@string/sign_up"-->
+<!--        tools:layout="@layout/fragment_list_services" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_reg_customer"-->
+<!--        android:name="com.findmysalon.view.fragments.RegisterCustomerFragment"-->
+<!--        android:label="@string/sign_up"-->
+<!--        tools:layout="@layout/fragment_register_customer" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_reg_business_staff"-->
+<!--        android:name="com.findmysalon.view.fragments.StaffFragment"-->
+<!--        android:label="@string/sign_up"-->
+<!--        tools:layout="@layout/fragment_list_staff" />-->
+
+</navigation>
