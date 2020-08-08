@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_registration"
-    app:startDestination="@+id/nav_reg_business">
+    app:startDestination="@+id/nav_type_user">
+
+    <fragment
+        android:id="@+id/nav_type_user"
+        android:name="com.findmysalon.view.fragments.TypeUserFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_type_user" />
 
     <fragment
         android:id="@+id/nav_reg_business"
@@ -16,6 +22,12 @@
         android:name="com.findmysalon.view.fragments.ServicesFragment"
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_list_services" />
+
+    <fragment
+        android:id="@+id/nav_reg_customer"
+        android:name="com.findmysalon.view.fragments.RegisterCustomerFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_register_customer" />
 
     <fragment
         android:id="@+id/nav_reg_business_staff"

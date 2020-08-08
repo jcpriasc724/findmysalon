@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, TypeUserActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 //ide .putExtra("hi", "HI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
