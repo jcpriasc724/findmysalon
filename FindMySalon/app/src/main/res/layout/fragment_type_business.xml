@@ -19,68 +19,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
+
+        <LinearLayout
             android:id="@+id/salon_card"
-            android:layout_width="180dp"
-            android:layout_height="220dp"
-            app:cardCornerRadius="2dp"
-            app:cardElevation="2dp">
+            android:layout_width="160dp"
+            android:layout_height="200dp"
+            android:layout_margin="28dp"
+            android:background="@drawable/bg_item_service"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/img_business"
                 android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/business" />
+
+            <TextView
+                android:id="@+id/txt_business"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="28dp"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:text="@string/lbl_salons"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_size_titles" />
 
-                <ImageView
-                    android:id="@+id/img_business"
-                    android:layout_width="wrap_content"
-                    android:layout_height="140dp"
-                    android:src="@drawable/business" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/txt_business"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/lbl_salons"
-                    android:textAlignment="center" />
 
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:id="@+id/barbershop_card"
-            android:layout_width="180dp"
-            android:layout_height="220dp"
-            android:layout_marginTop="20dp"
-            app:cardCornerRadius="2dp"
-            app:cardElevation="2dp">
+            android:layout_width="160dp"
+            android:layout_height="200dp"
+            android:layout_margin="28dp"
+            android:background="@drawable/bg_item_service"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/img_customer"
                 android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/barber" />
+
+            <TextView
+                android:id="@+id/txt_customer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="28dp"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:text="@string/lbl_barbershop"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_size_titles" />
 
-                <ImageView
-                    android:id="@+id/img_customer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="140dp"
-                    android:src="@drawable/barber" />
-
-                <TextView
-                    android:id="@+id/txt_customer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/lbl_barbershop"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
 
     </LinearLayout>

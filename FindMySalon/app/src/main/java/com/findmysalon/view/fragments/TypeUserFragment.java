@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,8 +29,8 @@ public class TypeUserFragment  extends Fragment {
     public void onStart() {
         super.onStart();
 
-        CardView cardBusiness = (CardView) getActivity().findViewById(R.id.business_card);
-        CardView cardCustomer = (CardView) getActivity().findViewById(R.id.customer_card);
+        LinearLayout cardBusiness = (LinearLayout) getActivity().findViewById(R.id.business_card);
+        LinearLayout cardCustomer = (LinearLayout) getActivity().findViewById(R.id.customer_card);
 
         cardBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
