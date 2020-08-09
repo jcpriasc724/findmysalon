@@ -11,23 +11,23 @@
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_type_business" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_reg_business"-->
-<!--        android:name="com.findmysalon.view.fragments.RegisterBusinessFragment"-->
-<!--        android:label="@string/sign_up"-->
-<!--        tools:layout="@layout/fragment_register_business" />-->
+    <fragment
+        android:id="@+id/nav_list_business"
+        android:name="com.findmysalon.view.fragments.ListBusinessFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_list_business" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_reg_business_services"-->
-<!--        android:name="com.findmysalon.view.fragments.ServicesFragment"-->
-<!--        android:label="@string/sign_up"-->
-<!--        tools:layout="@layout/fragment_list_services" />-->
+    <fragment
+        android:id="@+id/nav_business_detail"
+        android:name="com.findmysalon.view.fragments.BusinessDetailFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_business_detail" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_reg_customer"-->
-<!--        android:name="com.findmysalon.view.fragments.RegisterCustomerFragment"-->
-<!--        android:label="@string/sign_up"-->
-<!--        tools:layout="@layout/fragment_register_customer" />-->
+    <fragment
+        android:id="@+id/nav_list_services_by_category"
+        android:name="com.findmysalon.view.fragments.ServicesByCategoryFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_list_services_by_category" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/nav_reg_business_staff"-->

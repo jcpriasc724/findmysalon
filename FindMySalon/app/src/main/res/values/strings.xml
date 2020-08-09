@@ -5,6 +5,7 @@
     <string name="lbl_business">Business</string>
     <string name="lbl_customer">Customer</string>
     <string name="lbl_upload_photo">Upload photo</string>
+    <string name="lbl_book">Book now</string>
     <string name="lbl_type_business">Type of Business</string>
     <string name="lbl_business_name">Business Name</string>
     <string name="lbl_first_name">First Name</string>
@@ -17,14 +18,20 @@
     <string name="lbl_edit">Edit</string>
     <string name="lbl_services">Services</string>
     <string name="lbl_staff">Staff</string>
+    <string name="lbl_location">Location</string>
     <string name="lbl_business_details">Business Details</string>
     <string name="lbl_customer_details">Customer Details</string>
     <string name="lbl_no_services">No Services</string>
     <string name="lbl_no_staff">No Staff</string>
+
     <string name="lbl_salons">Salons</string>
     <string name="lbl_barbershop">Barbershops</string>
     <string name="lbl_"/>
     <string name="lbl_submit">Submit</string>
+
+    <string name="lbl_current_location">Current Location</string>
+    <string name="lbl_filter_services">Key word</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

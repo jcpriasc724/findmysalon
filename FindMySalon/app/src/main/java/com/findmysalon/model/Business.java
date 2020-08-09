@@ -11,6 +11,7 @@ public class Business extends User{
         this.storeName = storeName;
         this.businessType = businessType;
         this.customerCategory = customerCategory;
+
     }
 
     public String getStoreName() {

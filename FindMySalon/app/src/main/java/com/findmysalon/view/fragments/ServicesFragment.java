@@ -58,7 +58,7 @@ public class ServicesFragment extends Fragment {
 
         servicesList = new ArrayList<Service>();
 
-        Category category = new Category("Basicos", "","");
+        Category category = new Category("Basicos", "","", null);
 
         Service service1 = new Service("Basic hair cut", category, 20d, 20l, "The hair cut is beautiful");
         Service service2 = new Service("Hair cut with style", category, 30d, 30l, "The hair cut is beautiful");

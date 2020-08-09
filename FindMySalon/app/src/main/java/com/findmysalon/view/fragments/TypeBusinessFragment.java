@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,13 +29,13 @@ public class TypeBusinessFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        CardView cardSalon = (CardView) getActivity().findViewById(R.id.salon_card);
-        CardView cardBarbershop = (CardView) getActivity().findViewById(R.id.barbershop_card);
+        LinearLayout cardSalon = (LinearLayout) getActivity().findViewById(R.id.salon_card);
+        LinearLayout cardBarbershop = (LinearLayout) getActivity().findViewById(R.id.barbershop_card);
 
         cardSalon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navigation.findNavController(v).navigate(R.id.nav_reg_business);
+                Navigation.findNavController(v).navigate(R.id.nav_list_business);
 
             }
         });
@@ -42,7 +43,7 @@ public class TypeBusinessFragment extends Fragment {
         cardBarbershop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navigation.findNavController(v).navigate(R.id.nav_reg_customer);
+                Navigation.findNavController(v).navigate(R.id.nav_list_business);
             }
         });
     }
