@@ -1,101 +1,39 @@
 package com.findmysalon.model;
 
-import java.util.Date;
+public class Business extends User{
 
-public class Business {
+    private String storeName;
+    private String businessType;
+    private String customerCategory;
 
-    private String businessName;
-    private String userType;
-    private String phoneNumber;
-    private String email;
-    private String address;
-    private String password;
-    private String lat;
-    private String lng;
-
-    private Date createdAt;
-    private Date updatedAt;
-
-    public Business() {
+    public Business(String email, String phone, String address, double lat, double lng, String userType, String storeName, String businessType, String customerCategory) {
+        super(email, phone, address, lat, lng, userType);
+        this.storeName = storeName;
+        this.businessType = businessType;
+        this.customerCategory = customerCategory;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public String getBusinessType() {
+        return businessType;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setBusinessType(String businessType) {
+        this.businessType = businessType;
     }
 
-    public String getLat() {
-        return lat;
+    public String getCustomerCategory() {
+        return customerCategory;
     }
 
-    public void setLat(String lat) {
-        this.lat = lat;
-    }
-
-    public String getLng() {
-        return lng;
-    }
-
-    public void setLng(String lng) {
-        this.lng = lng;
-    }
-
-    public String getBusinessName() {
-        return businessName;
-    }
-
-    public void setBusinessName(String businessName) {
-        this.businessName = businessName;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCustomerCategory(String customerCategory) {
+        this.customerCategory = customerCategory;
     }
 }
