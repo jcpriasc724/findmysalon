@@ -78,8 +78,8 @@ public class RegisterCustomerFragment extends Fragment {
             public void onClick(View v){
                 //customerSignUp();
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://api.dogdog.info/")
-                        //.baseUrl("http://127.0.0.1:8000/")
+                        //.baseUrl("https://api.dogdog.info/")
+                        .baseUrl("http://127.0.0.1:8000/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
@@ -138,7 +138,6 @@ public class RegisterCustomerFragment extends Fragment {
         }
         else{
             Retrofit retrofit = new Retrofit.Builder()
-                    //.baseUrl("https://api.dogdog.info/")
                     .baseUrl("http://localhost:8000/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

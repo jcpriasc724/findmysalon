@@ -36,10 +36,10 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
     @Override
     public void onBindViewHolder(@NonNull BusinessHolder holder, int position) {
 
-        holder.txtNameBusiness.setText(list.get(position).getBusinessName());
+        holder.txtNameBusiness.setText(list.get(position).getStoreName());
         holder.txtAddress.setText(list.get(position).getAddress());
-        holder.txtPhoneNumber.setText(list.get(position).getPhoneNumber());
-        holder.rtbBusiness.setRating(list.get(position).getRating());
+        holder.txtPhoneNumber.setText(list.get(position).getPhone());
+        //holder.rtbBusiness.setRating(list.get(position).get());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
