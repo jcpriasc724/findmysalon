@@ -1,18 +1,29 @@
 package com.findmysalon.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
     private int userId;
+    @SerializedName("email")
     private String email;
+    @SerializedName("password")
+    private String password;
+    @SerializedName("phone")
     private String phone;
+    @SerializedName("address")
     private String address;
+    @SerializedName("latitude")
     private double lat;
+    @SerializedName("longitude")
     private double lng;
+    @SerializedName("user_type")
     private String userType;
     //private String profilePhoto;
 
-    public User(String email, String phone, String address, double lat, double lng, String userType){
+    public User(String email, String password, String phone, String address, double lat, double lng, String userType){
         this.email = email;
+        this.password = password;
         this.phone = phone;
         this.address = address;
         this.lat = lat;

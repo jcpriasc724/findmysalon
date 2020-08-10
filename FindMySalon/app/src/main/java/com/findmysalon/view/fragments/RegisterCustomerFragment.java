@@ -76,15 +76,15 @@ public class RegisterCustomerFragment extends Fragment {
         mSubmitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //customerSignUp();
-                Retrofit retrofit = new Retrofit.Builder()
+                customerSignUp();
+                /*Retrofit retrofit = new Retrofit.Builder()
                         //.baseUrl("https://api.dogdog.info/")
-                        .baseUrl("http://127.0.0.1:8000/")
+                        .baseUrl("http://10.0.2.2:8000/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
                 userApi = retrofit.create(UserApi.class);
-                userSignUp();
+                userSignUp();*/
             }
         });
 
@@ -138,26 +138,29 @@ public class RegisterCustomerFragment extends Fragment {
         }
         else{
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://localhost:8000/")
+                    .baseUrl("http://10.0.2.2:8000/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
             userApi = retrofit.create(UserApi.class);
-            userSignUp();
+            userSignUp(firstName, lastName, email, password, address, phone);
 
         }
 
     }
 
-    private void userSignUp(){
+    private void userSignUp(String firstName, String lastName, String email, String password, String address, String phone ){
         Log.d("Msg: ", "Signup initiated");
-        Customer customer = new Customer("Abhishek","Ejam","ejam.abhishek@gmail.com","0433949553", "Brunswick", 92.123,-23.1212, "C");
+        //Customer customer = new Customer("Nirpa","Rai","nirpa@gmail.com","test", "0433949553", "Brunswick", 92.123,-23.1212, "C");
+        //Log.d("JSON: ", ""+customer);
+        Customer customer = new Customer(firstName, lastName, email, password, address, phone,92.123,-23.1212, "C" );
         Call<Customer> call = userApi.customerSignUp(customer);
+
         call.enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
                 if(!response.isSuccessful()){
-                    Log.d("Error: ",""+response.code());
+                    Log.d("Error: ",""+response.message());
                 }
 
                 Customer resp = response.body();

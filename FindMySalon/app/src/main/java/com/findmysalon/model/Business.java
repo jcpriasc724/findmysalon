@@ -6,8 +6,8 @@ public class Business extends User{
     private String businessType;
     private String customerCategory;
 
-    public Business(String email, String phone, String address, double lat, double lng, String userType, String storeName, String businessType, String customerCategory) {
-        super(email, phone, address, lat, lng, userType);
+    public Business(String email, String password, String phone, String address, double lat, double lng, String userType, String storeName, String businessType, String customerCategory) {
+        super(email, password, phone, address, lat, lng, userType);
         this.storeName = storeName;
         this.businessType = businessType;
         this.customerCategory = customerCategory;
