@@ -6,10 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.findmysalon.R;
 
 public class LoginActivity extends AppCompatActivity {
+
+    Button btnSignin;
+    Button btnSignup;
+    EditText email;
+    EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +27,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Button btnSignin = (Button) findViewById(R.id.btn_signIn);
-        Button btnSignup = (Button) findViewById(R.id.btn_signUp);
+        btnSignin = (Button) findViewById(R.id.btn_signIn);
+        btnSignup = (Button) findViewById(R.id.btn_signUp);
+        email = findViewById(R.id.etx_email);
+        password = findViewById(R.id.etx_password);
 
 
         btnSignin.setOnClickListener(new View.OnClickListener() {
