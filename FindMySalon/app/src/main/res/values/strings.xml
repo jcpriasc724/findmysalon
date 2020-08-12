@@ -65,5 +65,7 @@
     <string name="incomplete"> Sign up details are incomplete</string>
     <string name="invalid_email"> Email is invalid</string>
     <string name="invalid_phone"> Phone is invalid. Please, enter phone number without country code</string>
+    <string name="password_no_match">The password confirmation does not match</string>
     <string name="ok">OK</string>
+    <string name="api_key">AIzaSyArTaAe7YfAZn_ylMk-nGWWRfueTseIV3Q</string>
 </resources>

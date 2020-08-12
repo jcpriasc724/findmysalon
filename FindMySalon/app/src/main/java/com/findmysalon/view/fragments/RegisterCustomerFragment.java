@@ -1,13 +1,25 @@
 package com.findmysalon.view.fragments;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,14 +31,41 @@ import com.findmysalon.R;
 import com.findmysalon.model.Customer;
 import com.findmysalon.model.User;
 import com.findmysalon.view.api.UserApi;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
+import com.findmysalon.view.adapters.PlaceAutoSuggestionAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.ContentValues.TAG;
 
 public class RegisterCustomerFragment extends Fragment {
 
@@ -35,27 +74,63 @@ public class RegisterCustomerFragment extends Fragment {
     private EditText mLastName;
     private EditText mEmail;
     private EditText mAddress;
+    private TextView mSearchResult;
+    private ListView listView;
+    private StringBuilder mResult;
     private EditText mPhone;
     private EditText mPassword;
     private EditText mRePassword;
     private Button mSubmitButton;
-
+    private PlacesClient placesClient;
     private UserApi userApi;
+    private String apiKey;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("Left", "onCreate()");
+        apiKey = getString(R.string.api_key);
+        // Initialize the SDK
+        if (!Places.isInitialized()) {
+            Places.initialize(getActivity().getApplicationContext(), apiKey);
+        }
+        // Create a new PlacesClient instance
+        placesClient = Places.createClient(getActivity());
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_register_customer, container, false);
-        //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
-       /* btnNext = view.findViewById(R.id.btn_next);
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
+        final AutoCompleteTextView autoCompleteTextView = v.findViewById(R.id.etx_address);
+        autoCompleteTextView.setAdapter(new PlaceAutoSuggestionAdapter(getActivity(),android.R.layout.simple_list_item_1));
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_reg_business_services);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Address : ",autoCompleteTextView.getText().toString());
+                LatLng latLng = getLatLngFromAddress(autoCompleteTextView.getText().toString());
+                //Log.d("Lat lng: ", ""+latLng);
+                if(latLng!=null) {
+                    Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
+                    Address address=getAddressFromLatLng(latLng);
+                    if(address!=null) {
+                        Log.d("Address : ", "" + address.toString());
+                        Log.d("Address Line : ",""+address.getAddressLine(0));
+                        Log.d("Phone : ",""+address.getPhone());
+                        Log.d("Pin Code : ",""+address.getPostalCode());
+                        Log.d("Feature : ",""+address.getFeatureName());
+                        Log.d("More : ",""+address.getLocality());
+                    }
+                    else {
+                        Log.d("Adddress","Address Not Found");
+                    }
+                }
+                else {
+                    Log.d("Lat Lng","Lat Lng Not Found");
+                }
+
             }
-        });*/
+        });
 
         mFirstName = (EditText) v.findViewById(R.id.etx_first_name);
         //firstName.setText(mVenue.getName());
@@ -64,8 +139,28 @@ public class RegisterCustomerFragment extends Fragment {
 
         mEmail = (EditText) v.findViewById(R.id.etx_email);
 
-        mAddress = (EditText) v.findViewById(R.id.etx_address);
+        //mSearchResult = (TextView) v.findViewById(R.id.search_result);
 
+        /*mAddress = (EditText) v.findViewById(R.id.etx_address);
+        mAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("Typed text: ",""+s);
+                //dataAdapter.getFilter().filter(s.toString());
+                //addressAutocomplete(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+*/
         mPhone = (EditText) v.findViewById(R.id.etx_phone);
 
         mPassword = (EditText) v.findViewById(R.id.etx_password);
@@ -77,14 +172,6 @@ public class RegisterCustomerFragment extends Fragment {
             @Override
             public void onClick(View v){
                 customerSignUp();
-                /*Retrofit retrofit = new Retrofit.Builder()
-                        //.baseUrl("https://api.dogdog.info/")
-                        .baseUrl("http://10.0.2.2:8000/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-                userApi = retrofit.create(UserApi.class);
-                userSignUp();*/
             }
         });
 
@@ -117,23 +204,27 @@ public class RegisterCustomerFragment extends Fragment {
         String phone = mPhone.getText().toString();
         String password = mPassword.getText().toString();
         String rePassword = mRePassword.getText().toString();
-
+        String msg;
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String phonePattern = "^[0-9]{10}$";
         // Validation of empty inputs
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || address.isEmpty() || phone.isEmpty() || password.isEmpty() || rePassword.isEmpty())
         {
-            String msg = getString(R.string.incomplete);
+            msg = getString(R.string.incomplete);
             errorMsgDialog(msg);
         }
         // Validation of email
         else if(!email.matches(emailPattern)){
-            String msg = getString(R.string.invalid_email);
+            msg = getString(R.string.invalid_email);
             errorMsgDialog(msg);
         }
         // Validation of phone
         else if(!phone.matches(phonePattern)){
-            String msg = getString(R.string.invalid_phone);
+            msg = getString(R.string.invalid_phone);
+            errorMsgDialog(msg);
+        }
+        else if(!password.equals(rePassword)){
+            msg = getString(R.string.password_no_match);
             errorMsgDialog(msg);
         }
         else{
@@ -144,7 +235,6 @@ public class RegisterCustomerFragment extends Fragment {
 
             userApi = retrofit.create(UserApi.class);
             userSignUp(firstName, lastName, email, password, address, phone);
-
         }
 
     }
@@ -172,5 +262,80 @@ public class RegisterCustomerFragment extends Fragment {
                 Log.d("Fail: ", t.getMessage());
             }
         });
+    }
+
+    // Method to handle auto complete of address
+    public void addressAutocomplete(String address){
+        AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
+
+        RectangularBounds bounds = RectangularBounds.newInstance(
+                new LatLng(-33.880490, 151.184363), //dummy lat/lng
+                new LatLng(-33.858754, 151.229596));
+
+        FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                .setLocationBias(bounds)
+                .setCountry("AU")
+                .setTypeFilter(TypeFilter.ADDRESS)
+                .setSessionToken(token)
+                .setQuery(address)
+                .build();
+
+        placesClient.findAutocompletePredictions(request).addOnSuccessListener(response -> {
+            mResult = new StringBuilder();
+            for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
+                mResult.append(" ").append(prediction.getFullText(null) + "\n");
+                Log.i(TAG, prediction.getPlaceId());
+                Log.i(TAG, prediction.getPrimaryText(null).toString());
+            }
+            mSearchResult.setText(String.valueOf(mResult));
+        }).addOnFailureListener((exception) -> {
+            if (exception instanceof ApiException) {
+                ApiException apiException = (ApiException) exception;
+                Log.e(TAG, "Place not found: " + apiException.getStatusCode());
+            }
+        });
+    }
+
+    private LatLng getLatLngFromAddress(String address){
+
+        Geocoder geocoder=new Geocoder(getActivity());
+        List<Address> addressList;
+
+        try {
+            addressList = geocoder.getFromLocationName(address, 1);
+            if(addressList!=null){
+                Address singleaddress=addressList.get(0);
+                LatLng latLng=new LatLng(singleaddress.getLatitude(),singleaddress.getLongitude());
+                return latLng;
+            }
+            else{
+                return null;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private Address getAddressFromLatLng(LatLng latLng){
+        Geocoder geocoder=new Geocoder(getActivity());
+        List<Address> addresses;
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5);
+            if(addresses!=null){
+                Address address=addresses.get(0);
+                return address;
+            }
+            else{
+                return null;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }
