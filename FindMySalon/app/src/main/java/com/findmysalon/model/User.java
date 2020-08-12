@@ -21,6 +21,11 @@ public class User {
     private String userType;
     //private String profilePhoto;
 
+    public User(String address, String phone) {
+        this.address = address;
+        this.phone = phone;
+    }
+
     public User(String email, String password, String phone, String address, double lat, double lng, String userType){
         this.email = email;
         this.password = password;

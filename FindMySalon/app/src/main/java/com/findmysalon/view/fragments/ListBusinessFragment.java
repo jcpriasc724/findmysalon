@@ -45,14 +45,14 @@ public class ListBusinessFragment extends Fragment {
 
         list = new ArrayList<Business>();
 
-        /*Business business1 = new Business("Business 1", "092830498", "Address Number 1", 4.5f);
-        Business business2 = new Business("Business 2", "092830498", "Address Number 2", 3.5f);
-        Business business3 = new Business("Business 3", "092830498", "Address Number 3", 1.5f);
+        Business business1 = new Business("Address Number 1", "092830498", "Business 1", 4.5f);
+        Business business2 = new Business("Address Number 2", "092830498", "Business 6666", 1.5f);
+        Business business3 = new Business("Address Number 3", "092830498", "Business 1888", 5f);
 
 
         list.add(business1);
         list.add(business2);
-        list.add(business3);*/
+        list.add(business3);
 
         businessAdapter = new BusinessAdapter(getActivity(), list);
         recBusiness.setAdapter(businessAdapter);
