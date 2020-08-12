@@ -29,10 +29,10 @@
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_list_services_by_category" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_reg_business_staff"-->
-<!--        android:name="com.findmysalon.view.fragments.StaffFragment"-->
-<!--        android:label="@string/sign_up"-->
-<!--        tools:layout="@layout/fragment_list_staff" />-->
+    <fragment
+        android:id="@+id/nav_staff_booking"
+        android:name="com.findmysalon.view.fragments.StaffBookingFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_staff_booking" />
 
 </navigation>

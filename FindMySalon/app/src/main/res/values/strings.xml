@@ -24,14 +24,15 @@
     <string name="lbl_no_services">No Services</string>
     <string name="lbl_no_staff">No Staff</string>
 
-    <string name="lbl_salons">Salons</string>
-    <string name="lbl_barbershop">Barbershops</string>
-    <string name="lbl_"/>
-    <string name="lbl_submit">Submit</string>
-
+    <string name="lbl_no_businesses">No Businesses</string>
+    <string name="lbl_salons">Hair Salon</string>
+    <string name="lbl_barbershop">Barbershop</string>
     <string name="lbl_current_location">Current Location</string>
     <string name="lbl_filter_services">Key word</string>
-    <string name="lbl_no_businesses">No business</string>
+    <string name="lbl_choose_staff">Choose Staff</string>
+    <string name="lbl_"></string>
+
+    <string name="lbl_submit">Submit</string>
 
 
 

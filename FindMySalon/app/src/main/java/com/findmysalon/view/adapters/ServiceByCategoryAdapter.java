@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
@@ -33,6 +34,12 @@ public class ServiceByCategoryAdapter extends RecyclerView.Adapter<ServiceByCate
     @Override
     public void onBindViewHolder(@NonNull ServiceHolder holder, int position) {
         holder.txtNameService.setText(servicesList.get(position).getNameService());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_staff_booking);
+            }
+        });
     }
 
     @Override

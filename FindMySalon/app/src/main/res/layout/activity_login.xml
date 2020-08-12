@@ -9,39 +9,74 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_find_my_salon" />
+<!--        <ImageView-->
+<!--            android:id="@+id/img_logo"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:srcCompat="@drawable/ic_find_my_salon" />-->
 
-        <Button
-            android:id="@+id/btn_signIn"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:layout_marginTop="35dp"
-            android:text="@string/lbl_signIn"
-            android:textColor="@color/colorWhite"/>
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_signUp"
+            <EditText
+                android:id="@+id/etx_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lbl_email"
+                android:inputType="textEmailAddress"/>
+
+            <EditText
+                android:id="@+id/etx_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lbl_password"
+                android:inputType="textPassword"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:layout_marginTop="35dp"
-            android:text="@string/lbl_signUp" />
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_signIn"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_marginRight="20dp"
+                android:text="@string/lbl_signIn"
+                android:textColor="@color/colorWhite"/>
+
+            <Button
+                android:id="@+id/btn_signUp"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:text="@string/lbl_signUp" />
+
+        </LinearLayout>
+
+
+
+
 
 
     </LinearLayout>

@@ -9,6 +9,7 @@ public class Staff {
     private Category category;
     private String phoneNumber;
     private String email;
+    private float rating;
 
     private Date createdAt;
     private Date updatedAt;
@@ -22,12 +23,25 @@ public class Staff {
         this.email = email;
     }
 
+    public Staff(String name, float rating) {
+        this.name = name;
+        this.rating = rating;
+    }
+
     public Staff(Business business, String name, Category category, String phoneNumber, String email) {
         this.business = business;
         this.name = name;
         this.category = category;
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     public Business getBusiness() {
