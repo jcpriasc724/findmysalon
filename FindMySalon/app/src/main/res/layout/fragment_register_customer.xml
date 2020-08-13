@@ -146,7 +146,13 @@
                     android:hint="@string/lbl_email"
                     android:inputType="textEmailAddress" />
 
-                <EditText
+                <!--<fragment android:id="@+id/autocomplete_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                    />-->
+
+                <!--<EditText
                     android:id="@+id/etx_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -154,7 +160,23 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/lbl_address"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName" />-->
+
+                <AutoCompleteTextView
+                    android:hint="@string/lbl_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etx_address" />
+
+                <!--<ListView android:id="@+id/listView1" android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/filterLayout"/>-->
+
+                <!--<TextView
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/search_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />-->
 
                 <EditText
                     android:id="@+id/etx_phone"
