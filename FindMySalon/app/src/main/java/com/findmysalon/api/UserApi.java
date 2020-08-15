@@ -1,7 +1,9 @@
 package com.findmysalon.api;
 import com.findmysalon.model.Customer;
+import com.findmysalon.model.Token;
 import com.google.gson.JsonObject;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -13,11 +15,9 @@ public interface UserApi {
     @POST("api/user/signup/")
     Call<Customer> customerSignUp(@Body Customer customer);
 
-    @FormUrlEncoded
+    @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("api/user/signin/")
-    Call<JsonObject> userSignIn(
-            @Field("email") String email,
-            @Field("password") String address);
+    Call<Token> oathToken(@Body RequestBody login);
 
     @FormUrlEncoded
     @POST("api/user/token/verify/")

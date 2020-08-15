@@ -6,19 +6,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.findmysalon.R;
 import com.findmysalon.api.UserApi;
+import com.findmysalon.model.Token;
+import com.findmysalon.utils.RetrofitClient;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.util.HashMap;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.findmysalon.utils.Helper;
+
+import static com.findmysalon.utils.abcConstants.ACCESS_TOKEN;
+import static com.findmysalon.utils.abcConstants.REFRESH_TOKEN;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -68,77 +79,45 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signIn(){
-        String email = mEmail.getText().toString();
-        String password = mPassword.getText().toString();
-        String msg;
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        // Validation of empty inputs
-        if (email.isEmpty() || password.isEmpty())
-        {
-            msg = getString(R.string.incomplete);
-            errorMsgDialog(msg);
-        }
-        // Validation of email
-        else if(!email.matches(emailPattern)){
-            msg = getString(R.string.invalid_email);
-            errorMsgDialog(msg);
-        }
-        else{
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(getString(R.string.server_url))
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+        // data to Json
+        Gson gson=new Gson();
+        HashMap<String,String> paramsMap= new HashMap<>();
+        paramsMap.put("email",  mEmail.getText().toString());
+        paramsMap.put("password",   mPassword.getText().toString());
+        String obj=gson.toJson(paramsMap);
+        RequestBody body= RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),obj);
 
-            userApi = retrofit.create(UserApi.class);
-            Call<JsonObject> call = userApi.userSignIn(email, password);
-
-            call.enqueue(new Callback<JsonObject>(){
-
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    // If user is not authenticated, display error message
-                    if(response.code() == 200){
-                        JsonObject resp = response.body();
-
-                        // Store access and refresh token fetched from API into SharedPreference
-                        String accessToken = resp.get("access").toString();
-                        Log.d("Login access token: ", accessToken);
-                        String refreshToken = resp.get("refresh").toString();
-                        Long timeStamp = System.currentTimeMillis()/1000;
-                        SharedPreferences.Editor editor = getSharedPreferences("FindMeSalon", MODE_PRIVATE).edit();
-                        editor.putString("access_token", accessToken);
-                        editor.putString("refresh_token", refreshToken);
-                        editor.putLong("timestamp", timeStamp);
-                        editor.apply();
-
-                        //Navigation.findNavController(v).navigate(R.id.nav_type_user);
-                        Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
-                        //ide .putExtra("hi", "HI");
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-                    else if(response.code() == 401){
-                        Log.d("Error: ",""+response.message());
-                        String msg = getString(R.string.invalid_credentials);
-                        errorMsgDialog(msg);
-                    }
-                    else{
-                        Log.d("Error: ",""+response.message());
-                        String msg = getString(R.string.network_error);
-                        errorMsgDialog(msg);
-                    }
-
+        // retrofit
+        Retrofit retrofit = RetrofitClient.getInstance(LoginActivity.this);
+        userApi = retrofit.create(UserApi.class);
+        Call<Token> call = userApi.oathToken(body);
+        call.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if(response.code() != 200){
+                    Log.d("Error: ",""+response.errorBody());
+                    Helper.errorMsgDialog(LoginActivity.this, R.string.invalid_credentials);
+                    return;
                 }
+//                      response.code()
+                Token resp = response.body();
+                final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(ACCESS_TOKEN,resp.getAccess());
+                editor.putString(REFRESH_TOKEN,resp.getRefresh());
+                editor.commit();
 
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.d("Fail: ", t.getMessage());
-                    String msg = getString(R.string.network_error);
-                    errorMsgDialog(msg);
-                }
-            });
-        }
+                Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
+                //ide .putExtra("hi", "HI");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
 
-
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                Log.d("Fail: ", t.getMessage());
+            }
+        });
+        // retrofit End
     }
 }
