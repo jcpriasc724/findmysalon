@@ -95,23 +95,23 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
-                if(response.code() != 200){
+                if(response.isSuccessful()){
+                    Token resp = response.body();
+                    final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(ACCESS_TOKEN,resp.getAccess());
+                    editor.putString(REFRESH_TOKEN,resp.getRefresh());
+                    editor.commit();
+
+                    Intent intent = new Intent(LoginActivity.this, BusinessActivity.class);
+                    //ide .putExtra("hi", "HI");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                else{
                     Log.d("Error: ",""+response.errorBody());
                     Helper.errorMsgDialog(LoginActivity.this, R.string.invalid_credentials);
-                    return;
                 }
-//                      response.code()
-                Token resp = response.body();
-                final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(ACCESS_TOKEN,resp.getAccess());
-                editor.putString(REFRESH_TOKEN,resp.getRefresh());
-                editor.commit();
-
-                Intent intent = new Intent(LoginActivity.this, BusinessActivity.class);
-                //ide .putExtra("hi", "HI");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
             }
 
             @Override
