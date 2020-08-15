@@ -1,10 +1,12 @@
 package com.findmysalon.view;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.findmysalon.R;
+import com.findmysalon.helpers.TokenManager;
 
 public class CustomerActivity extends AppCompatActivity {
 
@@ -12,6 +14,7 @@ public class CustomerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer);
+        //Log.d("Token", );
 
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {

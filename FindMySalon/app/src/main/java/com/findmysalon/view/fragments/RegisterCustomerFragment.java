@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.findmysalon.R;
 import com.findmysalon.model.Customer;
-import com.findmysalon.view.api.UserApi;
+import com.findmysalon.api.UserApi;
 import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
 import com.findmysalon.view.adapters.PlaceAutoSuggestionAdapter;
@@ -151,7 +151,7 @@ public class RegisterCustomerFragment extends Fragment {
         }
         else{
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:8000/")
+                    .baseUrl(getString(R.string.server_url))
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
