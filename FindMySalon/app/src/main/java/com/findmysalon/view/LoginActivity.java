@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.findmysalon.R;
 import com.findmysalon.api.UserApi;
+import com.findmysalon.model.Customer;
 import com.findmysalon.model.Token;
 import com.findmysalon.utils.RetrofitClient;
 import com.google.gson.Gson;
@@ -107,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString(REFRESH_TOKEN,resp.getRefresh());
                 editor.commit();
 
-                Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
+                Intent intent = new Intent(LoginActivity.this, BusinessActivity.class);
                 //ide .putExtra("hi", "HI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

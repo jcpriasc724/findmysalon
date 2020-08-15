@@ -108,7 +108,12 @@ public class TokenInterceptor implements Interceptor {
         accessToken = sharedPreferences.getString(ACCESS_TOKEN, "");
         refreshToken = sharedPreferences.getString(REFRESH_TOKEN, "");
 
+        request = request.newBuilder()
+                .addHeader("Authorization", JWT_TOKEN_PREFIX + " "+ tokenManager.getToken())
+                .build();
+
         Response response = chain.proceed(request);
+
         boolean unauthorized =false;
         if(response.code() == 401 || response.code() == 422){
             unauthorized=true;
