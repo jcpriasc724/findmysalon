@@ -28,7 +28,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="@string/lbl_step_one"
+                    android:text="@string/lbl_step_two"
                     android:textAlignment="center"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/text_size_titles" />
@@ -52,7 +52,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_category"
+        android:id="@+id/rec_staff_booking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-60dp"
