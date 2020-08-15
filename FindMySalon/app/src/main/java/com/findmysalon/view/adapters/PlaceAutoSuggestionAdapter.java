@@ -7,7 +7,7 @@ import android.widget.Filter;
 
 import androidx.annotation.NonNull;
 
-import com.findmysalon.model.PlaceApi;
+import com.findmysalon.helpers.PlaceApi;
 
 import java.util.ArrayList;
 

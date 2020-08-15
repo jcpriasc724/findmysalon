@@ -1,4 +1,4 @@
-package com.findmysalon.model;
+package com.findmysalon.helpers;
 
 import android.util.Log;
 
