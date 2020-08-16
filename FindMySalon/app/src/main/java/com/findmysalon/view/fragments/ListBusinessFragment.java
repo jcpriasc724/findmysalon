@@ -30,6 +30,15 @@ public class ListBusinessFragment extends Fragment {
     ArrayList<Business> list;
     BusinessAdapter businessAdapter;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Fetch active access token to make authenticated API request
+        /*TokenManager tokenManager = new TokenManager(getActivity());
+        tokenManager.getAccessToken();*/
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,9 +54,9 @@ public class ListBusinessFragment extends Fragment {
 
         list = new ArrayList<Business>();
 
-        Business business1 = new Business("Business 1", "092830498", "Address Number 1", 4.5f);
-        Business business2 = new Business("Business 2", "092830498", "Address Number 2", 3.5f);
-        Business business3 = new Business("Business 3", "092830498", "Address Number 3", 1.5f);
+        Business business1 = new Business("Business 1", "Salon", "business@gmail.com","1234","1234567890","Address Number 1", 43.98888,  -23.09888, "B");
+        Business business2 = new Business("Business 1234", "Barbershop", "business@gmail.com","1234","1234567890","Address Number 1", 43.98888,  -23.09888, "B");
+        Business business3 = new Business("Business 1888", "Salon", "business@gmail.com","1234","1234567890","Address Number 1", 43.98888,  -23.09888, "B");
 
 
         list.add(business1);

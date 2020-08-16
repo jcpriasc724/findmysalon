@@ -175,7 +175,7 @@
                     android:hint="@string/lbl_email"
                     android:inputType="textEmailAddress" />
 
-                <EditText
+                <!--<EditText
                     android:id="@+id/etx_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -183,7 +183,12 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/lbl_address"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName" />-->
+                <AutoCompleteTextView
+                    android:hint="@string/lbl_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etx_address" />
 
                 <EditText
                     android:id="@+id/etx_phone"
@@ -206,7 +211,7 @@
                     android:inputType="textPassword" />
 
                 <EditText
-                    android:id="@+id/etx_repassword"
+                    android:id="@+id/etx_rePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -214,6 +219,17 @@
                     android:ems="10"
                     android:hint="@string/lbl_retype_password"
                     android:inputType="textPassword" />
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/lbl_submit"
+                    android:layout_gravity="center"
+                    />
             </LinearLayout>
         </LinearLayout>
 
