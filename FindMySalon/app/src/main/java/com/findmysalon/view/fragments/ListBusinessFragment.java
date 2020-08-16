@@ -54,9 +54,9 @@ public class ListBusinessFragment extends Fragment {
 
         list = new ArrayList<Business>();
 
-        Business business1 = new Business("Address Number 1", "092830498", "Business 1", 4.5f);
-        Business business2 = new Business("Address Number 2", "092830498", "Business 6666", 1.5f);
-        Business business3 = new Business("Address Number 3", "092830498", "Business 1888", 5f);
+        Business business1 = new Business("Business 1", "Salon", "business@gmail.com","1234","1234567890","Address Number 1", 43.98888,  -23.09888, "B");
+        Business business2 = new Business("Business 1234", "Barbershop", "business@gmail.com","1234","1234567890","Address Number 1", 43.98888,  -23.09888, "B");
+        Business business3 = new Business("Business 1888", "Salon", "business@gmail.com","1234","1234567890","Address Number 1", 43.98888,  -23.09888, "B");
 
 
         list.add(business1);

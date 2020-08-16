@@ -1,4 +1,5 @@
 package com.findmysalon.api;
+import com.findmysalon.model.Business;
 import com.findmysalon.model.Customer;
 import com.findmysalon.model.Token;
 import com.google.gson.JsonObject;
@@ -14,6 +15,9 @@ import retrofit2.http.POST;
 public interface UserApi {
     @POST("api/user/signup/")
     Call<Customer> customerSignUp(@Body Customer customer);
+
+    @POST("api/user/signup/")
+    Call<Business> businessSignUp(@Body Business business);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("api/user/signin/")

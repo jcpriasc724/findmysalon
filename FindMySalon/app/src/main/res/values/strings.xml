@@ -63,6 +63,7 @@
 
     <string name="warning">Warning</string>
     <string name="incomplete"> Please, fill out all the fields</string>
+    <string name="address_incomplete"> Could not find address. Please, type address select from suggested list</string>
     <string name="invalid_email"> Email is invalid</string>
     <string name="invalid_phone"> Phone is invalid. Please, enter phone number without country code</string>
     <string name="password_no_match">The password confirmation does not match</string>
