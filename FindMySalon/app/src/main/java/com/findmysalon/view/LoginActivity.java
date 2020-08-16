@@ -31,6 +31,8 @@ import com.findmysalon.utils.Helper;
 
 import static com.findmysalon.utils.abcConstants.ACCESS_TOKEN;
 import static com.findmysalon.utils.abcConstants.REFRESH_TOKEN;
+import static com.findmysalon.utils.abcConstants.TOKEN_EXPIRED;
+import static com.findmysalon.utils.abcConstants.TOKEN_VALID_TIME;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -101,6 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(ACCESS_TOKEN,resp.getAccess());
                     editor.putString(REFRESH_TOKEN,resp.getRefresh());
+                    editor.putLong(TOKEN_EXPIRED, ((System.currentTimeMillis()/1000) + TOKEN_VALID_TIME * 60) );
+
                     editor.commit();
 
                     Intent intent = new Intent(LoginActivity.this, BusinessActivity.class);

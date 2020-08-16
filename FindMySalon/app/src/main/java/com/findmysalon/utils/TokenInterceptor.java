@@ -24,11 +24,14 @@ import static com.findmysalon.utils.abcConstants.ACCESS_TOKEN;
 import static com.findmysalon.utils.abcConstants.BASE_URL;
 import static com.findmysalon.utils.abcConstants.JWT_TOKEN_PREFIX;
 import static com.findmysalon.utils.abcConstants.REFRESH_TOKEN;
+import static com.findmysalon.utils.abcConstants.TOKEN_EXPIRED;
+import static com.findmysalon.utils.abcConstants.TOKEN_VALID_TIME;
 
 public class TokenInterceptor implements Interceptor {
     private static Retrofit retrofit = null;
     private static String accessToken;
     private static String refreshToken;
+    private static Long tokenExpired;
     private static TokenManager tokenManager;
     private static Context mContext;
 
@@ -46,7 +49,12 @@ public class TokenInterceptor implements Interceptor {
 
             @Override
             public String getToken() {
-
+                tokenExpired = sharedPreferences.getLong(TOKEN_EXPIRED, 0);
+                Long currentTimeStamp = System.currentTimeMillis()/1000;
+                Long diff = currentTimeStamp - tokenExpired;
+                if (diff >= 0) {
+                    return "";
+                }
                 accessToken = sharedPreferences.getString(ACCESS_TOKEN, "");
                 return accessToken;
             }
@@ -89,7 +97,8 @@ public class TokenInterceptor implements Interceptor {
                         Gson gson = new Gson();
                         Token refreshTokenResponseModel = gson.fromJson(jsonData, Token.class);
                         sharedPreferences.edit().putString(ACCESS_TOKEN, refreshTokenResponseModel.getAccess()).apply();
-                        return "1";
+                        sharedPreferences.edit().putLong(TOKEN_EXPIRED, ((System.currentTimeMillis()/1000) + TOKEN_VALID_TIME * 60) ).apply();
+                        return accessToken;
                     } else {
                         // if refresh token fails, redirect to login activity
                         Intent intent = new Intent(mContext, LoginActivity.class);
@@ -104,15 +113,21 @@ public class TokenInterceptor implements Interceptor {
         };
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-
-        accessToken = sharedPreferences.getString(ACCESS_TOKEN, "");
         refreshToken = sharedPreferences.getString(REFRESH_TOKEN, "");
-
-        request = request.newBuilder()
-                .addHeader("Authorization", JWT_TOKEN_PREFIX + " "+ tokenManager.getToken())
-                .build();
-
+//        Log.i(null, String.valueOf( request.header("NonAuthentication")));
+        if(request.header("NonAuthentication") == null) {
+            // validate the token is expired or not
+            if (tokenManager.getToken() == "") {
+                tokenManager.clearToken();
+                tokenManager.refreshToken();
+            }
+            request = request.newBuilder()
+                    .addHeader("Authorization", JWT_TOKEN_PREFIX + " " + tokenManager.getToken())
+                    .build();
+        }
         Response response = chain.proceed(request);
+
+
 
         boolean unauthorized =false;
         if(response.code() == 401 || response.code() == 422){
@@ -120,17 +135,25 @@ public class TokenInterceptor implements Interceptor {
         }
 
         if (unauthorized) {
-            tokenManager.clearToken();
-            tokenManager.refreshToken();
-            accessToken = sharedPreferences.getString(ACCESS_TOKEN, "");
-            if(accessToken!=null){
-                modifiedRequest = request.newBuilder()
-                        .addHeader("Authorization", JWT_TOKEN_PREFIX + " "+ tokenManager.getToken())
-                        .build();
-                Log.i(null, JWT_TOKEN_PREFIX + " "+ tokenManager.getToken());
-                response.close();
-                return chain.proceed(modifiedRequest);
-            }
+//            tokenManager.clearToken();
+//            tokenManager.refreshToken();
+//            accessToken = sharedPreferences.getString(ACCESS_TOKEN, "");
+//            if(accessToken!=null){
+//                response.close();
+////                Log.i(null, "1: " + JWT_TOKEN_PREFIX + " "+ tokenManager.getToken());
+//                modifiedRequest = request.newBuilder()
+//                        .addHeader("Authorization", JWT_TOKEN_PREFIX + " "+ tokenManager.getToken())
+//                        .build();
+//                Log.i(null, "2:" + JWT_TOKEN_PREFIX + " "+ tokenManager.getToken());
+//                Log.i(null, modifiedRequest.header("Authorization"));
+//
+//                response = chain.proceed(modifiedRequest);
+//                return response;
+//            }
+            response.close();
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            mContext.startActivity(intent);
         }
         return response;
     }

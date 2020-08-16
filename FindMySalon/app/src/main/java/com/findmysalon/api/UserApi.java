@@ -13,19 +13,22 @@ import retrofit2.http.POST;
 
 public interface UserApi {
     @POST("api/user/signup/")
+    @Headers({"NonAuthentication:True"})
     Call<Customer> customerSignUp(@Body Customer customer);
 
-    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @Headers({"Content-type:application/json;charset=UTF-8;","NonAuthentication:True"})
     @POST("api/user/signin/")
     Call<Token> oathToken(@Body RequestBody login);
 
     @FormUrlEncoded
     @POST("api/user/token/verify/")
+    @Headers({"NonAuthentication:True"})
     Call<JsonObject> verifyAccessToken(
             @Field("access") String accessToken);
 
     //@Headers("Content-Type: application/json")
     @FormUrlEncoded
+    @Headers({"NonAuthentication:True"})
     @POST("api/user/token/refresh/")
     Call<JsonObject> getNewAccessToken(
             @Field("refresh") String refreshToken);
