@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.findmysalon.R;
-import com.findmysalon.helpers.TokenManager;
 
 public class CustomerActivity extends AppCompatActivity {
 

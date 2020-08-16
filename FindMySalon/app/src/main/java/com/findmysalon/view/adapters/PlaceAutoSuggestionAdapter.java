@@ -42,10 +42,10 @@ public class PlaceAutoSuggestionAdapter extends ArrayAdapter implements Filterab
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults=new FilterResults();
                 if(constraint!=null){
-                    results=placeApi.autoComplete(constraint.toString());
+                    results = placeApi.autoComplete(constraint.toString());
 
-                    filterResults.values=results;
-                    filterResults.count=results.size();
+                    filterResults.values = results;
+                    filterResults.count = results.size();
                 }
                 return filterResults;
             }

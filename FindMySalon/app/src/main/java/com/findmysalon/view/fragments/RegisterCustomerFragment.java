@@ -1,46 +1,43 @@
 package com.findmysalon.view.fragments;
 
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.findmysalon.R;
+import com.findmysalon.helpers.PlaceApi;
 import com.findmysalon.model.Customer;
 import com.findmysalon.api.UserApi;
-import com.google.android.gms.maps.model.LatLng;
-import java.util.List;
-import com.findmysalon.view.adapters.PlaceAutoSuggestionAdapter;
+import com.findmysalon.utils.Helper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.findmysalon.utils.abcConstants.BASE_URL;
+
 public class RegisterCustomerFragment extends Fragment {
 
     private EditText mFirstName;
     private EditText mLastName;
     private EditText mEmail;
-    private String mAddress;
-    private double mLat;
-    private double mLng;
     private EditText mPhone;
     private EditText mPassword;
     private EditText mRePassword;
     private UserApi userApi;
+    private HashMap<String, Object> addressApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,38 +50,38 @@ public class RegisterCustomerFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_register_customer, container, false);
 
         // Address autocomplete suggestions
-        final AutoCompleteTextView autoCompleteTextView = v.findViewById(R.id.etx_address);
-        autoCompleteTextView.setAdapter(new PlaceAutoSuggestionAdapter(getActivity(),android.R.layout.simple_list_item_1));
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("Address : ",autoCompleteTextView.getText().toString());
-                LatLng latLng = getLatLngFromAddress(autoCompleteTextView.getText().toString());
-                if(latLng!=null) {
-                    Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
-                    mAddress = autoCompleteTextView.getText().toString();
-                    mLat = latLng.latitude;
-                    mLng = latLng.longitude;
-                    /*Address address=getAddressFromLatLng(latLng);
-                    if(address!=null) {
+        PlaceApi placeApi = new PlaceApi();
+        addressApi = placeApi.fetchAddressLatLng(v.findViewById(R.id.etx_address), getActivity());
 
-                        Log.d("Address : ", "" + address.toString());
-                        Log.d("Address Line : ",""+address.getAddressLine(0));
-                        Log.d("Phone : ",""+address.getPhone());
-                        Log.d("Pin Code : ",""+address.getPostalCode());
-                        Log.d("Feature : ",""+address.getFeatureName());
-                        Log.d("More : ",""+address.getLocality());
-                    }
-                    else {
-                        Log.d("Address","Address Not Found");
-                    }*/
+        /*final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) v.findViewById(R.id.etx_address);
+        autoCompleteTextView.setAdapter(new PlaceAutoSuggestionAdapter(getActivity(),android.R.layout.simple_list_item_1));
+        autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+            Log.d("Address : ",autoCompleteTextView.getText().toString());
+            LatLng latLng = getLatLngFromAddress(autoCompleteTextView.getText().toString());
+            if(latLng!=null) {
+                Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
+                mAddress = autoCompleteTextView.getText().toString();
+                mLat = latLng.latitude;
+                mLng = latLng.longitude;
+                *//*Address address=getAddressFromLatLng(latLng);
+                if(address!=null) {
+
+                    Log.d("Address : ", "" + address.toString());
+                    Log.d("Address Line : ",""+address.getAddressLine(0));
+                    Log.d("Phone : ",""+address.getPhone());
+                    Log.d("Pin Code : ",""+address.getPostalCode());
+                    Log.d("Feature : ",""+address.getFeatureName());
+                    Log.d("More : ",""+address.getLocality());
                 }
                 else {
-                    Log.d("Lat Lng","Lat Lng Not Found");
-                }
-
+                    Log.d("Address","Address Not Found");
+                }*//*
             }
-        });
+            else {
+                Log.d("Lat Lng","Lat Lng Not Found");
+            }
+
+        });*/
 
         mFirstName = (EditText) v.findViewById(R.id.etx_first_name);
         mLastName = (EditText) v.findViewById(R.id.etx_last_name);
@@ -104,61 +101,45 @@ public class RegisterCustomerFragment extends Fragment {
         super.onStart();
     }
 
-    public void errorMsgDialog(String msg)
-    {
-        AlertDialog d = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.warning)
-                .setMessage(msg)
-                .setPositiveButton(R.string.ok, null)
-                .create();
-
-        d.show();
-    }
-
     // Method to handle customer signUp
     public void customerSignUp(){
         String firstName = mFirstName.getText().toString();
         String lastName = mLastName.getText().toString();
         String email = mEmail.getText().toString().trim();
-        String address = mAddress;
-        double latitude = mLat;
-        double longitude = mLng;
         String phone = mPhone.getText().toString();
         String password = mPassword.getText().toString();
         String rePassword = mRePassword.getText().toString();
-        String msg;
+        String address = (String) addressApi.get("address");
+        double latitude = (double) addressApi.get("lat");
+        double longitude = (double) addressApi.get("lng");
+
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String phonePattern = "^[0-9]{10}$";
         // Validation of empty inputs
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || address.isEmpty() || phone.isEmpty() || password.isEmpty() || rePassword.isEmpty())
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || rePassword.isEmpty())
         {
-            msg = getString(R.string.incomplete);
-            errorMsgDialog(msg);
+            Helper.errorMsgDialog(getActivity(), R.string.incomplete);
         }
         // Validation of email
         else if(!email.matches(emailPattern)){
-            msg = getString(R.string.invalid_email);
-            errorMsgDialog(msg);
+            Helper.errorMsgDialog(getActivity(), R.string.invalid_email);
         }
         // Validation of phone
         else if(!phone.matches(phonePattern)){
-            msg = getString(R.string.invalid_phone);
-            errorMsgDialog(msg);
+            Helper.errorMsgDialog(getActivity(), R.string.invalid_phone);
         }
         else if(!password.equals(rePassword)){
-            msg = getString(R.string.password_no_match);
-            errorMsgDialog(msg);
+            Helper.errorMsgDialog(getActivity(), R.string.password_no_match);
         }
         else{
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(getString(R.string.server_url))
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
             userApi = retrofit.create(UserApi.class);
             userSignUp(firstName, lastName, email, password, address, latitude, longitude, phone);
         }
-
     }
 
     // Method to handle user sign up
@@ -171,22 +152,26 @@ public class RegisterCustomerFragment extends Fragment {
         call.enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
-                if(!response.isSuccessful()){
+                if(response.isSuccessful()){
+                    Customer resp = response.body();
+                    Log.d("Response: ", ""+resp);
+                }
+                else{
+                    Helper.errorMsgDialog(getActivity(), R.string.response_error);
                     Log.d("Error: ",""+response.message());
                 }
 
-                Customer resp = response.body();
-                Log.d("Response: ", ""+resp);
             }
 
             @Override
             public void onFailure(Call<Customer> call, Throwable t) {
+                Helper.errorMsgDialog(getActivity(), R.string.network_error);
                 Log.d("Fail: ", t.getMessage());
             }
         });
     }
 
-    // Method to get latitude and longitude from address
+    /*// Method to get latitude and longitude from address
     private LatLng getLatLngFromAddress(String address){
 
         Geocoder geocoder=new Geocoder(getActivity());
@@ -208,7 +193,7 @@ public class RegisterCustomerFragment extends Fragment {
             return null;
         }
 
-    }
+    }*/
 
     /*private Address getAddressFromLatLng(LatLng latLng){
         Geocoder geocoder=new Geocoder(getActivity());

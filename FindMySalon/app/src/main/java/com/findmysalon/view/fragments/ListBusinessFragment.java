@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
-import com.findmysalon.helpers.TokenManager;
 import com.findmysalon.model.Business;
 import com.findmysalon.model.Staff;
 import com.findmysalon.view.adapters.BusinessAdapter;
@@ -36,8 +35,8 @@ public class ListBusinessFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // Fetch active access token to make authenticated API request
-        TokenManager tokenManager = new TokenManager(getActivity());
-        tokenManager.getAccessToken();
+        /*TokenManager tokenManager = new TokenManager(getActivity());
+        tokenManager.getAccessToken();*/
     }
 
     @Nullable

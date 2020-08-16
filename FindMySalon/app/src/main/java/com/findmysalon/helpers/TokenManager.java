@@ -1,3 +1,4 @@
+/*
 package com.findmysalon.helpers;
 
 import android.content.Context;
@@ -88,3 +89,4 @@ public class TokenManager extends ContextWrapper {
         return refreshToken;
     }
 }
+*/

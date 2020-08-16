@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Find My Salon</string>
-    <string name="server_url">http://10.0.2.2:8000/</string>
     <string name="lbl_signIn">Sign In</string>
     <string name="lbl_signUp">Sign Up</string>
     <string name="lbl_business">Business</string>
@@ -69,6 +68,7 @@
     <string name="password_no_match">The password confirmation does not match</string>
     <string name="invalid_credentials"> Invalid credentials</string>
     <string name="network_error"> Network error. Please, try again later</string>
+    <string name="response_error"> Request could not be processed. Please, try again later</string>
     <string name="ok">OK</string>
     <string name="api_key">AIzaSyArTaAe7YfAZn_ylMk-nGWWRfueTseIV3Q</string>
     <string name="title_activity_business">BusinessActivity</string>
