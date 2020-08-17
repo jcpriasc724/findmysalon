@@ -1,6 +1,7 @@
 package com.findmysalon.view.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
+import com.findmysalon.api.StaffApi;
 import com.findmysalon.model.Category;
 import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
+import com.findmysalon.utils.RetrofitClient;
 import com.findmysalon.view.adapters.ServiceAdapter;
 import com.findmysalon.view.adapters.StaffAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import java.util.ArrayList;
 
@@ -33,6 +40,7 @@ public class StaffFragment extends Fragment {
 
     Button btnNext;
     Button btnAddStaff;
+    StaffApi staffApi;
 
     @Nullable
     @Override
@@ -67,17 +75,40 @@ public class StaffFragment extends Fragment {
 
         list = new ArrayList<Staff>();
 
-        Staff staff1 = new Staff("Juan Camilo Puente","0413460105","camilo479@gmail.com");
-        Staff staff2 = new Staff("Simon","0413460105","simon@gmail.com");
-        Staff staff3 = new Staff("Abhishek","0413460105","abhishek@gmail.com");
-
-
-        list.add(staff1);
-        list.add(staff2);
-        list.add(staff3);
+//        Staff staff1 = new Staff("Juan Camilo Puente","0413460105","camilo479@gmail.com");
+//        Staff staff2 = new Staff("Simon","0413460105","simon@gmail.com");
+//        Staff staff3 = new Staff("Abhishek","0413460105","abhishek@gmail.com");
+//
+//
+//        list.add(staff1);
+//        list.add(staff2);
+//        list.add(staff3);
 
         staffAdapter = new StaffAdapter(getActivity(), list);
         recStaff.setAdapter(staffAdapter);
+
+        // retrofit
+        Retrofit retrofit = RetrofitClient.getInstance(getActivity());
+        staffApi = retrofit.create(StaffApi.class);
+        Call<ArrayList<Staff>> call = staffApi.staffList();
+        call.enqueue(new Callback<ArrayList<Staff>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Staff>> call, Response<ArrayList<Staff>> response) {
+                if(response.code() == 200){
+                    list.addAll(response.body());
+//                    Log.i("SERVICE_LIT", list.toString());
+                    staffAdapter.notifyDataSetChanged();
+                }
+//
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Staff>> call, Throwable t) {
+                Log.d("Fail: ", t.getMessage());
+            }
+        });
+        // retrofit End
+
 
         return view;
     }

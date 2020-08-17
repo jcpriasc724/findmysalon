@@ -32,6 +32,10 @@
     <string name="lbl_current_location">Current Location</string>
     <string name="lbl_filter_services">Key word</string>
     <string name="lbl_choose_staff">Choose Staff</string>
+    <string name="lbl_"></string>
+
+    <string name="lbl_submit">Submit</string>
+
     <string name="lbl_description_service">Description Service</string>
     <string name="lbl_price_service">Price Service</string>
     <string name="lbl_duration_service">Duration Service</string>
@@ -74,4 +78,18 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <string name="warning">Warning</string>
+    <string name="incomplete"> Please, fill out all the fields</string>
+    <string name="address_incomplete"> Could not find address. Please, type address select from suggested list</string>
+    <string name="invalid_email"> Email is invalid</string>
+    <string name="invalid_phone"> Phone is invalid. Please, enter phone number without country code</string>
+    <string name="password_no_match">The password confirmation does not match</string>
+    <string name="invalid_credentials"> Invalid credentials</string>
+    <string name="network_error"> Network error. Please, try again later</string>
+    <string name="response_error"> Request could not be processed. Please, try again later</string>
+    <string name="ok">OK</string>
+    <string name="api_key">AIzaSyArTaAe7YfAZn_ylMk-nGWWRfueTseIV3Q</string>
+    <string name="title_activity_business">BusinessActivity</string>
 </resources>
