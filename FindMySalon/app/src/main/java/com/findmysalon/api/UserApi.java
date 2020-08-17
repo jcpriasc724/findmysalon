@@ -13,13 +13,15 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface UserApi {
+    @Headers({"NonAuthentication:True"})
     @POST("api/user/signup/")
     Call<Customer> customerSignUp(@Body Customer customer);
 
+    @Headers({"NonAuthentication:True"})
     @POST("api/user/signup/")
     Call<Business> businessSignUp(@Body Business business);
 
-    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @Headers({"Content-type:application/json;charset=UTF-8","NonAuthentication:True"})
     @POST("api/user/signin/")
     Call<Token> oathToken(@Body RequestBody login);
 

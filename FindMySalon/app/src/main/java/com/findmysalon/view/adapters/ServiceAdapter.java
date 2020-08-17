@@ -1,6 +1,7 @@
 package com.findmysalon.view.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         holder.txtPrice.setText("$ " + servicesList.get(position).getPrice().toString());
         holder.txtDuration.setText(servicesList.get(position).getDuration().toString() + " mins");
         holder.txtDescription.setText(servicesList.get(position).getDescription());
+        holder.txtStatus.setText(servicesList.get(position).getDisplayStatus().compareTo("S") == 0 ? "Enable" : "Disable");
 
     }
 
@@ -49,7 +51,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
     class ServiceHolder extends RecyclerView.ViewHolder {
 
-        TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription;
+        TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription, txtStatus;
 
         public ServiceHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +60,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtPrice = (TextView) itemView.findViewById(R.id.txt_price);
             txtDuration = (TextView) itemView.findViewById(R.id.txt_duration);
             txtDescription = (TextView) itemView.findViewById(R.id.txt_description);
+            txtStatus = (TextView) itemView.findViewById(R.id.txt_status);
         }
     }
 }
