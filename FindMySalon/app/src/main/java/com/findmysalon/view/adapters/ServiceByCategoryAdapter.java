@@ -34,6 +34,8 @@ public class ServiceByCategoryAdapter extends RecyclerView.Adapter<ServiceByCate
     @Override
     public void onBindViewHolder(@NonNull ServiceHolder holder, int position) {
         holder.txtNameService.setText(servicesList.get(position).getNameService());
+        holder.txtPrice.setText("$ "+servicesList.get(position).getPrice().toString());
+        holder.txtDuration.setText(servicesList.get(position).getDuration().toString()+" min");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,10 +52,14 @@ public class ServiceByCategoryAdapter extends RecyclerView.Adapter<ServiceByCate
     class ServiceHolder extends RecyclerView.ViewHolder {
 
         TextView txtNameService;
+        TextView txtPrice;
+        TextView txtDuration;
 
         public ServiceHolder(@NonNull View itemView) {
             super(itemView);
             txtNameService = (TextView) itemView.findViewById(R.id.txt_service_by_category);
+            txtPrice = (TextView) itemView.findViewById(R.id.txt_price);
+            txtDuration = (TextView) itemView.findViewById(R.id.txt_duration);
         }
     }
 }

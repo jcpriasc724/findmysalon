@@ -36,14 +36,15 @@ public class StaffBookingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_staff_booking, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_staff_booking, container, false);
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         txtNameStaff = view.findViewById(R.id.txt_name_staff);
         rtbStaff = view.findViewById(R.id.rtb_staff);
 
         recStaff = view.findViewById(R.id.rec_staff_booking);
-        recStaff.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recStaff.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recStaff.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         list = new ArrayList<Staff>();
 

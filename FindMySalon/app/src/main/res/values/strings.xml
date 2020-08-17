@@ -17,6 +17,8 @@
     <string name="lbl_retype_password">Re-type Password</string>
     <string name="lbl_edit">Edit</string>
     <string name="lbl_services">Services</string>
+    <string name="lbl_step_one">Step 1: Choose a service</string>
+    <string name="lbl_step_two">Step 2: Choose staff</string>
     <string name="lbl_staff">Staff</string>
     <string name="lbl_location">Location</string>
     <string name="lbl_business_details">Business Details</string>
