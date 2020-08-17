@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -52,7 +53,7 @@ public class RegisterCustomerFragment extends Fragment {
 
         // Address autocomplete suggestions
         PlaceApi placeApi = new PlaceApi();
-        addressApi = placeApi.fetchAddressLatLng(v.findViewById(R.id.etx_address), getActivity());
+        addressApi = placeApi.fetchAddressLatLng((AutoCompleteTextView) v.findViewById(R.id.etx_address), getActivity());
 
         /*final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) v.findViewById(R.id.etx_address);
         autoCompleteTextView.setAdapter(new PlaceAutoSuggestionAdapter(getActivity(),android.R.layout.simple_list_item_1));
