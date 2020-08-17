@@ -31,6 +31,7 @@ public class ServicesFragment extends Fragment {
     ServiceAdapter serviceAdapter;
 
     Button btnNext;
+    Button btnAddService;
 
     @Nullable
     @Override
@@ -48,6 +49,14 @@ public class ServicesFragment extends Fragment {
         recServices.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         btnNext = view.findViewById(R.id.btn_next);
+        btnAddService = view.findViewById(R.id.btn_add_service);
+
+        btnAddService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_add_service);
+            }
+        });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override

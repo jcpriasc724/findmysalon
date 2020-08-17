@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +31,9 @@ public class StaffFragment extends Fragment {
     ArrayList<Staff> list;
     StaffAdapter staffAdapter;
 
+    Button btnNext;
+    Button btnAddStaff;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,6 +46,24 @@ public class StaffFragment extends Fragment {
 
         recStaff = view.findViewById(R.id.rec_staff);
         recStaff.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        btnNext = view.findViewById(R.id.btn_next);
+        btnAddStaff = view.findViewById(R.id.btn_add_staff);
+
+
+        btnAddStaff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_add_staff);
+            }
+        });
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Navigation.findNavController(v).navigate(R.id.nav_reg_business_staff);
+            }
+        });
 
         list = new ArrayList<Staff>();
 

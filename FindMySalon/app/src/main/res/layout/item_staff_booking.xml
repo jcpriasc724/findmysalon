@@ -30,13 +30,13 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size" />
 
-            <RatingBar
-                android:id="@+id/rtb_staff"
-                style="@style/Widget.AppCompat.RatingBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                />
+<!--            <RatingBar-->
+<!--                android:id="@+id/rtb_staff"-->
+<!--                style="@style/Widget.AppCompat.RatingBar.Small"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                />-->
 
         </LinearLayout>
 

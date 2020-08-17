@@ -1,5 +1,6 @@
 package com.findmysalon.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Staff {
@@ -10,6 +11,7 @@ public class Staff {
     private String phoneNumber;
     private String email;
     private float rating;
+    private ArrayList<StaffRoster> staffRosters;
 
     private Date createdAt;
     private Date updatedAt;
@@ -23,9 +25,10 @@ public class Staff {
         this.email = email;
     }
 
-    public Staff(String name, float rating) {
+    public Staff(String name, float rating, ArrayList<StaffRoster> staffRosters) {
         this.name = name;
         this.rating = rating;
+        this.staffRosters = staffRosters;
     }
 
     public Staff(Business business, String name, Category category, String phoneNumber, String email) {
@@ -34,6 +37,14 @@ public class Staff {
         this.category = category;
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+
+    public ArrayList<StaffRoster> getStaffRosters() {
+        return staffRosters;
+    }
+
+    public void setStaffRosters(ArrayList<StaffRoster> staffRosters) {
+        this.staffRosters = staffRosters;
     }
 
     public float getRating() {
