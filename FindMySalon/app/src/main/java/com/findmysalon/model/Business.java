@@ -1,32 +1,26 @@
 package com.findmysalon.model;
 
-import java.util.Date;
+import com.google.gson.annotations.SerializedName;
 
-public class Business {
+public class Business extends User{
 
-    private String businessName;
-    private String userType;
-    private String phoneNumber;
-    private String email;
-    private String address;
-    private String password;
-    private String lat;
-    private String lng;
-    private Float rating;
+    @SerializedName("store_name")
+    private String storeName;
+    @SerializedName("business_type")
+    private String businessType;
+    private Float rating = 4.5f;
 
-    private Date createdAt;
-    private Date updatedAt;
-
-    public Business() {
+    public Business(String storeName, String businessType, String email, String password, String phone, String address, double lat, double lng, String userType) {
+        super(email, password, phone, address, lat, lng, userType);
+        this.storeName = storeName;
+        this.businessType = businessType;
     }
 
-
-    public Business(String businessName, String phoneNumber, String address, Float rating) {
-        this.businessName = businessName;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
+    /*public Business(String address, String phone, String storeName, Float rating) {
+        super(address, phone);
+        this.storeName = storeName;
         this.rating = rating;
-    }
+    }*/
 
     public Float getRating() {
         return rating;
@@ -36,83 +30,28 @@ public class Business {
         this.rating = rating;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public String getBusinessType() {
+        return businessType;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setBusinessType(String businessType) {
+        this.businessType = businessType;
     }
 
-    public String getLat() {
-        return lat;
-    }
-
-    public void setLat(String lat) {
-        this.lat = lat;
-    }
-
-    public String getLng() {
-        return lng;
-    }
-
-    public void setLng(String lng) {
-        this.lng = lng;
-    }
-
-    public String getBusinessName() {
-        return businessName;
-    }
-
-    public void setBusinessName(String businessName) {
-        this.businessName = businessName;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public String toString() {
+        return "Business{" +
+                "storeName='" + storeName + '\'' +
+                ", businessType='" + businessType + '\'' +
+                ", rating=" + rating +
+                '}' + super.toString();
     }
 }

@@ -22,7 +22,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/photos_default"
-            android:tint="@color/colorGrayDark"/>
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -42,6 +42,16 @@
             android:text="Name Staff"/>
 
         <TextView
+                android:id="@+id/txt_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@color/colorGrayDark"
+                android:text="Phone Number"/>
+
+
+        <TextView
             android:id="@+id/txt_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,14 +60,6 @@
             android:textColor="@color/colorGrayDark"
             android:text="Email"/>
 
-        <TextView
-            android:id="@+id/txt_phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:textSize="@dimen/text_size_small"
-            android:textColor="@color/colorGrayDark"
-            android:text="Phone Number"/>
 
     </LinearLayout>
 

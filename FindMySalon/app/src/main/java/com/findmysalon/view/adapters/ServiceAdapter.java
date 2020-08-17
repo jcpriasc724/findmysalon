@@ -1,6 +1,7 @@
 package com.findmysalon.view.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,14 @@ import com.findmysalon.R;
 import com.findmysalon.model.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceHolder>{
 
     Context context;
-    ArrayList<Service> servicesList;
+    List<Service> servicesList;
 
-    public ServiceAdapter(Context context, ArrayList<Service> servicesList) {
+    public ServiceAdapter(Context context, List<Service> servicesList) {
         this.context = context;
         this.servicesList = servicesList;
     }
@@ -35,9 +37,10 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
         holder.txtNameService.setText(servicesList.get(position).getNameService());
         holder.txtCategory.setText(servicesList.get(position).getCategory().getNameCategory());
-        holder.txtPrice.setText(servicesList.get(position).getPrice().toString());
-        holder.txtDuration.setText(servicesList.get(position).getDuration().toString());
+        holder.txtPrice.setText("$ " + servicesList.get(position).getPrice().toString());
+        holder.txtDuration.setText(servicesList.get(position).getDuration().toString() + " mins");
         holder.txtDescription.setText(servicesList.get(position).getDescription());
+        holder.txtStatus.setText(servicesList.get(position).getDisplayStatus().compareTo("S") == 0 ? "Enable" : "Disable");
 
     }
 
@@ -48,7 +51,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
     class ServiceHolder extends RecyclerView.ViewHolder {
 
-        TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription;
+        TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription, txtStatus;
 
         public ServiceHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,6 +60,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtPrice = (TextView) itemView.findViewById(R.id.txt_price);
             txtDuration = (TextView) itemView.findViewById(R.id.txt_duration);
             txtDescription = (TextView) itemView.findViewById(R.id.txt_description);
+            txtStatus = (TextView) itemView.findViewById(R.id.txt_status);
         }
     }
 }

@@ -1,27 +1,44 @@
 package com.findmysalon.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Service {
-
+    @SerializedName("id")
+    private int id;
+    @SerializedName("name")
     private String nameService;
+    @SerializedName("category")
     private Category category;
+    @SerializedName("price")
     private Double price;
+    @SerializedName("duration")
     private Long duration;
+    @SerializedName("display_status")
+    private String displayStatus;
+    @SerializedName("description")
     private String description;
+    @SerializedName("order")
+    private int order;
+    @SerializedName("created_at")
     private Date createdAt;
+    @SerializedName("updated_at")
     private Date updatedAt;
 
     public Service() {
 
     }
 
-    public Service(String nameService, Category category, Double price, Long duration, String description) {
+    public Service(int id, String nameService, Category category, Double price, Long duration, String description,String displayStatus, int order) {
+        this.id = id;
         this.nameService = nameService;
         this.category = category;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.displayStatus = displayStatus;
+        this.order = order;
     }
 
     public Service(String nameService, Double price, Long duration, String description) {
@@ -29,6 +46,14 @@ public class Service {
         this.price = price;
         this.duration = duration;
         this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNameService() {
@@ -85,5 +110,21 @@ public class Service {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDisplayStatus() {
+        return displayStatus;
+    }
+
+    public void setDisplayStatus(String displayStatus) {
+        this.displayStatus = displayStatus;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 }

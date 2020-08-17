@@ -1,20 +1,30 @@
 package com.findmysalon.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Staff {
 
+    @SerializedName("id")
+    private int id;
     private Business business;
+    @SerializedName("name")
     private String name;
+    @SerializedName("service_category")
     private Category category;
+    @SerializedName("phone")
     private String phoneNumber;
     private String email;
+    @SerializedName("image")
+    private String image;
     private float rating;
-    private ArrayList<StaffRoster> staffRosters;
-
+    @SerializedName("created_at")
     private Date createdAt;
+    @SerializedName("updated_at")
     private Date updatedAt;
+    private ArrayList<StaffRoster> staffRosters;
 
     public Staff() {
     }
@@ -28,7 +38,6 @@ public class Staff {
     public Staff(String name, float rating, ArrayList<StaffRoster> staffRosters) {
         this.name = name;
         this.rating = rating;
-        this.staffRosters = staffRosters;
     }
 
     public Staff(Business business, String name, Category category, String phoneNumber, String email) {
@@ -39,6 +48,16 @@ public class Staff {
         this.email = email;
     }
 
+    public Staff(int id, String name, Category category, String phoneNumber, String image, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.phoneNumber = phoneNumber;
+        this.image = image;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public ArrayList<StaffRoster> getStaffRosters() {
         return staffRosters;
     }
@@ -46,6 +65,10 @@ public class Staff {
     public void setStaffRosters(ArrayList<StaffRoster> staffRosters) {
         this.staffRosters = staffRosters;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id;}
 
     public float getRating() {
         return rating;
@@ -110,4 +133,14 @@ public class Staff {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 }

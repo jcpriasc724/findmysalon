@@ -90,7 +90,7 @@
                             android:tint="@color/colorGrayDark"/>
                     </LinearLayout>
 
-                    <Button
+                    <!--<Button
                         android:id="@+id/btn_upload_photo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                         android:layout_marginTop="15dp"
                         android:text="@string/lbl_upload_photo"
                         android:layout_gravity="center"
-                        />
+                        />-->
 
                 </LinearLayout>
 
@@ -133,7 +133,13 @@
                     android:hint="@string/lbl_email"
                     android:inputType="textEmailAddress" />
 
-                <EditText
+                <!--<fragment android:id="@+id/autocomplete_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                    />-->
+
+                <!--<EditText
                     android:id="@+id/etx_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,7 +147,23 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/lbl_address"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName" />-->
+
+                <AutoCompleteTextView
+                    android:hint="@string/lbl_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etx_address" />
+
+                <!--<ListView android:id="@+id/listView1" android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/filterLayout"/>-->
+
+                <!--<TextView
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/search_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />-->
 
                 <EditText
                     android:id="@+id/etx_phone"
@@ -164,7 +186,7 @@
                     android:inputType="textPassword" />
 
                 <EditText
-                    android:id="@+id/etx_repassword"
+                    android:id="@+id/etx_rePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -174,13 +196,13 @@
                     android:inputType="textPassword" />
 
                 <Button
-                    android:id="@+id/btn_save"
+                    android:id="@+id/btn_submit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorWhite"
                     android:background="@color/colorPrimary"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/lbl_save"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/lbl_submit"
                     android:layout_gravity="center"
                     />
 

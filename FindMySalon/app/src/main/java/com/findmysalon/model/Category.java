@@ -1,14 +1,20 @@
 package com.findmysalon.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Category {
 
+    @SerializedName("name")
     private String nameCategory;
+    @SerializedName("order")
     private String order;
     private String description;
+    @SerializedName("created_at")
     private Date createdAt;
+    @SerializedName("updated_at")
     private Date updatedAt;
     private ArrayList<Service> listServices;
 
