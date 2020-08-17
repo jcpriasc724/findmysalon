@@ -8,6 +8,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
@@ -35,7 +36,10 @@ public class StaffBookingAdapter extends RecyclerView.Adapter<StaffBookingAdapte
     public void onBindViewHolder(@NonNull StaffHolder holder, int position) {
 
         holder.txtNameStaff.setText(list.get(position).getName());
-        holder.rtbStaff.setRating(list.get(position).getRating());
+        //holder.rtbStaff.setRating(list.get(position).getRating());
+
+        DateBookingAdapter dateBookingAdapter = new DateBookingAdapter(context, list.get(position).getStaffRosters());
+        holder.recDateTime.setAdapter(dateBookingAdapter);
 
     }
 
@@ -47,12 +51,16 @@ public class StaffBookingAdapter extends RecyclerView.Adapter<StaffBookingAdapte
     class StaffHolder extends RecyclerView.ViewHolder {
 
         TextView txtNameStaff;
-        RatingBar rtbStaff;
+        //RatingBar rtbStaff;
+        RecyclerView recDateTime;
 
         public StaffHolder(@NonNull View itemView) {
             super(itemView);
             txtNameStaff = (TextView) itemView.findViewById(R.id.txt_name_staff);
-            rtbStaff = (RatingBar) itemView.findViewById(R.id.rtb_staff);
+            //rtbStaff = (RatingBar) itemView.findViewById(R.id.rtb_staff);
+
+            recDateTime = (RecyclerView) itemView.findViewById(R.id.rec_date_time);
+            recDateTime.setLayoutManager(new LinearLayoutManager(context));
         }
     }
 }

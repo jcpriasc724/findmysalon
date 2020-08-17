@@ -35,4 +35,16 @@
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_list_staff" />
 
+    <fragment
+        android:id="@+id/nav_add_service"
+        android:name="com.findmysalon.view.fragments.RegisterServiceFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_register_services" />
+
+    <fragment
+        android:id="@+id/nav_add_staff"
+        android:name="com.findmysalon.view.fragments.RegisterStaffFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_register_staff" />
+
 </navigation>
