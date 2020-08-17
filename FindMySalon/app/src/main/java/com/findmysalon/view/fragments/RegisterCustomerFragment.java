@@ -15,7 +15,7 @@ import com.findmysalon.R;
 
 public class RegisterCustomerFragment extends Fragment {
 
-    Button btnNext;
+    //Button btnNext;
 
 
     @Nullable
@@ -24,14 +24,14 @@ public class RegisterCustomerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register_customer, container, false);
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
-        btnNext = view.findViewById(R.id.btn_next);
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.nav_reg_business_services);
-            }
-        });
+//        btnNext = view.findViewById(R.id.btn_next);
+//
+//        btnNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Navigation.findNavController(v).navigate(R.id.nav_reg_business_services);
+//            }
+//        });
 
         return view;
     }

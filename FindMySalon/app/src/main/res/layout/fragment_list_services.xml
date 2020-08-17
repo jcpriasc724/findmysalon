@@ -20,7 +20,7 @@
             <LinearLayout
                 android:layout_marginLeft="20dp"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -29,7 +29,7 @@
                     android:text="@string/lbl_services"
                     android:textSize="@dimen/text_size_titles"
                     android:textColor="@color/colorWhite"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:layout_marginTop="20dp"/>
 
             </LinearLayout>
@@ -38,7 +38,7 @@
                 android:layout_width="@dimen/fab_btn_circle"
                 android:layout_height="@dimen/fab_btn_circle"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="150dp"
+                android:layout_marginLeft="30dp"
                 android:id="@+id/btn_add_service"
                 android:text="+"
                 android:background="@drawable/bg_btn_circle"
