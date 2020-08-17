@@ -115,7 +115,7 @@ public class RegisterCustomerFragment extends Fragment {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String phonePattern = "^[0-9]{10}$";
         // Validation of empty inputs
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || rePassword.isEmpty())
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() || password.isEmpty() || rePassword.isEmpty())
         {
             Helper.errorMsgDialog(getActivity(), R.string.incomplete);
         }

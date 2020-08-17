@@ -1,28 +1,26 @@
 package com.findmysalon.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Business extends User{
 
+    @SerializedName("store_name")
     private String storeName;
+    @SerializedName("business_type")
     private String businessType;
-    private String customerCategory;
-    private Float rating;
+    private Float rating = 4.5f;
 
-
-
-    public Business(String email, String password, String phone, String address, double lat, double lng, String userType, String storeName, String businessType, String customerCategory) {
+    public Business(String storeName, String businessType, String email, String password, String phone, String address, double lat, double lng, String userType) {
         super(email, password, phone, address, lat, lng, userType);
         this.storeName = storeName;
         this.businessType = businessType;
-        this.customerCategory = customerCategory;
-
     }
 
-
-    public Business(String address, String phone, String storeName, Float rating) {
+    /*public Business(String address, String phone, String storeName, Float rating) {
         super(address, phone);
         this.storeName = storeName;
         this.rating = rating;
-    }
+    }*/
 
     public Float getRating() {
         return rating;
@@ -48,11 +46,12 @@ public class Business extends User{
         this.businessType = businessType;
     }
 
-    public String getCustomerCategory() {
-        return customerCategory;
-    }
-
-    public void setCustomerCategory(String customerCategory) {
-        this.customerCategory = customerCategory;
+    @Override
+    public String toString() {
+        return "Business{" +
+                "storeName='" + storeName + '\'' +
+                ", businessType='" + businessType + '\'' +
+                ", rating=" + rating +
+                '}' + super.toString();
     }
 }

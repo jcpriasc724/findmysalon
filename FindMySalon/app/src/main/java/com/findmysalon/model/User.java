@@ -100,4 +100,18 @@ public class User {
     public void setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
     }*/
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", userType='" + userType + '\'' +
+                '}';
+    }
 }

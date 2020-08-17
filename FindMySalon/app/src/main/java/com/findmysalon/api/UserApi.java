@@ -1,4 +1,5 @@
 package com.findmysalon.api;
+import com.findmysalon.model.Business;
 import com.findmysalon.model.Customer;
 import com.findmysalon.model.Token;
 import com.google.gson.JsonObject;
@@ -13,22 +14,22 @@ import retrofit2.http.POST;
 
 public interface UserApi {
     @POST("api/user/signup/")
-    @Headers({"NonAuthentication:True"})
     Call<Customer> customerSignUp(@Body Customer customer);
 
-    @Headers({"Content-type:application/json;charset=UTF-8;","NonAuthentication:True"})
+    @POST("api/user/signup/")
+    Call<Business> businessSignUp(@Body Business business);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("api/user/signin/")
     Call<Token> oathToken(@Body RequestBody login);
 
     @FormUrlEncoded
     @POST("api/user/token/verify/")
-    @Headers({"NonAuthentication:True"})
     Call<JsonObject> verifyAccessToken(
             @Field("access") String accessToken);
 
     //@Headers("Content-Type: application/json")
     @FormUrlEncoded
-    @Headers({"NonAuthentication:True"})
     @POST("api/user/token/refresh/")
     Call<JsonObject> getNewAccessToken(
             @Field("refresh") String refreshToken);
