@@ -18,12 +18,16 @@
     <string name="lbl_retype_password">Re-type Password</string>
     <string name="lbl_edit">Edit</string>
     <string name="lbl_services">Services</string>
+    <string name="lbl_service">Service:</string>
     <string name="lbl_step_one">Step 1: Choose a service</string>
     <string name="lbl_step_two">Step 2: Choose staff</string>
-    <string name="lbl_staff">Staff</string>
+    <string name="lbl_staff">Staff:</string>
+    <string name="lbl_date">Date:</string>
+    <string name="lbl_time">Time:</string>
     <string name="lbl_location">Location</string>
     <string name="lbl_business_details">Business Details</string>
     <string name="lbl_customer_details">Customer Details</string>
+    <string name="lbl_appointment_confirmation">Appointment Confirmation</string>
     <string name="lbl_no_services">No Services</string>
     <string name="lbl_no_staff">No Staff</string>
     <string name="lbl_no_businesses">No Businesses</string>
@@ -32,6 +36,8 @@
     <string name="lbl_current_location">Current Location</string>
     <string name="lbl_filter_services">Key word</string>
     <string name="lbl_choose_staff">Choose Staff</string>
+    <string name="lbl_cancel">Cancel</string>
+    <string name="lbl_confirm">Confirm</string>
     <string name="lbl_"></string>
 
     <string name="lbl_submit">Submit</string>

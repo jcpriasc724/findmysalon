@@ -38,6 +38,7 @@ public class Staff {
     public Staff(String name, float rating, ArrayList<StaffRoster> staffRosters) {
         this.name = name;
         this.rating = rating;
+        this.staffRosters = staffRosters;
     }
 
     public Staff(Business business, String name, Category category, String phoneNumber, String email) {

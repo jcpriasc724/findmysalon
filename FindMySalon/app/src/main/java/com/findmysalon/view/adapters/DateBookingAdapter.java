@@ -49,7 +49,7 @@ public class DateBookingAdapter extends RecyclerView.Adapter<DateBookingAdapter.
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.nav_staff_booking);
+//                Navigation.findNavController(v).navigate(R.id.nav_appointment_confirmation);
 //            }
 //        });
     }
