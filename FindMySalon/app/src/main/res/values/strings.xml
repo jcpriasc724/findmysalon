@@ -50,6 +50,8 @@
     <string name="lbl_enable_disable">Disable / Enable</string>
     <string name="lbl_tags">Tags</string>
     <string name="lbl_save">Save</string>
+    <string name="lbl_delete">Delete</string>
+    <string name="lbl_order">Disaply Order e.g. 1 - 9999</string>
 
     <string name="category_prompt">Choose a category</string>
 
@@ -100,4 +102,13 @@
     <string name="ok">OK</string>
     <string name="api_key">AIzaSyArTaAe7YfAZn_ylMk-nGWWRfueTseIV3Q</string>
     <string name="title_activity_business">BusinessActivity</string>
+
+    <string name="invalid_service_name"> Service name is invalid</string>
+    <string name="invalid_service_price"> Service price is invalid</string>
+    <string name="invalid_service_duration"> Service duration is invalid</string>
+    <string name="submit_success">Submitted successfully</string>
+    <string name="submit_fail">Submitted failure</string>
+    <string name="delete_success">Deleted successfully</string>
+    <string name="delete_fail">Deleted failure</string>
+    <string name="delete_confirm">Are you sure to delete?</string>
 </resources>
