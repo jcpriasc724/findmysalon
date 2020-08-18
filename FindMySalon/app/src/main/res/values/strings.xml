@@ -25,12 +25,14 @@
     <string name="lbl_date">Date:</string>
     <string name="lbl_time">Time:</string>
     <string name="lbl_location">Location</string>
+    <string name="lbl_favorites">Favorites</string>
     <string name="lbl_business_details">Business Details</string>
     <string name="lbl_customer_details">Customer Details</string>
     <string name="lbl_appointment_confirmation">Appointment Confirmation</string>
     <string name="lbl_no_services">No Services</string>
     <string name="lbl_no_staff">No Staff</string>
     <string name="lbl_no_businesses">No Businesses</string>
+    <string name="lbl_no_fav_businesses">No Favorite Businesses</string>
     <string name="lbl_salons">Hair Salon</string>
     <string name="lbl_barbershop">Barbershop</string>
     <string name="lbl_current_location">Current Location</string>
