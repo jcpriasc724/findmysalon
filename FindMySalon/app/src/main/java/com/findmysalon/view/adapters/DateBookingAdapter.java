@@ -23,7 +23,6 @@ public class DateBookingAdapter extends RecyclerView.Adapter<DateBookingAdapter.
 
     Context context;
     ArrayList<StaffRoster> rosterList;
-    String pattern = "EEE, d MMM yyyy";
 
     public DateBookingAdapter(Context context, ArrayList<StaffRoster> rosterList) {
         this.context = context;
@@ -39,7 +38,7 @@ public class DateBookingAdapter extends RecyclerView.Adapter<DateBookingAdapter.
     @Override
     public void onBindViewHolder(@NonNull DateBookingHolder holder, int position) {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(context.getResources().getString(R.string.pattern));
         String dateBooking = simpleDateFormat.format(rosterList.get(position).getDateRoster());
 
         HourBookingAdapter hoursBookingAdapter = new HourBookingAdapter(context, rosterList.get(position).getHoursAvailable());

@@ -16,6 +16,11 @@ public class Business extends User{
         this.businessType = businessType;
     }
 
+    public Business(String address, String phone, String storeName) {
+        super(address, phone);
+        this.storeName = storeName;
+    }
+
     /*public Business(String address, String phone, String storeName, Float rating) {
         super(address, phone);
         this.storeName = storeName;

@@ -41,6 +41,10 @@ public class Service {
         this.order = order;
     }
 
+    public Service(String nameService) {
+        this.nameService = nameService;
+    }
+
     public Service(String nameService, Double price, Long duration, String description) {
         this.nameService = nameService;
         this.price = price;

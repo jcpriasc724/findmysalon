@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signIn(){
 
-        Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
+        Intent intent = new Intent(LoginActivity.this, BusinessActivity.class);
         //ide .putExtra("hi", "HI");
         //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

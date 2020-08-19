@@ -3,18 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_business"
-    app:startDestination="@+id/nav_staff_list_business">
+    app:startDestination="@+id/nav_list_bookings">
 
     <fragment
-        android:id="@+id/nav_service_list_business"
-        android:name="com.findmysalon.view.fragments.ServicesFragment"
+        android:id="@+id/nav_list_bookings"
+        android:name="com.findmysalon.view.fragments.BookingsFragment"
         android:label="@string/sign_up"
-        tools:layout="@layout/fragment_list_services" />
-
-    <fragment
-            android:id="@+id/nav_staff_list_business"
-            android:name="com.findmysalon.view.fragments.StaffFragment"
-            android:label="@string/sign_up"
-            tools:layout="@layout/fragment_list_staff" />
+        tools:layout="@layout/fragment_list_bookings" />
 
 </navigation>

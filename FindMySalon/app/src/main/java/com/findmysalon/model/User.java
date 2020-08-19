@@ -21,6 +21,10 @@ public class User {
     private String userType;
     //private String profilePhoto;
 
+
+    public User() {
+    }
+
     public User(String address, String phone) {
         this.address = address;
         this.phone = phone;
