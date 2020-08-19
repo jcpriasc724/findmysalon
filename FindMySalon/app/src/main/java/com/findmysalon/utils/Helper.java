@@ -11,7 +11,6 @@ import com.findmysalon.R;
 public final class Helper {
     private static final String TAG = "Helper";
 
-
     public static void errorMsgDialog(@NonNull Context context, @StringRes int  msg)
     {
         AlertDialog d = new AlertDialog.Builder(context)

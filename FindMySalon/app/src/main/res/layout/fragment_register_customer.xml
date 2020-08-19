@@ -93,14 +93,21 @@
                         android:layout_height="120dp"
                         android:background="@drawable/bg_img_circle"
                         >
+                        <!--<ImageView
+                            android:id="@+id/img_profile_photo"
+                            android:layout_width="85dp"
+                            android:layout_height="85dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="15dp"
+                            android:tint="@color/colorGrayDark"/>-->
+
                         <ImageView
                             android:id="@+id/img_profile_photo"
                             android:layout_width="85dp"
                             android:layout_height="85dp"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
-                            android:src="@drawable/photos_default"
-                            android:tint="@color/colorGrayDark"/>
+                            android:src="@drawable/photos_default"/>
                     </LinearLayout>
 
                     <!--<Button
