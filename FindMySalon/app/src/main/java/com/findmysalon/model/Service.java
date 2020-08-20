@@ -11,6 +11,8 @@ public class Service {
     private String nameService;
     @SerializedName("category")
     private Category category;
+    @SerializedName("category_id")
+    private int categoryId;
     @SerializedName("price")
     private Double price;
     @SerializedName("duration")
@@ -21,6 +23,8 @@ public class Service {
     private String description;
     @SerializedName("order")
     private int order;
+    @SerializedName("tags")
+    private String tags;
     @SerializedName("created_at")
     private Date createdAt;
     @SerializedName("updated_at")
@@ -30,8 +34,16 @@ public class Service {
 
     }
 
-    public Service(int id, String nameService, Category category, Double price, Long duration, String description,String displayStatus, int order) {
-        this.id = id;
+
+    public Service(String nameService, Double price, Long duration, String description) {
+        this.nameService = nameService;
+        this.price = price;
+        this.duration = duration;
+        this.description = description;
+        this.description = description;
+    }
+
+    public Service( String nameService, Category category, Double price, Long duration, String description, String displayStatus, int order) {
         this.nameService = nameService;
         this.category = category;
         this.price = price;
@@ -41,11 +53,53 @@ public class Service {
         this.order = order;
     }
 
-    public Service(String nameService, Double price, Long duration, String description) {
+    /**
+     *  For new service submission
+     */
+    public Service(int categoryId,String nameService, Double price, Long duration, String description, String tags, String displayStatus, int order) {
+        this.categoryId = categoryId;
         this.nameService = nameService;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.description = description;
+        this.displayStatus = displayStatus;
+        this.tags = tags;
+        this.order = order;
+    }
+
+    /**
+     *   service edit submission
+     */
+    public Service(int id, int categoryId,String nameService, Double price, Long duration, String description, String tags, String displayStatus, int order) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.nameService = nameService;
+        this.price = price;
+        this.duration = duration;
+        this.description = description;
+        this.description = description;
+        this.displayStatus = displayStatus;
+        this.tags = tags;
+        this.order = order;
+    }
+
+
+    /**
+     *  Fetch detail
+     */
+    public Service(int id, String nameService, Category category, Double price, Long duration, String description,String displayStatus, int order, String tags, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.nameService = nameService;
+        this.category = category;
+        this.price = price;
+        this.duration = duration;
+        this.description = description;
+        this.displayStatus = displayStatus;
+        this.order = order;
+        this.tags = tags;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public int getId() {
@@ -88,6 +142,14 @@ public class Service {
         this.category = category;
     }
 
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public Double getPrice() {
         return price;
     }
@@ -127,4 +189,14 @@ public class Service {
     public void setOrder(int order) {
         this.order = order;
     }
+
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
 }

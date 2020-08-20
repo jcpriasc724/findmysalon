@@ -130,6 +130,16 @@
                     android:ems="10"
                     android:hint="@string/lbl_tags" />
 
+                <EditText
+                        android:id="@+id/etx_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/lbl_order"
+                        android:inputType="number" />
+
                 <Button
                     android:id="@+id/btn_save"
                     android:layout_width="match_parent"
@@ -140,6 +150,18 @@
                     android:text="@string/lbl_save"
                     android:layout_gravity="center"
                     />
+
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorBtnRed"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/lbl_delete"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                />
 
             </LinearLayout>
         </LinearLayout>

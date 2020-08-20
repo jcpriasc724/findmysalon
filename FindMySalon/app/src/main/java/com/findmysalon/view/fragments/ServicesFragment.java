@@ -45,7 +45,7 @@ import static com.findmysalon.utils.abcConstants.REFRESH_TOKEN;
 
 public class ServicesFragment extends Fragment {
 
-    TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription;
+    TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription, txtNoServices;
 
     RecyclerView recServices;
     List<Service> servicesList;
@@ -67,6 +67,7 @@ public class ServicesFragment extends Fragment {
         txtPrice = view.findViewById(R.id.txt_price);
         txtDuration = view.findViewById(R.id.txt_duration);
         txtDescription = view.findViewById(R.id.txt_description);
+        txtNoServices = view.findViewById(R.id.txt_no_services);
 
         recServices = view.findViewById(R.id.rec_services);
         recServices.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -77,7 +78,9 @@ public class ServicesFragment extends Fragment {
         btnAddService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_add_service);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", 0);
+                Navigation.findNavController(v).navigate(R.id.nav_add_service, bundle);
             }
         });
 
@@ -113,6 +116,10 @@ public class ServicesFragment extends Fragment {
                     servicesList.addAll(response.body());
                     Log.i("SERVICE_LIT", servicesList.toString());
                     serviceAdapter.notifyDataSetChanged();
+
+                    if(servicesList.size() > 0){
+                        txtNoServices.setVisibility(View.GONE);
+                    }
                 }
 //
             }

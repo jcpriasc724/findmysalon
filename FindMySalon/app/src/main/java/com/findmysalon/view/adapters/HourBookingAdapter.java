@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
@@ -35,12 +36,12 @@ public class HourBookingAdapter extends RecyclerView.Adapter<HourBookingAdapter.
     public void onBindViewHolder(@NonNull HourBookingHolder holder, int position) {
 
         holder.txtHourBooking.setText(hoursList.get(position));
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.nav_staff_booking);
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_appointment_confirmation);
+            }
+        });
     }
 
     @Override

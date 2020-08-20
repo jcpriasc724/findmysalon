@@ -52,20 +52,20 @@ public class StaffBookingFragment extends Fragment {
         list = new ArrayList<Staff>();
 
         ArrayList<String> listHours1 = new ArrayList<>();
-//        listHours1.add("12:00 pm");
-//        listHours1.add("1:00 pm");
-//        listHours1.add("3:00 pm");
-//        listHours1.add("4:00 pm");
+        listHours1.add("12:00 pm");
+        listHours1.add("1:00 pm");
+        listHours1.add("3:00 pm");
+        listHours1.add("4:00 pm");
 
         StaffRoster staffRoster = new StaffRoster(new Date(), listHours1);
         ArrayList<StaffRoster> listRoster = new ArrayList<StaffRoster> ();
-//        listRoster.add(staffRoster);
+        listRoster.add(staffRoster);
 
         Staff staff1 = new Staff("Juan", 4.5f, listRoster);
 
         ArrayList<String> listHours2 = new ArrayList<>();
-//        listHours2.add("10:00 am");
-//        listHours2.add("11:00 am");
+        listHours2.add("10:00 am");
+        listHours2.add("11:00 am");
 
         Date dt = new Date();
         Calendar c = Calendar.getInstance();
@@ -76,16 +76,16 @@ public class StaffBookingFragment extends Fragment {
         StaffRoster staffRoster2 = new StaffRoster(dt, listHours2);
 
         ArrayList<StaffRoster> listRoster2 = new ArrayList<StaffRoster> ();
-//        listRoster2.add(staffRoster);
-//        listRoster2.add(staffRoster2);
+        listRoster2.add(staffRoster);
+        listRoster2.add(staffRoster2);
 
         Staff staff2 = new Staff("Simon", 1.5f, listRoster2);
 
         ArrayList<StaffRoster> listRoster3 = new ArrayList<StaffRoster> ();
-//        listRoster3.add(staffRoster);
-//        listRoster3.add(staffRoster);
-//        listRoster3.add(staffRoster);
-//        listRoster3.add(staffRoster);
+        listRoster3.add(staffRoster);
+        listRoster3.add(staffRoster);
+        listRoster3.add(staffRoster);
+        listRoster3.add(staffRoster);
 
         Staff staff3 = new Staff("Abhishek", 2.5f, listRoster3);
 

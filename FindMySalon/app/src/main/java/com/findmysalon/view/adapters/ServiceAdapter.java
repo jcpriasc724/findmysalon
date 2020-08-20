@@ -1,6 +1,7 @@
 package com.findmysalon.view.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
@@ -41,6 +43,15 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         holder.txtDuration.setText(servicesList.get(position).getDuration().toString() + " mins");
         holder.txtDescription.setText(servicesList.get(position).getDescription());
         holder.txtStatus.setText(servicesList.get(position).getDisplayStatus().compareTo("S") == 0 ? "Enable" : "Disable");
+        holder.txtEdit.setClickable(true);
+        holder.txtEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", servicesList.get(position).getId());
+                Navigation.findNavController(v).navigate(R.id.nav_add_service,bundle);
+            }
+        });
 
     }
 
@@ -51,7 +62,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
     class ServiceHolder extends RecyclerView.ViewHolder {
 
-        TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription, txtStatus;
+        TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription, txtStatus, txtEdit;
 
         public ServiceHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,6 +72,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtDuration = (TextView) itemView.findViewById(R.id.txt_duration);
             txtDescription = (TextView) itemView.findViewById(R.id.txt_description);
             txtStatus = (TextView) itemView.findViewById(R.id.txt_status);
+            txtEdit = (TextView) itemView.findViewById(R.id.txt_edit);
         }
     }
 }

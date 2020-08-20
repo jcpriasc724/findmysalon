@@ -7,6 +7,9 @@ import java.util.Date;
 
 public class Category {
 
+
+    @SerializedName("id")
+    private int id;
     @SerializedName("name")
     private String nameCategory;
     @SerializedName("order")
@@ -23,6 +26,23 @@ public class Category {
         this.order = order;
         this.description = description;
         this.listServices = listServices;
+    }
+
+    public Category(int id, String nameCategory, String order, String description, ArrayList<Service> listServices) {
+        this.id = id;
+        this.nameCategory = nameCategory;
+        this.order = order;
+        this.description = description;
+        this.listServices = listServices;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public ArrayList<Service> getListServices() {
