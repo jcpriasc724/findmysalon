@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
-        /*
+
         // data to Json
         Gson gson=new Gson();
         HashMap<String,String> paramsMap= new HashMap<>();
@@ -131,6 +131,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         // retrofit End
-        */
+
     }
 }

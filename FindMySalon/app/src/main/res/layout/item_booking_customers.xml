@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/bg_item_service"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="19dp"
+                android:backgroundTint="#00FFFFFF"
+                android:src="@drawable/appointment"
+                android:tint="#000000" />
+
+            <TextView
+                android:id="@+id/txt_date_booking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="19dp"
+                android:text="Tuesday, 11 December"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txt_time_booking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="10:00 am - 10:30 am "
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size" />
+
+
+        <TextView
+            android:id="@+id/txt_business"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="Barber Black Sheep"
+            android:textColor="@color/colorGrayDark"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@+id/txt_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="149 Sydney Rd, Brunswick VIC 3056"
+            android:textColor="@color/colorGrayDark"
+            android:textSize="@dimen/text_size_small" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="9dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_staff"
+                android:textColor="@color/colorGrayDark"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/txt_staff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Simon"
+                android:textColor="@color/colorGrayDark"
+                android:textSize="@dimen/text_size_small" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_service"
+                android:textColor="@color/colorGrayDark"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/txt_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Basic haircut"
+                android:textColor="@color/colorGrayDark"
+                android:textSize="@dimen/text_size_small" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="90dp">
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:backgroundTint="#00FFFFFF"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:tint="#FF0000" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -89,6 +89,7 @@ public class RegisterCustomerFragment extends Fragment {
     private File photoFile;
     String pathToFile;
     private Uri imageUri;
+    private File uploadPhotoPath = null;
 
 
     @Override
@@ -163,10 +164,10 @@ public class RegisterCustomerFragment extends Fragment {
     }
 
     private void chooseFromGallery() {
-        //Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        Intent intent = new Intent();
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        /*Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_GET_CONTENT);*/
         startActivityForResult(intent, REQUEST_GALLERY);
     }
 
@@ -276,19 +277,6 @@ public class RegisterCustomerFragment extends Fragment {
         return cursor.getString(column_index);
     }
 
-    /*private String getRealPathFromURI(Uri contentURI) {
-
-        String thePath = "no-path-found";
-        String[] filePathColumn = {MediaStore.Images.Media.DISPLAY_NAME};
-        Cursor cursor = getActivity().getContentResolver().query(contentURI, filePathColumn, null, null, null);
-        if(cursor.moveToFirst()){
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            thePath = cursor.getString(columnIndex);
-        }
-        cursor.close();
-        return  thePath;
-    }*/
-
     public String getRealPathFromURI1(Uri uri) {
         String path = "";
         if (getActivity().getContentResolver() != null) {
@@ -302,41 +290,6 @@ public class RegisterCustomerFragment extends Fragment {
         }
         return path;
     }
-
-    /*public static String getFileContent(
-            FileInputStream fis,
-            String          encoding ) throws IOException
-    {
-        try( BufferedReader br =
-                     new BufferedReader( new InputStreamReader(fis, encoding )))
-        {
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while(( line = br.readLine()) != null ) {
-                sb.append( line );
-                sb.append( '\n' );
-            }
-            return sb.toString();
-        }
-    }*/
-
-    /*public String getSourceStream(Uri u) throws FileNotFoundException {
-        FileInputStream out = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ParcelFileDescriptor parcelFileDescriptor =
-                    getActivity().getContentResolver().openFileDescriptor(u, "r");
-            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-            out = new FileInputStream(fileDescriptor);
-        } else {
-            out = (FileInputStream) getActivity().getContentResolver().openInputStream(u);
-        }
-        try{
-            return getFileContent(out, "UTF-8");
-        }
-        catch (Exception e){
-            return "";
-        }
-    }*/
 
     public static String getPath(final Context context, final Uri uri) {
 
@@ -473,8 +426,8 @@ public class RegisterCustomerFragment extends Fragment {
 
     // Method to handle user sign up
     private void userSignUp(String firstName, String lastName, String email, String password, String address, double latitude, double longitude, String phone ){
-        File file = new File(getPath(getActivity(), imageUri));
-        Log.d("Path ", getPath(getActivity(), imageUri)+"");
+        File file = new File(getRealPathFromURI1(imageUri));
+        Log.d("Path ", getRealPathFromURI1(imageUri)+"");
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
         MultipartBody.Part mProfilePhoto = MultipartBody.Part.createFormData(

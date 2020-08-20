@@ -12,24 +12,29 @@
     <string name="lbl_first_name">First Name</string>
     <string name="lbl_last_name">Last Name</string>
     <string name="lbl_email">E-mail</string>
+    <string name="lbl_name">Full name</string>
     <string name="lbl_address">Address</string>
     <string name="lbl_phone_number">Phone Number</string>
     <string name="lbl_password">Password</string>
     <string name="lbl_retype_password">Re-type Password</string>
     <string name="lbl_edit">Edit</string>
     <string name="lbl_services">Services</string>
+    <string name="lbl_bookings">Bookings</string>
     <string name="lbl_service">Service:</string>
     <string name="lbl_step_one">Step 1: Choose a service</string>
     <string name="lbl_step_two">Step 2: Choose staff</string>
     <string name="lbl_staff">Staff:</string>
+    <string name="lbl_customer_booking">Customer:</string>
     <string name="lbl_date">Date:</string>
     <string name="lbl_time">Time:</string>
     <string name="lbl_location">Location</string>
     <string name="lbl_favorites">Favorites</string>
     <string name="lbl_business_details">Business Details</string>
     <string name="lbl_customer_details">Customer Details</string>
+    <string name="lbl_staff_details">Staff Details</string>
     <string name="lbl_appointment_confirmation">Appointment Confirmation</string>
     <string name="lbl_no_services">No Services</string>
+    <string name="lbl_no_bookings">No Bookings</string>
     <string name="lbl_no_staff">No Staff</string>
     <string name="lbl_no_businesses">No Businesses</string>
     <string name="lbl_no_fav_businesses">No Favorite Businesses</string>
@@ -52,8 +57,10 @@
     <string name="lbl_save">Save</string>
     <string name="lbl_delete">Delete</string>
     <string name="lbl_order">Disaply Order e.g. 1 - 9999</string>
+    <string name="lbl_image_loading">Waiting image loading</string>
 
     <string name="category_prompt">Choose a category</string>
+    <string name="pattern">EEE, d MMM yyyy</string>
 
     <string-array name="categories_arrays">
         <item>Haircuts</item>
@@ -107,11 +114,15 @@
     <string name="invalid_service_name"> Service name is invalid</string>
     <string name="invalid_service_price"> Service price is invalid</string>
     <string name="invalid_service_duration"> Service duration is invalid</string>
+    <string name="invalid_first_name"> First name is invalid</string>
+    <string name="invalid_last_name"> Last name is invalid</string>
+    <string name="invalid_full_name"> Full name is invalid</string>
     <string name="submit_success">Submitted successfully</string>
     <string name="submit_fail">Submitted failure</string>
     <string name="delete_success">Deleted successfully</string>
     <string name="delete_fail">Deleted failure</string>
     <string name="delete_confirm">Are you sure to delete?</string>
+
     <string-array name="photo_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>
