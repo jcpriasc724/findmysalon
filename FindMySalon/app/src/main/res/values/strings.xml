@@ -110,9 +110,13 @@
     <string name="invalid_service_name"> Service name is invalid</string>
     <string name="invalid_service_price"> Service price is invalid</string>
     <string name="invalid_service_duration"> Service duration is invalid</string>
+    <string name="invalid_first_name"> First name is invalid</string>
+    <string name="invalid_last_name"> Last name is invalid</string>
     <string name="submit_success">Submitted successfully</string>
     <string name="submit_fail">Submitted failure</string>
     <string name="delete_success">Deleted successfully</string>
     <string name="delete_fail">Deleted failure</string>
     <string name="delete_confirm">Are you sure to delete?</string>
+
+
 </resources>

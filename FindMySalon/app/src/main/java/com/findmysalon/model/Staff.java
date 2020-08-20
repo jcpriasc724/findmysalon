@@ -12,6 +12,8 @@ public class Staff {
     private Business business;
     @SerializedName("name")
     private String name;
+    @SerializedName("service_category_id")
+    private int category_id;
     @SerializedName("service_category")
     private Category category;
     @SerializedName("phone")
@@ -59,6 +61,15 @@ public class Staff {
         this.updatedAt = updatedAt;
     }
 
+    /**
+     * Create Object
+     */
+    public Staff(int category_id, String name,  String phoneNumber) {
+        this.category_id = category_id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
     public ArrayList<StaffRoster> getStaffRosters() {
         return staffRosters;
     }
@@ -70,6 +81,14 @@ public class Staff {
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id;}
+
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
 
     public float getRating() {
         return rating;

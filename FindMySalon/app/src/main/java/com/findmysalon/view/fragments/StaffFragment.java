@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class StaffFragment extends Fragment {
 
-    TextView txtNameStaff, txtEmail, txtPhoneNumber;
+    TextView txtNameStaff, txtEmail, txtPhoneNumber, txtNoStaff;
 
     RecyclerView recStaff;
     ArrayList<Staff> list;
@@ -51,6 +51,7 @@ public class StaffFragment extends Fragment {
         txtNameStaff = view.findViewById(R.id.txt_name_staff);
         txtEmail = view.findViewById(R.id.txt_email);
         txtPhoneNumber = view.findViewById(R.id.txt_phone_number);
+        txtNoStaff = view.findViewById(R.id.txt_no_staff);
 
         recStaff = view.findViewById(R.id.rec_staff);
         recStaff.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -62,7 +63,9 @@ public class StaffFragment extends Fragment {
         btnAddStaff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_add_staff);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", 0);
+                Navigation.findNavController(v).navigate(R.id.nav_add_staff, bundle);
             }
         });
 
@@ -98,6 +101,10 @@ public class StaffFragment extends Fragment {
                     list.addAll(response.body());
 //                    Log.i("SERVICE_LIT", list.toString());
                     staffAdapter.notifyDataSetChanged();
+                }
+
+                if(list.size() > 0){
+                    txtNoStaff.setVisibility(View.GONE);
                 }
 //
             }

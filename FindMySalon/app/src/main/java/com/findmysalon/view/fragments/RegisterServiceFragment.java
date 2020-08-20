@@ -148,7 +148,7 @@ public class RegisterServiceFragment extends Fragment {
         String serviceTags = txtTags.getText().toString();
         String serviceOrder = txtOrder.getText().toString();
 
-        if(serviceName.isEmpty()) {
+        if(serviceName.isEmpty() || serviceName.length() <= 3) {
             Helper.errorMsgDialog(getActivity(), R.string.invalid_service_name);
             return;
         }
