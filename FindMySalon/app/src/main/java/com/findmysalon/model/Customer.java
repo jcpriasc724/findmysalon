@@ -15,6 +15,11 @@ public class Customer extends User {
         this.lastName = lastName;
     }
 
+    public Customer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }
