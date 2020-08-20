@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/lbl_business_details"
+                    android:text="@string/lbl_staff_details"
                     android:textSize="@dimen/text_size_titles"
                     android:textColor="@color/colorWhite"
                     android:textAlignment="center"
@@ -120,16 +120,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/lbl_first_name" />
-
-                <EditText
-                    android:id="@+id/etx_staff_last_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/lbl_last_name" />
+                    android:hint="@string/lbl_name" />
 
                 <EditText
                     android:id="@+id/etx_phone"

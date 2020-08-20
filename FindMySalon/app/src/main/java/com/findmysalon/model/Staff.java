@@ -21,6 +21,8 @@ public class Staff {
     private String email;
     @SerializedName("image")
     private String image;
+    @SerializedName("image_path")
+    private String imagePath;
     private float rating;
     @SerializedName("created_at")
     private Date createdAt;
@@ -64,11 +66,13 @@ public class Staff {
     /**
      * Create Object
      */
-    public Staff(int category_id, String name,  String phoneNumber) {
+    public Staff(int category_id, String name,  String phoneNumber,  String imagePath) {
         this.category_id = category_id;
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.imagePath = imagePath;
     }
+
 
     public ArrayList<StaffRoster> getStaffRosters() {
         return staffRosters;
@@ -154,7 +158,6 @@ public class Staff {
         this.updatedAt = updatedAt;
     }
 
-
     public String getImage() {
         return image;
     }
@@ -162,5 +165,14 @@ public class Staff {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
 
 }

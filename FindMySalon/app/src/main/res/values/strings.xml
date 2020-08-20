@@ -12,6 +12,7 @@
     <string name="lbl_first_name">First Name</string>
     <string name="lbl_last_name">Last Name</string>
     <string name="lbl_email">E-mail</string>
+    <string name="lbl_name">Full name</string>
     <string name="lbl_address">Address</string>
     <string name="lbl_phone_number">Phone Number</string>
     <string name="lbl_password">Password</string>
@@ -30,6 +31,7 @@
     <string name="lbl_favorites">Favorites</string>
     <string name="lbl_business_details">Business Details</string>
     <string name="lbl_customer_details">Customer Details</string>
+    <string name="lbl_staff_details">Staff Details</string>
     <string name="lbl_appointment_confirmation">Appointment Confirmation</string>
     <string name="lbl_no_services">No Services</string>
     <string name="lbl_no_bookings">No Bookings</string>
@@ -55,6 +57,7 @@
     <string name="lbl_save">Save</string>
     <string name="lbl_delete">Delete</string>
     <string name="lbl_order">Disaply Order e.g. 1 - 9999</string>
+    <string name="lbl_image_loading">Waiting image loading</string>
 
     <string name="category_prompt">Choose a category</string>
     <string name="pattern">EEE, d MMM yyyy</string>
@@ -112,6 +115,7 @@
     <string name="invalid_service_duration"> Service duration is invalid</string>
     <string name="invalid_first_name"> First name is invalid</string>
     <string name="invalid_last_name"> Last name is invalid</string>
+    <string name="invalid_full_name"> Full name is invalid</string>
     <string name="submit_success">Submitted successfully</string>
     <string name="submit_fail">Submitted failure</string>
     <string name="delete_success">Deleted successfully</string>

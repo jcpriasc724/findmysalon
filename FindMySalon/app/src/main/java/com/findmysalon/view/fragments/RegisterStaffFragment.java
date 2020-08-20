@@ -7,12 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,22 +31,18 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
-import com.findmysalon.BuildConfig;
 import com.findmysalon.R;
 import com.findmysalon.api.ServiceApi;
 import com.findmysalon.api.StaffApi;
 import com.findmysalon.model.Category;
+import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.utils.RetrofitClient;
 import com.google.gson.JsonObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -68,7 +60,7 @@ public class RegisterStaffFragment extends Fragment {
 
     Button btnSave, btnDelete, btnImgUpload;
     Spinner categorySpinner;
-    TextView txtFirstName, txtLastName, txtPhoneNumber;
+    TextView txtFullName, txtPhoneNumber;
     ImageView imgProfile;
     View v;
     StaffApi staffApi;
@@ -77,10 +69,12 @@ public class RegisterStaffFragment extends Fragment {
     ArrayAdapter<String> dataAdapter;
     int categorySpinnerVal;
     String phonePattern = "^[0-9]{10}$";
-    String mCurrentPhotoPath;
+    String mCurrentPhotoPath = ""; // if image upload successfully
     Uri photoUri = null;
     File photoPath = null;
+    File uploadPhotoPath = null;
 
+    Staff staffObject;
     // if editing
     int editId = 0;
 
@@ -98,8 +92,7 @@ public class RegisterStaffFragment extends Fragment {
         btnDelete = view.findViewById(R.id.btn_delete);
         btnImgUpload = view.findViewById(R.id.btn_upload_photo);
         categorySpinner = view.findViewById(R.id.spr_category);
-        txtFirstName = view.findViewById(R.id.etx_staff_name);
-        txtLastName = view.findViewById(R.id.etx_staff_last_name);
+        txtFullName = view.findViewById(R.id.etx_staff_name);
         txtPhoneNumber = view.findViewById(R.id.etx_phone);
         imgProfile = view.findViewById(R.id.img_profile_photo);
 
@@ -111,6 +104,8 @@ public class RegisterStaffFragment extends Fragment {
 
         // 1. set up category spinner
         categorySpinnerSetting();
+        // 2. delete
+        deleteBtnSetting();
 
         return view;
     }
@@ -184,48 +179,54 @@ public class RegisterStaffFragment extends Fragment {
         Uri tempUri = null;
         switch (requestCode){
             case 100:
-                if(resultCode == RESULT_OK )
+                if(resultCode == RESULT_OK ) {
                     tempUri = photoUri;
+                    uploadPhotoPath = photoPath;
+                }
                 break;
             case 101:
-                if(resultCode == RESULT_OK )
+                if(resultCode == RESULT_OK ) {
                     tempUri = data.getData();
+                    uploadPhotoPath = new File(getPath(tempUri));
+                }
                 break;
         }
         if(resultCode == RESULT_OK){
-//            File sFile = new File(tempUri.get());
-//            Log.i(TAG, String.valueOf(sFile));
-            RequestBody requestFile =
-                    RequestBody.Companion.create(photoPath, MediaType.parse("multipart/form-data"));
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("image", photoPath.getName(), requestFile);
+            if(Helper.checkAndRotateImg(uploadPhotoPath.toString()) == false){
+                Log.i(TAG,"Img rotation change failed ");
+            }
 
-            Toast.makeText(getActivity(), "Image Loading", Toast.LENGTH_LONG).show();
+            RequestBody requestFile =
+                    RequestBody.Companion.create(uploadPhotoPath, MediaType.parse("multipart/form-data"));
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData("image", uploadPhotoPath.getName(), requestFile);
+
+            Toast.makeText(getActivity(), R.string.lbl_image_loading, Toast.LENGTH_LONG).show();
             // retrofit
             Retrofit retrofit = RetrofitClient.getInstance(getActivity());
             staffApi = retrofit.create(StaffApi.class);
-            Call<ResponseBody> call;
+            Call<JsonObject> call;
             call = staffApi.staffAvatarUpload(body);
-            call.enqueue(new Callback<ResponseBody>() {
+            call.enqueue(new Callback<JsonObject>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 //
                     if(response.isSuccessful()){
-                        Log.i(TAG, String.valueOf(response.body().toString()));
-                        JsonObject jsonObject = new JsonObject().get(response.body().toString()).getAsJsonObject();
+                        Log.i(TAG, response.body().get("image").toString().replace("\"",""));
+//                        JsonObject jsonObject = new JsonObject().get(response.body().toString()).getAsJsonObject();
 
                         Glide.with(getContext())
-                                .load(jsonObject.get("image"))
+                                .load(response.body().get("image").toString().replace("\"",""))
                                 .circleCrop()
                                 .placeholder(R.drawable.photos_default)
                                 .into(imgProfile);
-
+                        mCurrentPhotoPath = response.body().get("save_image").toString().replace("\"","");
                     } else {
                         Toast.makeText(getActivity(), R.string.submit_fail, Toast.LENGTH_LONG).show();
                     }
                 }
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.d("Fail: ", t.getMessage());
                 }
             });
@@ -254,17 +255,11 @@ public class RegisterStaffFragment extends Fragment {
      */
     private void submit(){
 //        int categoryId = categorySpinnerVal;
-        String staffFirstName = txtFirstName.getText().toString();
-        String staffLastName = txtLastName.getText().toString();
+        String staffFullName = txtFullName.getText().toString();
         String staffPhoneNumber = txtPhoneNumber.getText().toString();
 
-        if(staffFirstName.isEmpty() || staffFirstName.length() < 2) {
-            Helper.errorMsgDialog(getActivity(), R.string.invalid_first_name);
-            return;
-        }
-
-        if(staffLastName.isEmpty() || staffLastName.length() < 2 ) {
-            Helper.errorMsgDialog(getActivity(), R.string.invalid_last_name);
+        if(staffFullName.isEmpty() || staffFullName.length() < 2 ) {
+            Helper.errorMsgDialog(getActivity(), R.string.invalid_full_name);
             return;
         }
 
@@ -275,15 +270,16 @@ public class RegisterStaffFragment extends Fragment {
 
         Staff staffObj = new Staff(
                 servicesCategoryList.get(categorySpinnerVal).getId(),
-                staffFirstName +" "+ staffLastName,
-                staffPhoneNumber
+                staffFullName,
+                staffPhoneNumber,
+                mCurrentPhotoPath
         );
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
         staffApi = retrofit.create(StaffApi.class);
         Call<Staff> call;
         if(editId > 0 ) {
-            staffObj.setId(editId);
+//            staffObj.setId(editId);
             call = staffApi.staffUpdate(editId, staffObj);
         } else {
             call = staffApi.staffSubmit(staffObj);
@@ -346,8 +342,8 @@ public class RegisterStaffFragment extends Fragment {
                         }
                     });
 
-//                    if(editId > 0)
-//                        fillEditForm();
+                    if(editId > 0)
+                        fillEditForm();
                 }
             }
             @Override
@@ -358,25 +354,106 @@ public class RegisterStaffFragment extends Fragment {
         // retrofit End
     }
 
+    /**
+     *  fill up form
+     */
+    private void fillEditForm(){
+        // retrofit
+        Retrofit retrofit = RetrofitClient.getInstance(getActivity());
+        staffApi = retrofit.create(StaffApi.class);
+        Call<Staff> call = staffApi.staffDetail(editId);
+        call.enqueue(new Callback<Staff>() {
+            @Override
+            public void onResponse(Call<Staff> call, Response<Staff> response) {
+//                Log.i(null,String.valueOf(response.code()));
+                if(response.code() == 200){
+                    staffObject = response.body();
 
-    private File uri2File(Uri uri){
-//        String[] arr = {MediaStore.Images.Media.DATA};
-//        Cursor cursor = getActivity().getContentResolver().query(uri, arr, null, null, null);
-        String img_path;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor actualimagecursor = getActivity().getContentResolver().query(uri, proj, null,
-                null, null);
-        if (actualimagecursor == null) {
-            img_path = uri.getPath();
-        } else {
-            int actual_image_column_index = actualimagecursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            actualimagecursor.moveToFirst();
-            img_path = actualimagecursor
-                    .getString(actual_image_column_index);
+                    // setup spinner
+                    for (int i = 0; i < servicesCategoryList.size(); i++){
+                        if(servicesCategoryList.get(i).getId() == staffObject.getCategory().getId()){
+                            categorySpinnerVal = i;
+                            categorySpinner.setSelection(categorySpinnerVal);
+                            break;
+                        }
+                    }
+
+                    txtFullName.setText(staffObject.getName());
+                    txtPhoneNumber.setText(staffObject.getPhoneNumber());
+
+                    Glide.with(getContext())
+                            .load(staffObject.getImage())
+                            .circleCrop()
+                            .placeholder(R.drawable.photos_default)
+                            .into(imgProfile);
+                }
+            }
+            @Override
+            public void onFailure(Call<Staff> call, Throwable t) {
+                Log.d("Fail: ", t.getMessage());
+            }
+        });
+        // retrofit End
+    }
+
+    /**
+     *  delete btn
+     */
+    private void deleteBtnSetting(){
+        if(editId > 0 ){
+            btnDelete.setVisibility(View.VISIBLE);
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new androidx.appcompat.app.AlertDialog.Builder(getActivity()).setTitle(R.string.delete_confirm)
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // retrofit
+                                Retrofit retrofit = RetrofitClient.getInstance(getActivity());
+                                staffApi = retrofit.create(StaffApi.class);
+
+                                Call<ResponseBody> call = staffApi.staffDelete(editId);
+                                call.enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if(response.isSuccessful()){
+                                            Toast.makeText(getActivity(), R.string.delete_success, Toast.LENGTH_LONG).show();
+                                            Navigation.findNavController(v).popBackStack();
+                                        } else {
+                                            Toast.makeText(getActivity(), R.string.delete_fail, Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        Log.d("Fail: ", t.getMessage());
+                                    }
+                                });
+                                // retrofit End
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {}
+                        }).show();
+                }
+            });
         }
-        File file = new File(img_path);
-        return file;
+    }
+
+    /**
+     *
+     * @param uri
+     * @return
+     */
+    private String getPath(Uri uri) {
+
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+
+        return cursor.getString(column_index);
     }
 
 }

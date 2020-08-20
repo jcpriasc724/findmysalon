@@ -3,6 +3,7 @@ package com.findmysalon.api;
 import com.findmysalon.model.Category;
 import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
+import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -26,9 +27,8 @@ public interface StaffApi {
 
     @Multipart
     @POST("staff/avatar/")
-    Call<ResponseBody> staffAvatarUpload(@Part MultipartBody.Part image);
+    Call<JsonObject> staffAvatarUpload(@Part MultipartBody.Part image);
 
-    @Multipart
     @POST("staff/")
     Call<Staff> staffSubmit(@Body Staff staffObj);
 

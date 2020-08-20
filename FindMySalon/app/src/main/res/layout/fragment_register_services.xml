@@ -152,15 +152,15 @@
                     />
 
                 <Button
-                    android:id="@+id/btn_delete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:background="@color/colorBtnRed"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/lbl_delete"
-                    android:visibility="gone"
-                    android:layout_gravity="center"
+                android:id="@+id/btn_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorBtnRed"
+                android:layout_marginTop="40dp"
+                android:text="@string/lbl_delete"
+                android:visibility="gone"
+                android:layout_gravity="center"
                 />
 
             </LinearLayout>
