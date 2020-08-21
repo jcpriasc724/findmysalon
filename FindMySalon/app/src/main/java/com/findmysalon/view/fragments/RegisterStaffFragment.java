@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,7 @@ public class RegisterStaffFragment extends Fragment {
 
     Button btnSave, btnDelete, btnImgUpload;
     Spinner categorySpinner;
+    ProgressBar progress;
     TextView txtFullName, txtPhoneNumber;
     ImageView imgProfile;
     View v;
@@ -95,7 +97,7 @@ public class RegisterStaffFragment extends Fragment {
         txtFullName = view.findViewById(R.id.etx_staff_name);
         txtPhoneNumber = view.findViewById(R.id.etx_phone);
         imgProfile = view.findViewById(R.id.img_profile_photo);
-
+        progress = view.findViewById(R.id.progress);
 
         btnSave = view.findViewById(R.id.btn_save);
 
@@ -192,6 +194,12 @@ public class RegisterStaffFragment extends Fragment {
                 break;
         }
         if(resultCode == RESULT_OK){
+            progress.setVisibility(View.VISIBLE);
+            // jusity the size of image
+//            if(Helper.toFileSize(uploadPhotoPath.to) == false){
+////                Log.i(TAG,"Img rotation change failed ");
+////            }
+
             if(Helper.checkAndRotateImg(uploadPhotoPath.toString()) == false){
                 Log.i(TAG,"Img rotation change failed ");
             }
@@ -224,10 +232,15 @@ public class RegisterStaffFragment extends Fragment {
                     } else {
                         Toast.makeText(getActivity(), R.string.submit_fail, Toast.LENGTH_LONG).show();
                     }
+                    // Finish remove the progress bar
+                    progress.setVisibility(View.GONE);
                 }
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.d("Fail: ", t.getMessage());
+                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    // Finish remove the progress bar
+                    progress.setVisibility(View.GONE);
                 }
             });
             // retrofit End
@@ -298,6 +311,7 @@ public class RegisterStaffFragment extends Fragment {
             @Override
             public void onFailure(Call<Staff> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         // retrofit End
@@ -349,6 +363,7 @@ public class RegisterStaffFragment extends Fragment {
             @Override
             public void onFailure(Call<ArrayList<Category>> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         // retrofit End
@@ -391,6 +406,7 @@ public class RegisterStaffFragment extends Fragment {
             @Override
             public void onFailure(Call<Staff> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         // retrofit End
@@ -427,6 +443,7 @@ public class RegisterStaffFragment extends Fragment {
                                     @Override
                                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                                         Log.d("Fail: ", t.getMessage());
+                                        Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 });
                                 // retrofit End

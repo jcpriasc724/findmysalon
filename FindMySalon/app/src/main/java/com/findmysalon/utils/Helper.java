@@ -18,10 +18,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public final class Helper {
     private static final String TAG = "Helper";
 
+    /**
+     *  Error message display dialog
+     * @param context
+     * @param msg
+     */
     public static void errorMsgDialog(@NonNull Context context, @StringRes int msg) {
         AlertDialog d = new AlertDialog.Builder(context)
                 .setTitle(R.string.warning)
@@ -32,7 +38,37 @@ public final class Helper {
         d.show();
     }
 
+    /**
+     *  check file size, return as MB
+     * @param fileS
+     * @return
+     */
+    public static String toFileSize(long fileS) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        String wrongSize = "0B";
+        if (fileS == 0) {
+            return wrongSize;
+        }
+        fileSizeString = df.format((double) fileS / 1048576);
+//        if (fileS < 1024) {
+//            fileSizeString = df.format((double) fileS) + "B";
+//        } else if (fileS < 1048576) {
+//            fileSizeString = df.format((double) fileS / 1024) + "KB";
+//        } else if (fileS < 1073741824) {
+//            fileSizeString = df.format((double) fileS / 1048576) + "MB";
+//        } else {
+//            fileSizeString = df.format((double) fileS / 1073741824) + "GB";
+//        }
+        return fileSizeString;
+    }
 
+
+    /**
+     * Rotate the image if the image not in right direction
+     * @param path
+     * @return
+     */
     public static boolean checkAndRotateImg(String path){
         // 1. check degree
         int degree = Helper.getBitmapDegree(path);
@@ -48,6 +84,7 @@ public final class Helper {
 
 
     /**
+     * get image degress
      * @param path
      * @return
      */

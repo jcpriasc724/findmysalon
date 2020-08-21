@@ -130,6 +130,7 @@ public class RegisterServiceFragment extends Fragment {
             @Override
             public void onFailure(Call<Service> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         // retrofit End
@@ -194,6 +195,7 @@ public class RegisterServiceFragment extends Fragment {
             @Override
             public void onFailure(Call<Service> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         // retrofit End
@@ -261,6 +263,7 @@ public class RegisterServiceFragment extends Fragment {
             @Override
             public void onFailure(Call<ArrayList<Category>> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         // retrofit End
@@ -298,6 +301,7 @@ public class RegisterServiceFragment extends Fragment {
                                     @Override
                                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                                         Log.d("Fail: ", t.getMessage());
+                                        Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 });
                                 // retrofit End
