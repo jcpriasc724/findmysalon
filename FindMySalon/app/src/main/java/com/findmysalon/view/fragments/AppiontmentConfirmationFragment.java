@@ -12,10 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.findmysalon.R;
+import com.findmysalon.view.CustomerActivity;
 
 public class AppiontmentConfirmationFragment extends Fragment {
 
-    //Button btnSave;
+    Button btnConfirm;
 
 
     @Nullable
@@ -24,14 +25,14 @@ public class AppiontmentConfirmationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_appointment_confirmation, container, false);
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
-//        btnSave = view.findViewById(R.id.btn_save);
-//
-//        btnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.nav_reg_business_staff);
-//            }
-//        });
+        btnConfirm = view.findViewById(R.id.btn_confirm);
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_type_business);
+            }
+        });
 
         return view;
     }
