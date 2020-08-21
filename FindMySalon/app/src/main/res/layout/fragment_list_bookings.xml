@@ -28,14 +28,13 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="20dp"
-                        android:backgroundTint="#00FFFFFF"
-                        android:src="@drawable/appointment"
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_appointment"
+                        android:tint="@color/colorWhite"
                         android:layout_marginRight="10dp"
-                        android:tint="#FFFFFF" />
+                        android:layout_marginTop="20dp"/>
 
                     <TextView
                         android:layout_width="match_parent"

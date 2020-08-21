@@ -41,4 +41,16 @@
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_appointment_confirmation" />
 
+    <fragment
+        android:id="@+id/nav_list_customer_bookings"
+        android:name="com.findmysalon.view.fragments.BookingsCustomerFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_list_bookings" />
+
+    <fragment
+        android:id="@+id/nav_list_fav_business"
+        android:name="com.findmysalon.view.fragments.ListFavBusinessFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_list_fav_business" />
+
 </navigation>
