@@ -27,34 +27,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.findmysalon.R;
 import com.findmysalon.helpers.PlaceApi;
-import com.findmysalon.model.Customer;
 import com.findmysalon.api.UserApi;
 import com.findmysalon.utils.Helper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -66,7 +50,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import static android.os.Environment.getExternalStoragePublicDirectory;
 
 import static android.app.Activity.RESULT_OK;
 import static com.findmysalon.utils.abcConstants.BASE_URL;
@@ -82,15 +65,10 @@ public class RegisterCustomerFragment extends Fragment {
     private EditText mPhone;
     private EditText mPassword;
     private EditText mRePassword;
-    private View v;
     private UserApi userApi;
     private HashMap<String, Object> addressApi;
-    private Uri fileUri;
-    private File photoFile;
-    String pathToFile;
     private Uri imageUri;
-    private File uploadPhotoPath = null;
-
+    private View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -173,10 +151,10 @@ public class RegisterCustomerFragment extends Fragment {
 
     private void takePhoto() {
         // Intent to open camera
-        Intent takePictureIntent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Checking if there any app that can handle the IMAGE_CAPTURE intent to avoid app crash
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null){
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null){
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -199,17 +177,20 @@ public class RegisterCustomerFragment extends Fragment {
                 Log.d("Path to file", ""+pathToFile);*/
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
-                mImgView.setImageBitmap(imageBitmap);
-
                 imageUri = getImageUri(getActivity().getApplicationContext(), imageBitmap);
+                mImgView.setImageBitmap(imageBitmap);
             }
             else if(requestCode == REQUEST_GALLERY){
                 //Get selected image uri here
                 imageUri = data.getData();
-                Log.d("URI ", imageUri+"");
                 mImgView.setImageURI(imageUri);
             }
-
+            // Plugin to display image
+            Glide.with(getContext())
+                    .load(imageUri)
+                    .circleCrop()
+                    .placeholder(R.drawable.photos_default)
+                    .into(mImgView);
         }
     }
 
@@ -229,13 +210,13 @@ public class RegisterCustomerFragment extends Fragment {
         String password = mPassword.getText().toString();
         String rePassword = mRePassword.getText().toString();
         String address = (String) addressApi.get("address");
-        /*double latitude = (double) addressApi.get("lat");
-        double longitude = (double) addressApi.get("lng");*/
+        double latitude = (double) addressApi.get("lat");
+        double longitude = (double) addressApi.get("lng");
 
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String phonePattern = "^[0-9]{10}$";
         // Validation of empty inputs
-        /*if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() || password.isEmpty() || rePassword.isEmpty())
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() || password.isEmpty() || rePassword.isEmpty())
         {
             Helper.errorMsgDialog(getActivity(), R.string.incomplete);
         }
@@ -250,19 +231,19 @@ public class RegisterCustomerFragment extends Fragment {
         else if(!password.equals(rePassword)){
             Helper.errorMsgDialog(getActivity(), R.string.password_no_match);
         }
-        else{*/
+        else{
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
             userApi = retrofit.create(UserApi.class);
-            //userSignUp(firstName, lastName, email, password, address, latitude, longitude, phone);
-            userSignUp("Abhi", "Ejam", "ejam@gmail.com", "hey", "Lucerny 3/11, Warsaw, Poland", 52.21476550000000000000, 21.13416250000000000000, "9999999999");
-        //}
+            userSignUp(firstName, lastName, email, password, address, latitude, longitude, phone);
+            //userSignUp("Abhi", "Ejam", "ejam@gmail.com", "hey", "Lucerny 3/11, Warsaw, Poland", 52.21476550000000000000, 21.13416250000000000000, "9999999999");
+        }
     }
 
-    public String getRealPathFromURI(Uri contentUri) {
+    /*public String getRealPathFromURI(Uri contentUri) {
 
         // can post image
         String [] proj={MediaStore.Images.Media.DATA};
@@ -275,9 +256,9 @@ public class RegisterCustomerFragment extends Fragment {
         cursor.moveToFirst();
 
         return cursor.getString(column_index);
-    }
+    }*/
 
-    public String getRealPathFromURI1(Uri uri) {
+    public String getRealPathFromURI(Uri uri) {
         String path = "";
         if (getActivity().getContentResolver() != null) {
             Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
@@ -291,143 +272,10 @@ public class RegisterCustomerFragment extends Fragment {
         return path;
     }
 
-    public static String getPath(final Context context, final Uri uri) {
-
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
-        // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // ExternalStorageProvider
-            if (isExternalStorageDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/" + split[1];
-                }
-
-                // TODO handle non-primary volumes
-            }
-            // DownloadsProvider
-            else if (isDownloadsDocument(uri)) {
-
-                final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-                return getDataColumn(context, contentUri, null, null);
-            }
-            // MediaProvider
-            else if (isMediaDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                Uri contentUri = null;
-                if ("image".equals(type)) {
-                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("video".equals(type)) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("audio".equals(type)) {
-                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                }
-
-                final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
-                        split[1]
-                };
-
-                return getDataColumn(context, contentUri, selection, selectionArgs);
-            }
-        }
-        // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
-
-            // Return the remote address
-            if (isGooglePhotosUri(uri))
-                return uri.getLastPathSegment();
-
-            return getDataColumn(context, uri, null, null);
-        }
-        // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the value of the data column for this Uri. This is useful for
-     * MediaStore Uris, and other file-based ContentProviders.
-     *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
-     * @param selectionArgs (Optional) Selection arguments used in the query.
-     * @return The value of the _data column, which is typically a file path.
-     */
-    public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
-
-        Cursor cursor = null;
-        final String column = "_data";
-        final String[] projection = {
-                column
-        };
-
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
-            if (cursor != null && cursor.moveToFirst()) {
-                final int index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(index);
-            }
-        } finally {
-            if (cursor != null)
-                cursor.close();
-        }
-        return null;
-    }
-
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is ExternalStorageProvider.
-     */
-    public static boolean isExternalStorageDocument(Uri uri) {
-        return "com.android.externalstorage.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is DownloadsProvider.
-     */
-    public static boolean isDownloadsDocument(Uri uri) {
-        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is MediaProvider.
-     */
-    public static boolean isMediaDocument(Uri uri) {
-        return "com.android.providers.media.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is Google Photos.
-     */
-    public static boolean isGooglePhotosUri(Uri uri) {
-        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
-    }
-
     // Method to handle user sign up
     private void userSignUp(String firstName, String lastName, String email, String password, String address, double latitude, double longitude, String phone ){
-        File file = new File(getRealPathFromURI1(imageUri));
-        Log.d("Path ", getRealPathFromURI1(imageUri)+"");
+        File file = new File(getRealPathFromURI(imageUri));
+        Log.d("Path ", getRealPathFromURI(imageUri)+"");
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
         MultipartBody.Part mProfilePhoto = MultipartBody.Part.createFormData(
@@ -515,47 +363,5 @@ public class RegisterCustomerFragment extends Fragment {
         });*/
     }
 
-    /*// Method to get latitude and longitude from address
-    private LatLng getLatLngFromAddress(String address){
 
-        Geocoder geocoder=new Geocoder(getActivity());
-        List<Address> addressList;
-
-        try {
-            addressList = geocoder.getFromLocationName(address, 1);
-            if(addressList!=null){
-                Address singleAddress = addressList.get(0);
-                LatLng latLng = new LatLng(singleAddress.getLatitude(),singleAddress.getLongitude());
-                return latLng;
-            }
-            else{
-                return null;
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-
-    }*/
-
-    /*private Address getAddressFromLatLng(LatLng latLng){
-        Geocoder geocoder=new Geocoder(getActivity());
-        List<Address> addresses;
-        try {
-            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5);
-            if(addresses!=null){
-                Address address = addresses.get(0);
-                return address;
-            }
-            else{
-                return null;
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-
-    }*/
 }

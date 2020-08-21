@@ -35,13 +35,29 @@ public interface UserApi {
             @Part MultipartBody.Part profilePhoto
     );
 
+    @Headers({"NonAuthentication:True"})
+    @Multipart
+    @POST("api/user/signup/")
+    Call<ResponseBody>  businessSignUp(
+            @Part("store_name") RequestBody storeName,
+            @Part("business_type") RequestBody businessType,
+            @Part("email") RequestBody email,
+            @Part("password") RequestBody password,
+            @Part("phone") RequestBody phone,
+            @Part("address") RequestBody address,
+            @Part("latitude") RequestBody latitude,
+            @Part("longitude") RequestBody longitude,
+            @Part("user_type") RequestBody userType,
+            @Part MultipartBody.Part profilePhoto
+    );
+
     /*@Headers({"NonAuthentication:True"})
     @POST("api/user/signup/")
     Call<Customer> customerSignUp(@Body Customer customer);*/
 
-    @Headers({"NonAuthentication:True"})
+    /*@Headers({"NonAuthentication:True"})
     @POST("api/user/signup/")
-    Call<Business> businessSignUp(@Body Business business);
+    Call<Business> businessSignUp(@Body Business business);*/
 
     @Headers({"Content-type:application/json;charset=UTF-8","NonAuthentication:True"})
     @POST("api/user/signin/")
