@@ -56,6 +56,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import static android.app.Activity.RESULT_OK;
+import static com.findmysalon.utils.abcConstants.MAXIMUM_IMAGE_SIZE;
 
 public class RegisterStaffFragment extends Fragment {
 
@@ -181,12 +182,14 @@ public class RegisterStaffFragment extends Fragment {
         Uri tempUri = null;
         switch (requestCode){
             case 100:
+                // camera
                 if(resultCode == RESULT_OK ) {
                     tempUri = photoUri;
                     uploadPhotoPath = photoPath;
                 }
                 break;
             case 101:
+                // photo album
                 if(resultCode == RESULT_OK ) {
                     tempUri = data.getData();
                     uploadPhotoPath = new File(getPath(tempUri));
@@ -194,16 +197,14 @@ public class RegisterStaffFragment extends Fragment {
                 break;
         }
         if(resultCode == RESULT_OK){
-            progress.setVisibility(View.VISIBLE);
-            // jusity the size of image
-//            if(Helper.toFileSize(uploadPhotoPath.to) == false){
-////                Log.i(TAG,"Img rotation change failed ");
-////            }
-
+            if(Helper.toFileSize(uploadPhotoPath.toString()) > MAXIMUM_IMAGE_SIZE){
+                Toast.makeText(getActivity(), R.string.invalid_image_size, Toast.LENGTH_LONG).show();
+                return;
+            }
             if(Helper.checkAndRotateImg(uploadPhotoPath.toString()) == false){
                 Log.i(TAG,"Img rotation change failed ");
             }
-
+            progress.setVisibility(View.VISIBLE);
             RequestBody requestFile =
                     RequestBody.Companion.create(uploadPhotoPath, MediaType.parse("multipart/form-data"));
             MultipartBody.Part body =

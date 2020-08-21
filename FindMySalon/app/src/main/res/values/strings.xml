@@ -121,6 +121,7 @@
     <string name="invalid_first_name"> First name is invalid</string>
     <string name="invalid_last_name"> Last name is invalid</string>
     <string name="invalid_full_name"> Full name is invalid</string>
+    <string name="invalid_image_size"> The maximum image size is 5MB</string>
     <string name="submit_success">Submitted successfully</string>
     <string name="submit_fail">Submitted failure</string>
     <string name="delete_success">Deleted successfully</string>

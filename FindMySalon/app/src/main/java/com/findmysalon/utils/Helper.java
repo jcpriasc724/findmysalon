@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -14,6 +15,8 @@ import com.findmysalon.R;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,14 +46,15 @@ public final class Helper {
      * @param fileS
      * @return
      */
-    public static String toFileSize(long fileS) {
+    public static int toFileSize(String path) {
         DecimalFormat df = new DecimalFormat("#.00");
         String fileSizeString = "";
-        String wrongSize = "0B";
-        if (fileS == 0) {
-            return wrongSize;
-        }
-        fileSizeString = df.format((double) fileS / 1048576);
+        int size = 0;
+        Bitmap bitmap = Helper.openImage(path);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        size =  baos.toByteArray().length / 1048576;
+//        Log.i(null, String.valueOf(size));
 //        if (fileS < 1024) {
 //            fileSizeString = df.format((double) fileS) + "B";
 //        } else if (fileS < 1048576) {
@@ -60,7 +64,7 @@ public final class Helper {
 //        } else {
 //            fileSizeString = df.format((double) fileS / 1073741824) + "GB";
 //        }
-        return fileSizeString;
+        return size;
     }
 
 
@@ -72,11 +76,13 @@ public final class Helper {
     public static boolean checkAndRotateImg(String path){
         // 1. check degree
         int degree = Helper.getBitmapDegree(path);
-        if (degree == 0)
-            return true;
+//        Log.i(null, String.valueOf(degree));
+//        if (degree == 0)
+//            return true;
         // 2. bitmap
         Bitmap bitmap = Helper.rotateBitmapByDegree(Helper.openImage(path), degree);
-        // 3. save bitmap
+        // 3.
+        // save bitmap
         Helper.saveImage(path, bitmap);
 
         return true;
@@ -169,8 +175,10 @@ public final class Helper {
      */
     public static void saveImage(String path, Bitmap bitmap) {
         try {
+
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+
             bos.flush();
             bos.close();
         } catch (FileNotFoundException e) {
