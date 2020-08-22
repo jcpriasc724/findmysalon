@@ -35,5 +35,11 @@
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_register_staff" />
 
+    <fragment
+        android:id="@+id/nav_roster_staff"
+        android:name="com.findmysalon.view.fragments.StaffRosterFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_list_staff_roster" />
+
 
 </navigation>

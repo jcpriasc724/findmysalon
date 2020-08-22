@@ -20,12 +20,15 @@
     <string name="lbl_edit">Edit</string>
     <string name="lbl_services">Services</string>
     <string name="lbl_logout">Log out</string>
+    <string name="lbl_roster">Roster Staff</string>
     <string name="lbl_bookings">Bookings</string>
     <string name="lbl_home">Home</string>
     <string name="lbl_settings">Settings</string>
     <string name="lbl_service">Service:</string>
     <string name="lbl_step_one">Step 1: Choose a service</string>
     <string name="lbl_step_two">Step 2: Choose staff</string>
+    <string name="lbl_step_one_roster">Step 1: Choose staff</string>
+    <string name="lbl_step_two_roster">Step 2: Choose staff</string>
     <string name="lbl_staff">Staff:</string>
     <string name="lbl_staff_1">Staff</string>
     <string name="lbl_customer_booking">Customer:</string>

@@ -51,6 +51,9 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
             case R.id.nav_services:
                 Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_service_list_services);
                 break;
+            case R.id.nav_roster_staff:
+                Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_roster_staff);
+                break;
 
         }
         drawer.closeDrawer(GravityCompat.START);
