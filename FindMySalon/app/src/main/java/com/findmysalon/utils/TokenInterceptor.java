@@ -134,7 +134,7 @@ public class TokenInterceptor implements Interceptor {
             unauthorized=true;
         }
 
-        if (unauthorized) {
+        if (unauthorized && request.header("NonAuthentication") == null) {
 //            tokenManager.clearToken();
 //            tokenManager.refreshToken();
 //            accessToken = sharedPreferences.getString(ACCESS_TOKEN, "");

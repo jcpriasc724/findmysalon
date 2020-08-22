@@ -9,10 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.findmysalon.R;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 public class BusinessActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -63,6 +66,27 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Fetch Fragments that belong to Activity
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments == null)
+        {
+            return;
+        }
+        // search Fragment onRequestPermissionsResult method
+        for (Fragment fragment : fragments)
+        {
+            if (fragment != null)
+            {
+                // class Fragment onRequestPermissionsResult method
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
         }
     }
 }

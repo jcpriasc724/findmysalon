@@ -38,6 +38,7 @@ import com.findmysalon.api.StaffApi;
 import com.findmysalon.model.Category;
 import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
+import com.findmysalon.utils.FilePath;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.utils.RetrofitClient;
 import com.google.gson.JsonObject;
@@ -133,14 +134,14 @@ public class RegisterStaffFragment extends Fragment {
                 switch (which) {
                     case 0:
                         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 100);
+                            requestPermissions( new String[]{Manifest.permission.CAMERA}, 100);
                         } else {
                             openCamera();
                         }
                         break;
                     case 1:
                         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+                            requestPermissions( new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
                         } else {
                             openAlbum();
                         }
@@ -172,7 +173,9 @@ public class RegisterStaffFragment extends Fragment {
     }
 
     protected void openAlbum(){
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
         startActivityForResult(intent, 101);
     }
 
@@ -192,7 +195,14 @@ public class RegisterStaffFragment extends Fragment {
                 // photo album
                 if(resultCode == RESULT_OK ) {
                     tempUri = data.getData();
-                    uploadPhotoPath = new File(getPath(tempUri));
+                    // Uri to file
+                    String tp = FilePath.getPath(getContext(), tempUri);
+                    if(tp == null){
+                        Toast.makeText(getActivity(), R.string.invalid_upload_file, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    uploadPhotoPath = new File(tp);
+
                 }
                 break;
         }
@@ -251,10 +261,20 @@ public class RegisterStaffFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.i(null,String.valueOf(requestCode));
         switch (requestCode) {
-            case 1:
+            case 100:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera();
+                    Log.i(null,"ww");
+                } else {
+                    Toast.makeText(getActivity(), "You denied the permission", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 101:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openAlbum();
+                    Log.i(null,"ww");
                 } else {
                     Toast.makeText(getActivity(), "You denied the permission", Toast.LENGTH_SHORT).show();
                 }

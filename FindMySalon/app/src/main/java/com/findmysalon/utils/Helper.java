@@ -1,10 +1,14 @@
 package com.findmysalon.utils;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,10 +21,12 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 
 public final class Helper {
@@ -43,7 +49,7 @@ public final class Helper {
 
     /**
      *  check file size, return as MB
-     * @param fileS
+     * @param
      * @return
      */
     public static int toFileSize(String path) {
@@ -187,4 +193,43 @@ public final class Helper {
             e.printStackTrace();
         }
     }
+
+
+//    public static File saveFileIntoExternalStorageByUri(Context context, Uri uri) {
+//        File file = null;
+//        try {
+//            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+//            int originalSize = inputStream.available();
+//
+//            BufferedInputStream bis = null;
+//            BufferedOutputStream bos = null;
+//            file = makeEmptyFileIntoExternalStorage(context);
+//            bis = new BufferedInputStream(inputStream);
+//            bos = new BufferedOutputStream(new FileOutputStream(
+//                    file, false));
+//
+//            byte[] buf = new byte[originalSize];
+//            bis.read(buf);
+//            do {
+//                bos.write(buf);
+//            } while (bis.read(buf) != -1);
+//
+//            bos.flush();
+//            bos.close();
+//            bis.close();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return file;
+//    }
+//
+//    public static File makeEmptyFileIntoExternalStorage(Context context) {
+//        String fileName = "cameraOutput" + System.currentTimeMillis() + ".jpg";
+//        File srcPath = new File(context.getFilesDir(), "images");
+//        File imagePath = new File(srcPath, fileName);
+//        return imagePath;
+//    }
+
 }
