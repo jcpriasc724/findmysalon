@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Find My Salon</string>
     <string name="lbl_signIn">Sign In</string>
-    <string name="lbl_signUp">Sign Up</string>
+    <string name="lbl_signUp">Register here</string>
     <string name="lbl_business">Business</string>
     <string name="lbl_customer">Customer</string>
     <string name="lbl_upload_photo">Upload photo</string>

@@ -1,83 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.LoginActivity"
-    android:background="@color/colorGray">
+    android:background="@color/colorGray"
+    tools:context=".view.LoginActivity">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        app:srcCompat="@drawable/ic_barber_shop" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/img_logo"-->
-<!--            android:layout_width="200dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            app:srcCompat="@drawable/ic_find_my_salon" />-->
+    <TextView
+        android:layout_below="@id/img_logo"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/text_size_titles"
+        android:text="@string/app_name"
+        android:textColor="@color/colorBlack"/>
 
-        <LinearLayout
+    <EditText
+        android:id="@+id/etx_email"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/img_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:background="#11000000"
+        android:ems="10"
+        android:drawableLeft="@drawable/ic_action_user"
+        android:hint="@string/lbl_email"
+        android:inputType="textPersonName"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/etx_password"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/etx_email"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:background="#11000000"
+        android:drawableLeft="@drawable/ic_action_lock"
+        android:ems="10"
+        android:hint="@string/lbl_password"
+        android:inputType="textPassword"
+        android:textSize="@dimen/text_size" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_signIn"
+        android:layout_below="@id/etx_password"
+        android:layout_marginTop="60dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="10dp"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/etx_email"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/lbl_email"
-                android:inputType="textEmailAddress"/>
-
-            <EditText
-                android:id="@+id/etx_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/lbl_password"
-                android:inputType="textPassword"/>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_signIn"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:layout_marginRight="20dp"
-                android:text="@string/lbl_signIn"
+                android:text="@string/sign_in"
+                android:textSize="@dimen/text_size"
+                android:layout_centerInParent="true"
                 android:textColor="@color/colorWhite"/>
 
-            <Button
-                android:id="@+id/btn_signUp"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:text="@string/lbl_signUp" />
+        </RelativeLayout>
 
-        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/btn_signUp"
+        android:layout_below="@id/btn_signIn"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/lbl_signUp"
+        android:textColor="@color/colorPrimary"/>
 
 
-
-
-
-
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
