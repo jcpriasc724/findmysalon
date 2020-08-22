@@ -20,8 +20,9 @@
             
             <LinearLayout
                 android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -33,11 +34,14 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/text_size_titles" />
 
-                <EditText
+                <Spinner
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/spr_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/lbl_current_location"
-                    android:textColor="@color/colorWhite"/>
+                    android:prompt="@string/distance_prompt"
+                    android:spinnerMode="dialog"
+                    android:entries="@array/distances_arrays"/>
 
             </LinearLayout>
 

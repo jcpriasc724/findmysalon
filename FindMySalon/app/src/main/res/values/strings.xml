@@ -64,11 +64,19 @@
     <string name="lbl_image_loading">Waiting image loading</string>
 
     <string name="category_prompt">Choose a category</string>
+    <string name="distance_prompt">Distance around</string>
     <string name="pattern">EEE, d MMM yyyy</string>
 
     <string-array name="categories_arrays">
         <item>Haircuts</item>
         <item>Colours</item>
+    </string-array>
+
+    <string-array name="distances_arrays">
+        <item>1km</item>
+        <item>10km</item>
+        <item>100km</item>
+        <item>1000km</item>
     </string-array>
 
 
