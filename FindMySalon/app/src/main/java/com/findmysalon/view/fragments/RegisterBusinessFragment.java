@@ -35,6 +35,7 @@ import com.findmysalon.helpers.PlaceApi;
 import com.findmysalon.model.Business;
 import com.findmysalon.model.Customer;
 import com.findmysalon.utils.Helper;
+import com.findmysalon.view.LoginActivity;
 import com.findmysalon.view.RegistrationActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -114,10 +115,10 @@ public class RegisterBusinessFragment extends Fragment {
         Button mSubmitButton = (Button) v.findViewById(R.id.btn_submit);
         mSubmitButton.setOnClickListener(v1 -> businessSignUp());
 
-        Button btnNext = v.findViewById(R.id.btn_next);
+        /*Button btnNext = v.findViewById(R.id.btn_next);
 
         btnNext.setOnClickListener(v12 -> Navigation.findNavController(v12).navigate(R.id.nav_reg_business_services));
-
+*/
         return v;
     }
 
@@ -312,12 +313,15 @@ public class RegisterBusinessFragment extends Fragment {
 
     // Method to handle business sign up
     private void userSignUp(String businessName, String businessType, String email, String password, String address, double latitude, double longitude, String phone ){
-        File file = new File(getRealPathFromURI(imageUri));
-        Log.d("Path ", getRealPathFromURI(imageUri)+"");
-
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part mProfilePhoto = MultipartBody.Part.createFormData(
-                "profile_photo", file.getName(), requestFile);
+        MultipartBody.Part mProfilePhoto = null;
+        // Process only if image is uploaded
+        if(imageUri != null){
+            File file = new File(getRealPathFromURI(imageUri));
+            //Log.d("Path ", getRealPathFromURI(imageUri)+"");
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+            mProfilePhoto = MultipartBody.Part.createFormData(
+                    "profile_photo", file.getName(), requestFile);
+        }
 
         RequestBody mBusinessName = RequestBody.create(MediaType.parse("text/plain"), businessName);
         RequestBody mBusinessType = RequestBody.create(MediaType.parse("text/plain"), businessType);
@@ -336,6 +340,9 @@ public class RegisterBusinessFragment extends Fragment {
                 if(response.isSuccessful()){
                     //Customer resp = response.body();
                     Log.d("Response: ", ""+response.body());
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
                 else{
                     Helper.errorMsgDialog(getActivity(), R.string.response_error);

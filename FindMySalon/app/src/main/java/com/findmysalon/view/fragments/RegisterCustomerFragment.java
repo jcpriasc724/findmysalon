@@ -37,6 +37,9 @@ import com.findmysalon.R;
 import com.findmysalon.helpers.PlaceApi;
 import com.findmysalon.api.UserApi;
 import com.findmysalon.utils.Helper;
+import com.findmysalon.view.CustomerActivity;
+import com.findmysalon.view.LoginActivity;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.HashMap;
@@ -55,8 +58,8 @@ import static android.app.Activity.RESULT_OK;
 import static com.findmysalon.utils.abcConstants.BASE_URL;
 
 public class RegisterCustomerFragment extends Fragment {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int REQUEST_GALLERY = 2;
+    static final int REQUEST_CAPTURE_IMAGE = 1;
+    static final int REQUEST_GALLERY_IMAGE = 2;
 
     private ImageView mImgView;
     private EditText mFirstName;
@@ -67,7 +70,7 @@ public class RegisterCustomerFragment extends Fragment {
     private EditText mRePassword;
     private UserApi userApi;
     private HashMap<String, Object> addressApi;
-    private Uri imageUri;
+    private Uri imageUri = null;
     private View v;
 
     @Override
@@ -143,10 +146,7 @@ public class RegisterCustomerFragment extends Fragment {
 
     private void chooseFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        /*Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);*/
-        startActivityForResult(intent, REQUEST_GALLERY);
+        startActivityForResult(intent, REQUEST_GALLERY_IMAGE);
     }
 
     private void takePhoto() {
@@ -154,7 +154,7 @@ public class RegisterCustomerFragment extends Fragment {
         Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Checking if there any app that can handle the IMAGE_CAPTURE intent to avoid app crash
         if (intent.resolveActivity(getActivity().getPackageManager()) != null){
-            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(intent, REQUEST_CAPTURE_IMAGE);
         }
     }
 
@@ -172,7 +172,8 @@ public class RegisterCustomerFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
-            if(requestCode == REQUEST_IMAGE_CAPTURE){
+            // For camera capture
+            if(requestCode == REQUEST_CAPTURE_IMAGE){
                 /*Bitmap imageBitmap = BitmapFactory.decodeFile(pathToFile);
                 Log.d("Path to file", ""+pathToFile);*/
                 Bundle extras = data.getExtras();
@@ -180,7 +181,8 @@ public class RegisterCustomerFragment extends Fragment {
                 imageUri = getImageUri(getActivity().getApplicationContext(), imageBitmap);
                 mImgView.setImageBitmap(imageBitmap);
             }
-            else if(requestCode == REQUEST_GALLERY){
+            // For gallery image
+            else if(requestCode == REQUEST_GALLERY_IMAGE){
                 //Get selected image uri here
                 imageUri = data.getData();
                 mImgView.setImageURI(imageUri);
@@ -209,9 +211,28 @@ public class RegisterCustomerFragment extends Fragment {
         String phone = mPhone.getText().toString();
         String password = mPassword.getText().toString();
         String rePassword = mRePassword.getText().toString();
-        String address = (String) addressApi.get("address");
-        double latitude = (double) addressApi.get("lat");
-        double longitude = (double) addressApi.get("lng");
+        Log.d("ADDRESS", addressApi+"");
+        String address = "";
+        double latitude = 0.0;
+        double longitude = 0.0;
+
+        if(!addressApi.isEmpty()){
+            address = (String) addressApi.get("address");
+            latitude = (double) addressApi.get("lat");
+            longitude = (double) addressApi.get("lng");
+        }
+        /*String address = null;
+        double latitude = 0.0;
+        double longitude = 0.0;
+        if(addressApi.containsKey("address")){
+            address = (String) addressApi.get("address");
+        }
+        if(addressApi.containsKey("lat")){
+            latitude = (double) addressApi.get("lat");
+        }
+        if(addressApi.containsKey("lng")){
+            longitude = (double) addressApi.get("lng");
+        }*/
 
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String phonePattern = "^[0-9]{10}$";
@@ -243,21 +264,6 @@ public class RegisterCustomerFragment extends Fragment {
         }
     }
 
-    /*public String getRealPathFromURI(Uri contentUri) {
-
-        // can post image
-        String [] proj={MediaStore.Images.Media.DATA};
-        Cursor cursor = getActivity().managedQuery( contentUri,
-                proj, // Which columns to return
-                null,       // WHERE clause; which rows to return (all rows)
-                null,       // WHERE clause selection arguments (none)
-                null); // Order-by clause (ascending by name)
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-
-        return cursor.getString(column_index);
-    }*/
-
     public String getRealPathFromURI(Uri uri) {
         String path = "";
         if (getActivity().getContentResolver() != null) {
@@ -274,12 +280,15 @@ public class RegisterCustomerFragment extends Fragment {
 
     // Method to handle user sign up
     private void userSignUp(String firstName, String lastName, String email, String password, String address, double latitude, double longitude, String phone ){
-        File file = new File(getRealPathFromURI(imageUri));
-        Log.d("Path ", getRealPathFromURI(imageUri)+"");
-
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part mProfilePhoto = MultipartBody.Part.createFormData(
-                        "profile_photo", file.getName(), requestFile);
+        MultipartBody.Part mProfilePhoto = null;
+        // Process only if image is uploaded
+        if(imageUri != null){
+            File file = new File(getRealPathFromURI(imageUri));
+            //Log.d("Path ", getRealPathFromURI(imageUri)+"");
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+            mProfilePhoto = MultipartBody.Part.createFormData(
+                    "profile_photo", file.getName(), requestFile);
+        }
 
         RequestBody mFirstName = RequestBody.create(MediaType.parse("text/plain"), firstName);
         RequestBody mLastName = RequestBody.create(MediaType.parse("text/plain"), lastName);
@@ -298,6 +307,9 @@ public class RegisterCustomerFragment extends Fragment {
                 if(response.isSuccessful()){
                     //Customer resp = response.body();
                     Log.d("Response: ", ""+response.body());
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
                 else{
                     Helper.errorMsgDialog(getActivity(), R.string.response_error);
