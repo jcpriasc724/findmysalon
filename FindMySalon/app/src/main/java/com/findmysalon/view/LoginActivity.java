@@ -70,17 +70,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void errorMsgDialog(String msg)
-    {
-        AlertDialog d = new AlertDialog.Builder(this)
-                .setTitle(R.string.warning)
-                .setMessage(msg)
-                .setPositiveButton(R.string.ok, null)
-                .create();
-
-        d.show();
-    }
-
     public void signIn(){
 
 //        Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
@@ -88,14 +77,13 @@ public class LoginActivity extends AppCompatActivity {
         //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        startActivity(intent);
 
-
         // data to Json
         Gson gson=new Gson();
         HashMap<String,String> paramsMap= new HashMap<>();
         paramsMap.put("email",  mEmail.getText().toString());
         paramsMap.put("password",   mPassword.getText().toString());
         String obj=gson.toJson(paramsMap);
-        RequestBody body= RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),obj);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),obj);
 
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(LoginActivity.this);
@@ -106,18 +94,31 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if(response.isSuccessful()){
                     Token resp = response.body();
+
+                    //Log.d("User type", resp.toString());
                     final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
+                    // Store access and refresh token along with access token expiry information in shared preference
                     editor.putString(ACCESS_TOKEN,resp.getAccess());
                     editor.putString(REFRESH_TOKEN,resp.getRefresh());
                     editor.putLong(TOKEN_EXPIRED, ((System.currentTimeMillis()/1000) + TOKEN_VALID_TIME * 60) );
-
                     editor.commit();
 
-                    Intent intent = new Intent(LoginActivity.this, BusinessActivity.class);
-                    //ide .putExtra("hi", "HI");
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    // If user is business then redirect them to business activity
+                    if(resp.getUserType().equals("B")){
+                        Intent intent = new Intent(LoginActivity.this, BusinessActivity.class);
+                        //ide .putExtra("hi", "HI");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                    // If user is customer then redirect them to customer activity
+                    else if(resp.getUserType().equals("C")){
+                        Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
+                        //ide .putExtra("hi", "HI");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+
                 }
                 else{
                     Log.d("Error: ",""+response.errorBody());
