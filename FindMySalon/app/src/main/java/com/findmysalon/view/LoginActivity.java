@@ -2,6 +2,7 @@ package com.findmysalon.view;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.findmysalon.R;
 import com.findmysalon.api.UserApi;
@@ -36,8 +38,9 @@ import static com.findmysalon.utils.abcConstants.TOKEN_VALID_TIME;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button btnSignin;
-    private Button btnSignup;
+    private CardView btnSignin;
+    private TextView btnSignup;
+
     private EditText mEmail;
     private EditText mPassword;
     private UserApi userApi;
@@ -52,12 +55,17 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        btnSignin = (Button) findViewById(R.id.btn_signIn);
-        btnSignup = (Button) findViewById(R.id.btn_signUp);
+        btnSignin = findViewById(R.id.btn_signIn);
+        btnSignup = findViewById(R.id.btn_signUp);
         mEmail = findViewById(R.id.etx_email);
         mPassword = findViewById(R.id.etx_password);
 
         btnSignin.setOnClickListener(v -> {
+
+//            Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
+//            //ide .putExtra("hi", "HI");
+//            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            startActivity(intent);
             signIn();
         });
 

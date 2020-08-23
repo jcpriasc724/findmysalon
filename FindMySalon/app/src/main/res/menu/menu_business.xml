@@ -26,6 +26,11 @@
             android:title="@string/lbl_services" />
 
         <item
+            android:id="@+id/nav_roster_staff"
+            android:icon="@drawable/ic_time"
+            android:title="@string/lbl_roster" />
+
+        <item
             android:id="@+id/nav_log_out"
             android:icon="@drawable/ic_logout"
             android:title="@string/lbl_logout" />

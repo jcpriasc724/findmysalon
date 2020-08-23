@@ -34,17 +34,17 @@
 
             </LinearLayout>
 
-            <!--<Button
-                android:layout_width="@dimen/fab_btn_circle"
-                android:layout_height="@dimen/fab_btn_circle"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="30dp"
-                android:id="@+id/btn_next"
-                android:text=">"
-                android:background="@drawable/bg_btn_circle"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_titles"
-                android:textAlignment="center"/>-->
+<!--            <Button-->
+<!--                android:layout_width="@dimen/fab_btn_circle"-->
+<!--                android:layout_height="@dimen/fab_btn_circle"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:id="@+id/btn_next"-->
+<!--                android:text=">"-->
+<!--                android:background="@drawable/bg_btn_circle"-->
+<!--                android:textColor="@color/colorWhite"-->
+<!--                android:textSize="@dimen/text_size_titles"-->
+<!--                android:textAlignment="center"/>-->
 
 
         </LinearLayout>
@@ -93,28 +93,20 @@
                         android:layout_height="120dp"
                         android:background="@drawable/bg_img_circle"
                         >
-                        <!--<ImageView
-                            android:id="@+id/img_profile_photo"
-                            android:layout_width="85dp"
-                            android:layout_height="85dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/photos_default"
-                            android:tint="@color/colorGrayDark"/>-->
-
                         <ImageView
                             android:id="@+id/img_profile_photo"
                             android:layout_width="85dp"
                             android:layout_height="85dp"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
-                            android:src="@drawable/photos_default"/>
+                            android:src="@drawable/photos_default"
+                            android:tint="@color/colorGrayDark"/>
                     </LinearLayout>
 
 
 
 
-                    <!--<Button
+                    <Button
                         android:id="@+id/btn_upload_photo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -123,7 +115,7 @@
                         android:layout_marginTop="15dp"
                         android:text="@string/lbl_upload_photo"
                         android:layout_gravity="center"
-                        />-->
+                        />
 
                 </LinearLayout>
 

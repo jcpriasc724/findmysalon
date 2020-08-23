@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Find My Salon</string>
     <string name="lbl_signIn">Sign In</string>
-    <string name="lbl_signUp">Sign Up</string>
+    <string name="lbl_signUp">Register here</string>
     <string name="lbl_business">Business</string>
     <string name="lbl_customer">Customer</string>
     <string name="lbl_upload_photo">Upload photo</string>
@@ -20,6 +20,7 @@
     <string name="lbl_edit">Edit</string>
     <string name="lbl_services">Services</string>
     <string name="lbl_logout">Log out</string>
+    <string name="lbl_roster">Roster Staff</string>
     <string name="lbl_bookings">Bookings</string>
     <string name="lbl_home">Home</string>
     <string name="lbl_settings">Settings</string>
@@ -27,6 +28,8 @@
     <string name="lbl_status">Status:</string>
     <string name="lbl_step_one">Step 1: Choose a service</string>
     <string name="lbl_step_two">Step 2: Choose staff</string>
+    <string name="lbl_step_one_roster">Step 1: Choose staff</string>
+    <string name="lbl_step_two_roster">Step 2: Choose staff</string>
     <string name="lbl_staff">Staff:</string>
     <string name="lbl_staff_1">Staff</string>
     <string name="lbl_customer_booking">Customer:</string>
@@ -65,11 +68,19 @@
     <string name="lbl_image_loading">Waiting image loading</string>
 
     <string name="category_prompt">Choose a category</string>
+    <string name="distance_prompt">Distance around</string>
     <string name="pattern">EEE, d MMM yyyy</string>
 
     <string-array name="categories_arrays">
         <item>Haircuts</item>
         <item>Colours</item>
+    </string-array>
+
+    <string-array name="distances_arrays">
+        <item>1km</item>
+        <item>10km</item>
+        <item>100km</item>
+        <item>1000km</item>
     </string-array>
 
 

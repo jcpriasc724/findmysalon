@@ -20,28 +20,24 @@
             
             <LinearLayout
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="@string/lbl_location"
+                    android:text="@string/lbl_step_one_roster"
                     android:textAlignment="center"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/text_size_titles" />
 
-                <Spinner
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/spr_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:prompt="@string/distance_prompt"
-                    android:spinnerMode="dialog"
-                    android:entries="@array/distances_arrays"/>
+<!--                <EditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="@string/lbl_filter_services"-->
+<!--                    android:textColor="@color/colorWhite"/>-->
 
             </LinearLayout>
 
@@ -56,22 +52,12 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_business"
+        android:id="@+id/rec_staff_roster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-60dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginTop="-60dp">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/txt_no_staff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_subtitles"
-        android:text="@string/lbl_no_businesses"
-        android:textAlignment="center"/>
 
 
 </LinearLayout>
