@@ -1,0 +1,729 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorGray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/colorSecondary"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_step_two_roster"
+                    android:textSize="@dimen/text_size_titles"
+                    android:textColor="@color/colorWhite"
+                    android:textAlignment="textStart"
+                    android:layout_marginTop="20dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-60dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_item_service"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/form_container"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="40dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_staff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="@dimen/text_size_titles"
+                    android:text="Simon's roaster"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/swt_monday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_monday" />
+
+                    <LinearLayout
+                        android:id="@+id/container_monday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_start_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_start_monday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_start_monday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_end_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_end_monday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_end_monday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/swt_tuesday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_tuesday" />
+
+                    <LinearLayout
+                        android:id="@+id/container_tuesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_start_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_start_tuesday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_start_tuesday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_end_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_end_tuesday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_end_tuesday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/swt_wednesday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_wednesday" />
+
+                    <LinearLayout
+                        android:id="@+id/container_wednesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_start_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_start_wednesday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_start_wednesday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_end_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_end_wednesday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_end_wednesday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/swt_thursday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_thursday" />
+
+                    <LinearLayout
+                        android:id="@+id/container_thursday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_start_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_start_thursday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_start_thursday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_end_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_end_thursday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_end_thursday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/swt_friday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_friday" />
+
+                    <LinearLayout
+                        android:id="@+id/container_friday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_start_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_start_friday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_start_friday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_end_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_end_friday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_end_friday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/swt_saturday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_saturday" />
+
+                    <LinearLayout
+                        android:id="@+id/container_saturday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_start_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_start_saturday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_start_saturday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_end_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_end_saturday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_end_saturday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/swt_sunday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_sunday" />
+
+                    <LinearLayout
+                        android:id="@+id/container_sunday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_start_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_start_sunday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_start_sunday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_end_time"/>
+
+                            <Spinner
+                                android:id="@+id/spr_hour_end_sunday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/hours_arrays"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                            <Spinner
+                                android:id="@+id/spr_min_end_sunday"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"
+                                android:entries="@array/minutes_arrays"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/lbl_cancel"
+                        android:textColor="@color/colorWhite"/>
+
+                    <Button
+                        android:id="@+id/btn_confirm"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:text="@string/lbl_confirm" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

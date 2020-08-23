@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +39,13 @@ public class StaffRosterAdapter extends RecyclerView.Adapter<StaffRosterAdapter.
 
         holder.txtNameStaff.setText(list.get(position).getName());
         holder.rtbStaff.setRating(list.get(position).getRating());
+        holder.containerStaff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_set_roster);
+            }
+        });
+
 
     }
 
@@ -49,11 +58,13 @@ public class StaffRosterAdapter extends RecyclerView.Adapter<StaffRosterAdapter.
 
         TextView txtNameStaff;
         RatingBar rtbStaff;
+        LinearLayout containerStaff;
 
         public StaffHolder(@NonNull View itemView) {
             super(itemView);
             txtNameStaff = (TextView) itemView.findViewById(R.id.txt_name_staff);
             rtbStaff = (RatingBar) itemView.findViewById(R.id.rtb_staff);
+            containerStaff = itemView.findViewById(R.id.container_staff);
         }
     }
 }
