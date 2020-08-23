@@ -28,8 +28,8 @@
     <string name="lbl_status">Status:</string>
     <string name="lbl_step_one">Step 1: Choose a service</string>
     <string name="lbl_step_two">Step 2: Choose staff</string>
-    <string name="lbl_step_one_roster">Step 1: Choose staff</string>
-    <string name="lbl_step_two_roster">Step 2: Choose staff</string>
+    <string name="lbl_step_one_roster">Choose staff</string>
+    <string name="lbl_step_two_roster">Step 2: Set days and hours</string>
     <string name="lbl_staff">Staff:</string>
     <string name="lbl_staff_1">Staff</string>
     <string name="lbl_customer_booking">Customer:</string>
@@ -53,7 +53,15 @@
     <string name="lbl_choose_staff">Choose Staff</string>
     <string name="lbl_cancel">Cancel</string>
     <string name="lbl_confirm">Confirm</string>
-    <string name="lbl_"></string>
+    <string name="lbl_monday">Monday</string>
+    <string name="lbl_tuesday">Tuesday</string>
+    <string name="lbl_wednesday">Wednesday</string>
+    <string name="lbl_thursday">Thursday</string>
+    <string name="lbl_friday">Friday</string>
+    <string name="lbl_saturday">Saturday</string>
+    <string name="lbl_sunday">Sunday</string>
+    <string name="lbl_start_time">Start time:</string>
+    <string name="lbl_end_time">End time:</string>
 
     <string name="lbl_submit">Submit</string>
 
@@ -74,6 +82,45 @@
     <string-array name="categories_arrays">
         <item>Haircuts</item>
         <item>Colours</item>
+    </string-array>
+
+    <string-array name="time_arrays">
+        <item>00</item>
+        <item>PM</item>
+    </string-array>
+
+    <string-array name="hours_arrays">
+        <item>00</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+    </string-array>
+
+    <string-array name="minutes_arrays">
+        <item>00</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
     </string-array>
 
     <string-array name="distances_arrays">
