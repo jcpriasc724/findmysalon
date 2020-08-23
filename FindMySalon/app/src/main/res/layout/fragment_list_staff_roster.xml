@@ -17,27 +17,30 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            
+
             <LinearLayout
-                android:layout_marginLeft="20dp"
-                android:orientation="vertical"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_time"
+                    android:tint="@color/colorWhite"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txt_staff"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/lbl_step_one_roster"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/text_size_titles" />
-
-<!--                <EditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="@string/lbl_filter_services"-->
-<!--                    android:textColor="@color/colorWhite"/>-->
 
             </LinearLayout>
 
@@ -55,7 +58,7 @@
         android:id="@+id/rec_staff_roster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-60dp">
+        android:layout_marginTop="-80dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
