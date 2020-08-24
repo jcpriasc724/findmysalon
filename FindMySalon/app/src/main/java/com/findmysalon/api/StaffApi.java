@@ -3,15 +3,18 @@ package com.findmysalon.api;
 import com.findmysalon.model.Category;
 import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
+import com.findmysalon.model.StaffRoster;
 import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -42,5 +45,16 @@ public interface StaffApi {
 
     @DELETE("staff/{id}/")
     Call<ResponseBody> staffDelete(@Path("id") int id);
+
+    // roster
+    @GET("staff/{id}/schedule/")
+    Call<ArrayList<StaffRoster>> scheduleList(@Path("id") int staffId);
+
+    @Headers({"Content-type:application/json"})
+    @POST("staff/{id}/schedule/")
+    Call<ResponseBody> submitScheduleList(
+            @Path("id") int staffId,
+            @Body RequestBody timeList
+    );
 
 }

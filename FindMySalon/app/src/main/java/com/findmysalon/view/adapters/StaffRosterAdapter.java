@@ -1,9 +1,11 @@
 package com.findmysalon.view.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.findmysalon.R;
 import com.findmysalon.model.Staff;
 
@@ -38,11 +41,27 @@ public class StaffRosterAdapter extends RecyclerView.Adapter<StaffRosterAdapter.
     public void onBindViewHolder(@NonNull StaffHolder holder, int position) {
 
         holder.txtNameStaff.setText(list.get(position).getName());
-        holder.rtbStaff.setRating(list.get(position).getRating());
+//        holder.rtbStaff.setRating(list.get(position).getRating());
+
+        holder.rtbStaff.setVisibility(View.GONE);
+        if(list.get(position).getImage() != null) {
+            holder.staffProfile.setImageTintMode(null);
+            Glide.with(holder.staffProfile.getContext())
+                    .load(list.get(position).getImage())
+                    .circleCrop()
+                    .placeholder(R.drawable.photos_default)
+                    .into(holder.staffProfile);
+        }else {
+            Glide.with(holder.staffProfile.getContext()).clear(holder.staffProfile);
+        }
+
         holder.containerStaff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_set_roster);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", list.get(position).getId());
+                bundle.putString("name", list.get(position).getName());
+                Navigation.findNavController(v).navigate(R.id.nav_set_roster, bundle);
             }
         });
 
@@ -59,12 +78,14 @@ public class StaffRosterAdapter extends RecyclerView.Adapter<StaffRosterAdapter.
         TextView txtNameStaff;
         RatingBar rtbStaff;
         LinearLayout containerStaff;
+        ImageView staffProfile;
 
         public StaffHolder(@NonNull View itemView) {
             super(itemView);
             txtNameStaff = (TextView) itemView.findViewById(R.id.txt_name_staff);
             rtbStaff = (RatingBar) itemView.findViewById(R.id.rtb_staff);
             containerStaff = itemView.findViewById(R.id.container_staff);
+            staffProfile = (ImageView) itemView.findViewById(R.id.img_staff);
         }
     }
 }

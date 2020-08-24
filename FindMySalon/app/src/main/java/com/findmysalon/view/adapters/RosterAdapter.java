@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -44,6 +45,67 @@ public class RosterAdapter extends RecyclerView.Adapter<RosterAdapter.RosterHold
         String dateRoster = simpleDateFormat.format(list.get(position).getDateRoster());
 
         holder.swtDate.setText(dateRoster);
+        // if status == 1, set visibility
+        if(list.get(position).getStatus() == 1){
+            holder.containerDay.setVisibility(View.VISIBLE);
+            holder.swtDate.setChecked(true);
+            // set up Spinner
+            holder.sprHourStartDay.setSelection(getIndex(holder.sprHourStartDay, list.get(position).getStartHour()));
+            holder.sprMinStartDay.setSelection(getIndex(holder.sprMinStartDay, list.get(position).getStartMin()));
+            holder.sprHourEndDay.setSelection(getIndex(holder.sprHourEndDay, list.get(position).getEndHour()));
+            holder.sprMinEndDay.setSelection(getIndex(holder.sprMinEndDay, list.get(position).getEndMin()));
+        } else {
+            holder.containerDay.setVisibility(View.GONE);
+        }
+
+        holder.sprHourStartDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int sprPosition, long id) {
+                // your code here
+                list.get(position).setStartHour(holder.sprHourStartDay.getSelectedItem().toString());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+
+        holder.sprMinStartDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int sprPosition, long id) {
+                // your code here
+                list.get(position).setStartMin(holder.sprMinStartDay.getSelectedItem().toString());
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+
+        holder.sprHourEndDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int sprPosition, long id) {
+                // your code here
+                list.get(position).setEndHour(holder.sprHourEndDay.getSelectedItem().toString());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+
+        holder.sprMinEndDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int sprPosition, long id) {
+                // your code here
+                list.get(position).setEndMin(holder.sprMinEndDay.getSelectedItem().toString());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
 
         holder.swtDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,14 +113,26 @@ public class RosterAdapter extends RecyclerView.Adapter<RosterAdapter.RosterHold
 
                 if (holder.swtDate.isChecked()){
                     holder.containerDay.setVisibility(View.VISIBLE);
+                    list.get(position).setStatus(1);
                 } else {
                     holder.containerDay.setVisibility(View.GONE);
+                    list.get(position).setStatus(0);
                 }
 
             }
         });
 
 
+    }
+
+    private int getIndex(Spinner spinner, String myString){
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                return i;
+            }
+        }
+
+        return 0;
     }
 
     @Override
