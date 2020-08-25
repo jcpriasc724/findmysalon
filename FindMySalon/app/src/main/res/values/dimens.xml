@@ -6,6 +6,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_btn_circle">40dp</dimen>
+    <dimen name="fab_btn_circle_small">30dp</dimen>
 
     <dimen name="text_size_titles">22sp</dimen>
     <dimen name="text_size_subtitles">20sp</dimen>

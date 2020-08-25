@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -28,23 +29,23 @@
                     android:layout_height="wrap_content"
                     android:text="@string/lbl_business_details"
                     android:textSize="@dimen/text_size_titles"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorPrimary"
                     android:textAlignment="textStart"
                     android:layout_marginTop="20dp"/>
 
             </LinearLayout>
 
             <!--<Button
-                            android:layout_width="@dimen/fab_btn_circle"
-                            android:layout_height="@dimen/fab_btn_circle"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="30dp"
-                            android:id="@+id/btn_next"
-                            android:text=">"
-                            android:background="@drawable/bg_btn_circle"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/text_size_titles"
-                            android:textAlignment="center"/>-->
+                                        android:layout_width="@dimen/fab_btn_circle"
+                                        android:layout_height="@dimen/fab_btn_circle"
+                                        android:layout_marginTop="20dp"
+                                        android:layout_marginLeft="30dp"
+                                        android:id="@+id/btn_next"
+                                        android:text=">"
+                                        android:background="@drawable/bg_btn_circle"
+                                        android:textColor="@color/colorWhite"
+                                        android:textSize="@dimen/text_size_titles"
+                                        android:textAlignment="center"/>-->
 
 
         </LinearLayout>
@@ -93,37 +94,41 @@
                         android:layout_height="120dp"
                         android:background="@drawable/bg_img_circle"
                         >
-                        <!--<ImageView
-                            android:id="@+id/img_profile_photo"
-                            android:layout_width="85dp"
-                            android:layout_height="85dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/photos_default"
-                            android:tint="@color/colorGrayDark"/>-->
-
                         <ImageView
                             android:id="@+id/img_profile_photo"
                             android:layout_width="85dp"
                             android:layout_height="85dp"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
-                            android:src="@drawable/photos_default"/>
+                            android:src="@drawable/photos_default"
+                            android:tint="@color/colorGrayDark"/>
                     </LinearLayout>
 
-
-
-
-                    <!--<Button
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/btn_upload_photo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
-                        android:background="@color/colorPrimary"
+                        android:layout_width="130dp"
+                        android:layout_height="50dp"
                         android:layout_marginTop="15dp"
-                        android:text="@string/lbl_upload_photo"
-                        android:layout_gravity="center"
-                        />-->
+                        android:layout_marginBottom="15dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:cardCornerRadius="25dp"
+                        app:cardElevation="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_upload_photo"
+                                android:textSize="@dimen/text_size"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/colorWhite"/>
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
@@ -228,16 +233,32 @@
                     android:hint="@string/lbl_retype_password"
                     android:inputType="textPassword" />
 
-                <Button
+                <androidx.cardview.widget.CardView
                     android:id="@+id/btn_submit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:background="@color/colorPrimary"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/lbl_submit"
+                    android:layout_width="280dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
-                    />
+                    android:layout_marginTop="35dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lbl_submit"
+                            android:textSize="@dimen/text_size"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/colorWhite"/>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
         </LinearLayout>
 

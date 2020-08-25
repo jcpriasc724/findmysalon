@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,22 @@ public class DateBookingAdapter extends RecyclerView.Adapter<DateBookingAdapter.
         holder.recHoursAvailable.setAdapter(hoursBookingAdapter);
 
         holder.txtDateBooking.setText(dateBooking);
+
+        holder.imgExpand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (holder.recHoursAvailable.getVisibility()==View.GONE){
+                    holder.recHoursAvailable.setVisibility(View.VISIBLE);
+                    holder.imgExpand.setImageResource(R.drawable.ic_expand_less);
+                } else {
+                    holder.recHoursAvailable.setVisibility(View.GONE);
+                    holder.imgExpand.setImageResource(R.drawable.ic_expand_more);
+                }
+
+            }
+        });
+
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -62,11 +79,12 @@ public class DateBookingAdapter extends RecyclerView.Adapter<DateBookingAdapter.
 
         TextView txtDateBooking;
         RecyclerView recHoursAvailable;
+        ImageView imgExpand;
 
         public DateBookingHolder(@NonNull View itemView) {
             super(itemView);
             txtDateBooking = (TextView) itemView.findViewById(R.id.txt_date_booking);
-
+            imgExpand = itemView.findViewById(R.id.img_expand);
             recHoursAvailable = (RecyclerView) itemView.findViewById(R.id.rec_hours_available);
             recHoursAvailable.setLayoutManager(new GridLayoutManager(context, 3));
 

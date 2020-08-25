@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -16,7 +17,7 @@ import com.findmysalon.view.CustomerActivity;
 
 public class AppiontmentConfirmationFragment extends Fragment {
 
-    Button btnConfirm;
+    CardView btnConfirm;
 
 
     @Nullable
