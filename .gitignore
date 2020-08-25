@@ -109,3 +109,7 @@ local.properties
 .idea/compiler.xml
 .idea/.name
 FindMySalon/app/build.gradle
+MyApplication/.idea/vcs.xml
+MyApplication/.idea/MyApplication.iml
+MyApplication/.idea/modules.xml
+MyApplication/.idea/codeStyles/Project.xml

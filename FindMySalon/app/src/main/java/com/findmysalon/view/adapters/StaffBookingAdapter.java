@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -41,6 +42,21 @@ public class StaffBookingAdapter extends RecyclerView.Adapter<StaffBookingAdapte
         DateBookingAdapter dateBookingAdapter = new DateBookingAdapter(context, list.get(position).getStaffRosters());
         holder.recDateTime.setAdapter(dateBookingAdapter);
 
+        holder.imgExpand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (holder.recDateTime.getVisibility()==View.GONE){
+                    holder.recDateTime.setVisibility(View.VISIBLE);
+                    holder.imgExpand.setImageResource(R.drawable.ic_expand_less);
+                } else {
+                    holder.recDateTime.setVisibility(View.GONE);
+                    holder.imgExpand.setImageResource(R.drawable.ic_expand_more);
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -53,12 +69,13 @@ public class StaffBookingAdapter extends RecyclerView.Adapter<StaffBookingAdapte
         TextView txtNameStaff;
         //RatingBar rtbStaff;
         RecyclerView recDateTime;
+        ImageView imgExpand;
 
         public StaffHolder(@NonNull View itemView) {
             super(itemView);
             txtNameStaff = (TextView) itemView.findViewById(R.id.txt_name_staff);
             //rtbStaff = (RatingBar) itemView.findViewById(R.id.rtb_staff);
-
+            imgExpand = itemView.findViewById(R.id.img_expand);
             recDateTime = (RecyclerView) itemView.findViewById(R.id.rec_date_time);
             recDateTime.setLayoutManager(new LinearLayoutManager(context));
         }

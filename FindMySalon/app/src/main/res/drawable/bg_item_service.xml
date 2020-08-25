@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid
-        android:color="@color/colorWhite"/>
-    <corners
-        android:radius="8dp"/>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bottom 2dp Shadow -->
+    <item>
+        <shape  android:shape="rectangle">
+            <solid android:color="@color/colorShadow" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
 
-</shape>
+    <!-- White Top color -->
+    <item
+        android:bottom="3px"
+        android:left="3px">
+        <shape  android:shape="rectangle">
+            <solid android:color="@color/colorWhite" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</layer-list>
+

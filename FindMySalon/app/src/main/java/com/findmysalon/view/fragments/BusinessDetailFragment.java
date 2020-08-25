@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -15,7 +16,7 @@ import com.findmysalon.R;
 
 public class BusinessDetailFragment extends Fragment {
 
-    Button btnBook;
+    CardView btnBook;
 
 
     @Nullable

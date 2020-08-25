@@ -28,7 +28,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@drawable/ic_star"
-                    android:tint="@color/colorWhite"
+                    android:tint="@color/colorPrimary"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="20dp"/>
 
@@ -38,7 +38,7 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/lbl_favorites"
                     android:textAlignment="center"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_titles" />
 
             </LinearLayout>

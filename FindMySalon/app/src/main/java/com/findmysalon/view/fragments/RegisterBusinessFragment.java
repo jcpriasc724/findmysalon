@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -68,12 +69,12 @@ public class RegisterBusinessFragment extends Fragment {
         mPhone = (EditText) v.findViewById(R.id.etx_phone);
         mPassword = (EditText) v.findViewById(R.id.etx_password);
         mRePassword = (EditText) v.findViewById(R.id.etx_rePassword);
-        Button mSubmitButton = (Button) v.findViewById(R.id.btn_submit);
+        CardView mSubmitButton = v.findViewById(R.id.btn_submit);
         mSubmitButton.setOnClickListener(v1 -> businessSignUp());
 
-        Button btnNext = v.findViewById(R.id.btn_next);
-
-        btnNext.setOnClickListener(v12 -> Navigation.findNavController(v12).navigate(R.id.nav_reg_business_services));
+//        Button btnNext = v.findViewById(R.id.btn_next);
+//
+//        btnNext.setOnClickListener(v12 -> Navigation.findNavController(v12).navigate(R.id.nav_reg_business_services));
 
         return v;
     }

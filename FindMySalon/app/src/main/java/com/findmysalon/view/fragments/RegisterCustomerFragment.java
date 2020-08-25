@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.findmysalon.R;
@@ -90,7 +91,7 @@ public class RegisterCustomerFragment extends Fragment {
         mPhone = (EditText) v.findViewById(R.id.etx_phone);
         mPassword = (EditText) v.findViewById(R.id.etx_password);
         mRePassword = (EditText) v.findViewById(R.id.etx_rePassword);
-        Button mSubmitButton = (Button) v.findViewById(R.id.btn_submit);
+        CardView mSubmitButton = v.findViewById(R.id.btn_submit);
         mSubmitButton.setOnClickListener(v1 -> customerSignUp());
 
         return v;
