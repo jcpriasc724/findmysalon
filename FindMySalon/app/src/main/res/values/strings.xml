@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Find My Salon</string>
     <string name="lbl_signIn">Sign In</string>
-    <string name="lbl_signUp">Sign Up</string>
+    <string name="lbl_signUp">Register here</string>
     <string name="lbl_business">Business</string>
     <string name="lbl_customer">Customer</string>
     <string name="lbl_upload_photo">Upload photo</string>
@@ -20,6 +20,7 @@
     <string name="lbl_edit">Edit</string>
     <string name="lbl_services">Services</string>
     <string name="lbl_logout">Log out</string>
+    <string name="lbl_roster">Roster Staff</string>
     <string name="lbl_bookings">Bookings</string>
     <string name="lbl_home">Home</string>
     <string name="lbl_settings">Settings</string>
@@ -27,6 +28,8 @@
     <string name="lbl_status">Status:</string>
     <string name="lbl_step_one">Step 1: Choose a service</string>
     <string name="lbl_step_two">Step 2: Choose staff</string>
+    <string name="lbl_step_one_roster">Step 1: Choose staff</string>
+    <string name="lbl_step_two_roster">Step 2: Set days and hours</string>
     <string name="lbl_staff">Staff:</string>
     <string name="lbl_staff_1">Staff</string>
     <string name="lbl_customer_booking">Customer:</string>
@@ -50,7 +53,15 @@
     <string name="lbl_choose_staff">Choose Staff</string>
     <string name="lbl_cancel">Cancel</string>
     <string name="lbl_confirm">Confirm</string>
-    <string name="lbl_"></string>
+    <string name="lbl_monday">Monday</string>
+    <string name="lbl_tuesday">Tuesday</string>
+    <string name="lbl_wednesday">Wednesday</string>
+    <string name="lbl_thursday">Thursday</string>
+    <string name="lbl_friday">Friday</string>
+    <string name="lbl_saturday">Saturday</string>
+    <string name="lbl_sunday">Sunday</string>
+    <string name="lbl_start_time">Start time:</string>
+    <string name="lbl_end_time">End time:</string>
 
     <string name="lbl_submit">Submit</string>
 
@@ -65,11 +76,58 @@
     <string name="lbl_image_loading">Waiting image loading</string>
 
     <string name="category_prompt">Choose a category</string>
+    <string name="distance_prompt">Distance around</string>
     <string name="pattern">EEE, d MMM yyyy</string>
 
     <string-array name="categories_arrays">
         <item>Haircuts</item>
         <item>Colours</item>
+    </string-array>
+
+    <string-array name="time_arrays">
+        <item>00</item>
+        <item>PM</item>
+    </string-array>
+
+    <string-array name="hours_arrays">
+        <item>00</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+    </string-array>
+
+    <string-array name="minutes_arrays">
+        <item>00</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+    </string-array>
+
+    <string-array name="distances_arrays">
+        <item>1km</item>
+        <item>10km</item>
+        <item>100km</item>
+        <item>1000km</item>
     </string-array>
 
 
@@ -132,6 +190,9 @@
     <string name="cancel_success">Cancel successfully</string>
     <string name="cancel_fail">Cancel failure</string>
     <string name="cancel_confirm">Are you sure cancel this booking?</string>
+
+    <string name="search">Search</string>
+    <string name="advanced_search">Advanced search</string>
 
     <string-array name="photo_options">
         <item>Take Photo</item>

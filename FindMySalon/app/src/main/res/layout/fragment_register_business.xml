@@ -35,16 +35,16 @@
             </LinearLayout>
 
             <!--<Button
-                android:layout_width="@dimen/fab_btn_circle"
-                android:layout_height="@dimen/fab_btn_circle"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="30dp"
-                android:id="@+id/btn_next"
-                android:text=">"
-                android:background="@drawable/bg_btn_circle"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_titles"
-                android:textAlignment="center"/>-->
+                            android:layout_width="@dimen/fab_btn_circle"
+                            android:layout_height="@dimen/fab_btn_circle"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/btn_next"
+                            android:text=">"
+                            android:background="@drawable/bg_btn_circle"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/text_size_titles"
+                            android:textAlignment="center"/>-->
 
 
         </LinearLayout>
