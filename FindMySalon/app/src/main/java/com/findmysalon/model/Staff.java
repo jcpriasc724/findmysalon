@@ -2,10 +2,11 @@ package com.findmysalon.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Staff {
+public class Staff implements Serializable {
 
     @SerializedName("id")
     private int id;
@@ -28,6 +29,7 @@ public class Staff {
     private Date createdAt;
     @SerializedName("updated_at")
     private Date updatedAt;
+    @SerializedName("datesList")
     private ArrayList<StaffRoster> staffRosters;
 
     public Staff() {

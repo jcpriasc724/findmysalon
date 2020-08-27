@@ -1,6 +1,7 @@
 package com.findmysalon.view.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,34 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
+import com.findmysalon.model.Service;
+import com.findmysalon.model.Staff;
 import com.findmysalon.model.StaffRoster;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HourBookingAdapter extends RecyclerView.Adapter<HourBookingAdapter.HourBookingHolder>{
 
     Context context;
     ArrayList<String> hoursList;
+    Service service;
+    Staff staff;
+    Date selectedDate;
 
-    public HourBookingAdapter(Context context, ArrayList<String> hoursList) {
+    public HourBookingAdapter(
+            Context context,
+            ArrayList<String> hoursList,
+            Service service,
+            Staff staff,
+            Date selectedDateStr
+    ) {
         this.context = context;
         this.hoursList = hoursList;
+        this.service = service;
+        this.staff = staff;
+        this.selectedDate = selectedDateStr;
     }
 
     @NonNull
@@ -39,7 +55,12 @@ public class HourBookingAdapter extends RecyclerView.Adapter<HourBookingAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_appointment_confirmation);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("service", service);
+                bundle.putSerializable("staff", staff);
+                bundle.putSerializable("selectedDate", selectedDate);
+                bundle.putString("selectedTime", hoursList.get(position));
+                Navigation.findNavController(v).navigate(R.id.nav_appointment_confirmation, bundle);
             }
         });
     }

@@ -15,6 +15,9 @@ public interface ServiceApi {
     @GET("service/")
     Call<ArrayList<Service>> serviceList();
 
+    @GET("service/{businessId}/list/")
+    Call<ArrayList<Service>> businessServiceList(@Path("businessId") int id);
+
     @GET("service/category/")
     Call<ArrayList<Category>> serviceCategoryList();
 

@@ -19,7 +19,7 @@ public class StaffRoster {
     private String endMin;
     @SerializedName("status")
     private int status;
-
+    @SerializedName("timesList")
     private ArrayList<String> hoursAvailable;
 
     public StaffRoster() {

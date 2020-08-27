@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
 import com.findmysalon.model.Service;
+import com.findmysalon.model.Staff;
 import com.findmysalon.model.StaffRoster;
 
 import java.text.SimpleDateFormat;
@@ -24,10 +25,18 @@ public class DateBookingAdapter extends RecyclerView.Adapter<DateBookingAdapter.
 
     Context context;
     ArrayList<StaffRoster> rosterList;
+    Service service;
+    Staff staff;
 
-    public DateBookingAdapter(Context context, ArrayList<StaffRoster> rosterList) {
+
+    public DateBookingAdapter(Context context,
+                              ArrayList<StaffRoster> rosterList,
+                              Service service,
+                              Staff staff) {
         this.context = context;
         this.rosterList = rosterList;
+        this.service = service;
+        this.staff = staff;
     }
 
     @NonNull
@@ -42,7 +51,14 @@ public class DateBookingAdapter extends RecyclerView.Adapter<DateBookingAdapter.
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(context.getResources().getString(R.string.pattern));
         String dateBooking = simpleDateFormat.format(rosterList.get(position).getDateRoster());
 
-        HourBookingAdapter hoursBookingAdapter = new HourBookingAdapter(context, rosterList.get(position).getHoursAvailable());
+        HourBookingAdapter hoursBookingAdapter =
+                new HourBookingAdapter(
+                        context,
+                        rosterList.get(position).getHoursAvailable(),
+                        service,
+                        staff,
+                        rosterList.get(position).getDateRoster()
+                );
         holder.recHoursAvailable.setAdapter(hoursBookingAdapter);
 
         holder.txtDateBooking.setText(dateBooking);

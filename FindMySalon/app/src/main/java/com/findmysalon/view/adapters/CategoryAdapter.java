@@ -20,6 +20,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     Context context;
     ArrayList<Category> list;
+    int businessId;
 
     public CategoryAdapter(Context context, ArrayList<Category> list) {
         this.context = context;

@@ -2,9 +2,10 @@ package com.findmysalon.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Service {
+public class Service implements Serializable {
     @SerializedName("id")
     private int id;
     @SerializedName("name")
@@ -29,6 +30,8 @@ public class Service {
     private Date createdAt;
     @SerializedName("updated_at")
     private Date updatedAt;
+    @SerializedName("business")
+    private Business business;
 
     public Service() {
 
@@ -201,6 +204,14 @@ public class Service {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
 }

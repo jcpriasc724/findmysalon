@@ -1,6 +1,7 @@
 package com.findmysalon.view.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,9 @@ public class ServiceByCategoryAdapter extends RecyclerView.Adapter<ServiceByCate
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_staff_booking);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("service", servicesList.get(position));
+                Navigation.findNavController(v).navigate(R.id.nav_staff_booking, bundle);
             }
         });
     }

@@ -13,18 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
+import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
+import com.findmysalon.model.StaffAvailable;
 
 import java.util.ArrayList;
 
 public class StaffBookingAdapter extends RecyclerView.Adapter<StaffBookingAdapter.StaffHolder>{
 
     Context context;
-    ArrayList<Staff> list;
+    ArrayList<StaffAvailable> list;
+    Service service;
 
-    public StaffBookingAdapter(Context context, ArrayList<Staff> list) {
+    public StaffBookingAdapter(Context context,
+                               ArrayList<StaffAvailable> list,
+                               Service service) {
         this.context = context;
         this.list = list;
+        this.service = service;
     }
 
     @NonNull
@@ -36,10 +42,10 @@ public class StaffBookingAdapter extends RecyclerView.Adapter<StaffBookingAdapte
     @Override
     public void onBindViewHolder(@NonNull StaffHolder holder, int position) {
 
-        holder.txtNameStaff.setText(list.get(position).getName());
+        holder.txtNameStaff.setText(list.get(position).getStaff().getName());
         //holder.rtbStaff.setRating(list.get(position).getRating());
 
-        DateBookingAdapter dateBookingAdapter = new DateBookingAdapter(context, list.get(position).getStaffRosters());
+        DateBookingAdapter dateBookingAdapter = new DateBookingAdapter(context, list.get(position).getStaffRosters(), service, list.get(position).getStaff());
         holder.recDateTime.setAdapter(dateBookingAdapter);
 
         holder.imgExpand.setOnClickListener(new View.OnClickListener() {

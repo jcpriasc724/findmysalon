@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Business extends User{
 
+    @SerializedName("id")
+    private int id;
     @SerializedName("store_name")
     private String storeName;
     @SerializedName("business_type")
@@ -26,6 +28,15 @@ public class Business extends User{
         this.storeName = storeName;
         this.rating = rating;
     }*/
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Float getRating() {
         return rating;
