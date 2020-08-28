@@ -119,7 +119,8 @@ public class StaffBookingFragment extends Fragment {
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
         appointmentApi = retrofit.create(AppointmentApi.class);
-        Call<ArrayList<StaffAvailable>> call = appointmentApi.availableTimeTable(service.getId(),service.getBusiness().getId());
+        Call<ArrayList<StaffAvailable>> call =
+                appointmentApi.availableTimeTable(service.getId(),service.getBusiness().getId());
         call.enqueue(new Callback<ArrayList<StaffAvailable>>() {
             @Override
             public void onResponse(Call<ArrayList<StaffAvailable>> call, Response<ArrayList<StaffAvailable>> response) {

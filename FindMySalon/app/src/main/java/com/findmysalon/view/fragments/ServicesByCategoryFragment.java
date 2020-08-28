@@ -1,6 +1,8 @@
 package com.findmysalon.view.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,17 +35,18 @@ import retrofit2.Retrofit;
 
 public class ServicesByCategoryFragment extends Fragment {
 
-    TextView txtNameCategory;
+    TextView txtNameCategory, txtKeyword;
 
     RecyclerView recServicesByCategory;
     //RecyclerView recServices;
-    ArrayList<Category> categoryList;
-    ArrayList<Service> servicesList;
+    ArrayList<Category> categoryList, categoryListTmp;
+    ArrayList<Service> servicesList, servicesListTmp;
     CategoryAdapter categoryAdapter;
     ServiceApi serviceApi;
     ArrayList<Service> sList;
     int curCategoryId;
     int businessId;
+
 
     @Nullable
     @Override
@@ -52,6 +55,7 @@ public class ServicesByCategoryFragment extends Fragment {
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         txtNameCategory = view.findViewById(R.id.txt_service_by_category);
+        txtKeyword = view.findViewById(R.id.txt_keyword);
 
         recServicesByCategory = view.findViewById(R.id.rec_category);
         recServicesByCategory.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -61,6 +65,55 @@ public class ServicesByCategoryFragment extends Fragment {
         servicesList =  new ArrayList<Service>();
         ArrayList<Service> servicesList1 = new ArrayList<Service>();
         businessId = getArguments().getInt("id", 1);
+
+        categoryAdapter = new CategoryAdapter(getActivity(), categoryList);
+        recServicesByCategory.setAdapter(categoryAdapter);
+
+        txtKeyword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+
+                if(categoryListTmp == null || categoryListTmp.size() < 1 )
+                    categoryListTmp = categoryList;
+
+                if(txtKeyword.getText().toString().equalsIgnoreCase("")){
+                    categoryList = categoryListTmp;
+                } else {
+                    boolean isContain = false;
+                    categoryList = new ArrayList<>();
+                    for( Category cate: categoryListTmp){
+                        isContain = false;
+                        servicesListTmp = new ArrayList<>();
+                        for (Service service: cate.getListServices()){
+                            if(service.getNameService().toLowerCase().contains(txtKeyword.getText().toString().toLowerCase())){
+                                isContain = true;
+                                servicesListTmp.add(service);
+                            }
+                        }
+                        if(isContain == true)
+                            categoryList.add(new Category(
+                                    cate.getId(),
+                                    cate.getNameCategory(),
+                                    cate.getOrder(),
+                                    cate.getDescription(),
+                                    servicesListTmp
+                            ));
+                    }
+                }
+
+                categoryAdapter = new CategoryAdapter(getActivity(), categoryList);
+                recServicesByCategory.setAdapter(categoryAdapter);
+            }
+        });
 //        Service service1 = new Service("Basic hair cut", 20d, 20l, "The hair cut is beautiful");
 //        Service service2 = new Service("Hair cut with style", 30d, 30l, "The hair cut is beautiful");
 //        Service service3 = new Service("Hair cut and Beard", 50d, 50l, "The hair cut is beautiful");
@@ -99,8 +152,14 @@ public class ServicesByCategoryFragment extends Fragment {
 //        categoryList.add(category3);
 
 
-        categoryAdapter = new CategoryAdapter(getActivity(), categoryList);
-        recServicesByCategory.setAdapter(categoryAdapter);
+        loadData();
+        return view;
+    }
+
+
+    private void loadData(){
+        if( categoryListTmp!=null && categoryListTmp.size() > 0 )
+            return;
 
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
@@ -114,10 +173,7 @@ public class ServicesByCategoryFragment extends Fragment {
 //                    Log.i("SERVICE_LIT", servicesList.toString());
                     if(servicesList.size() > 0) {
                         for (int index = 0; index < servicesList.size(); index++) {
-//                        Service s: servicesList
-//                        if(contains(categoryList, s.getCategory().getId()) == false)
-//                            categoryList.add(s.getCategory());
-//                        categoryList.set(categoryList.indexOf( s.getCategory().getId()), addService2Category(categoryList, s));
+
                             if (curCategoryId == 0) {
                                 curCategoryId = servicesList.get(index).getCategory().getId();
                                 sList = new ArrayList<Service>();
@@ -156,10 +212,6 @@ public class ServicesByCategoryFragment extends Fragment {
             }
         });
         // retrofit End
-
-
-
-        return view;
     }
 
 }

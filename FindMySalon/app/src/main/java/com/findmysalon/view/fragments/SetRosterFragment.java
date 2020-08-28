@@ -3,6 +3,7 @@ package com.findmysalon.view.fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Debug;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -121,7 +122,7 @@ public class SetRosterFragment extends Fragment {
     }
 
     private void submit(){
-        submitDf = new SimpleDateFormat("dd-MM-yyyy");
+        submitDf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         // validate the info
         submitData = new ArrayList<>();
         for (final StaffRoster sr : list) {
@@ -137,6 +138,8 @@ public class SetRosterFragment extends Fragment {
             }
             HashMap<String,String> paramsMap = new HashMap<>();
             paramsMap.put("date",  submitDf.format(sr.getDateRoster()));
+//            paramsMap.put("date",  sr.getDateRoster().toString());
+//            Log.i(null, sr.getDateRoster().toString());
             paramsMap.put("start_time", sr.getStartHour() + ":" + sr.getStartMin() );
             paramsMap.put("finish_time", sr.getEndHour() + ":" + sr.getEndMin()  );
             paramsMap.put("status", String.valueOf(sr.getStatus()));
