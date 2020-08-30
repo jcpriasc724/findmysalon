@@ -26,7 +26,9 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,6 +61,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.findmysalon.utils.abcConstants.BASE_URL;
 
 public class RegisterCustomerFragment extends Fragment {
+    public static final String EXTRAS_USER_ID = "user_id";
     static final int REQUEST_CAPTURE_IMAGE = 1;
     static final int REQUEST_GALLERY_IMAGE = 2;
 
@@ -73,6 +76,8 @@ public class RegisterCustomerFragment extends Fragment {
     private HashMap<String, Object> addressApi;
     private Uri imageUri = null;
     private View v;
+    private int userId;
+    private boolean editMode = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,13 +90,26 @@ public class RegisterCustomerFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, requestCode);
         }
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        if(extras != null){
+            userId = (int)extras.getSerializable(EXTRAS_USER_ID);
+            editMode = true;
+        }
+        Log.d("User id ", ""+userId);
+        Toast.makeText(getActivity(), "Hello "+ userId, Toast.LENGTH_LONG).show();
+
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_register_customer, container, false);
-
+        
+        if(editMode){
+            fillEditForm();
+        }
+        
         mImgView = (ImageView) v.findViewById(R.id.img_profile_photo);
         mImgView.setOnClickListener(v12 -> {
             selectImage();
@@ -113,6 +131,10 @@ public class RegisterCustomerFragment extends Fragment {
         mSubmitButton.setOnClickListener(v1 -> customerSignUp());
 
         return v;
+    }
+
+    private void fillEditForm() {
+
     }
 
     @Override

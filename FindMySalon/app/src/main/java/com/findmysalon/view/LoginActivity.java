@@ -122,7 +122,8 @@ public class LoginActivity extends AppCompatActivity {
                     // If user is customer then redirect them to customer activity
                     else if(resp.getUserType().equals("C")){
                         Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
-                        //ide .putExtra("hi", "HI");
+                        intent .putExtra("user_id", resp.getUserId());
+                        intent .putExtra("profile_photo", resp.getProfilePhoto());
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }

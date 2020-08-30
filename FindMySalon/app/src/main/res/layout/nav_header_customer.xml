@@ -14,8 +14,10 @@
 
     <ImageView
         android:id="@+id/img_profile_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@mipmap/ic_launcher_round" />
@@ -31,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="Simon"
+            android:text="@string/profile"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <ImageButton
@@ -40,6 +42,33 @@
             android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
             android:id="@+id/btn_edit"
+            android:tint="@color/colorPrimary"
+            android:src="@drawable/ic_edit"
+            android:background="@drawable/bg_btn_circle2"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/txt_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="@string/lbl_password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <ImageButton
+            android:layout_width="@dimen/fab_btn_circle_small"
+            android:layout_height="@dimen/fab_btn_circle_small"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:id="@+id/btn_change_password"
             android:tint="@color/colorPrimary"
             android:src="@drawable/ic_edit"
             android:background="@drawable/bg_btn_circle2"

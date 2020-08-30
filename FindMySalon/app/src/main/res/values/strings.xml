@@ -173,6 +173,7 @@
     <string name="ok">OK</string>
     <string name="api_key">AIzaSyArTaAe7YfAZn_ylMk-nGWWRfueTseIV3Q</string>
     <string name="title_activity_business">BusinessActivity</string>
+    <string name="customer_profile_activity">CustomerProfileActivity</string>
 
     <string name="invalid_service_name"> Service name is invalid</string>
     <string name="invalid_service_price"> Service price is invalid</string>
@@ -193,6 +194,7 @@
 
     <string name="search">Search</string>
     <string name="advanced_search">Advanced search</string>
+    <string name="profile">Profile</string>
 
     <string-array name="photo_options">
         <item>Take Photo</item>
