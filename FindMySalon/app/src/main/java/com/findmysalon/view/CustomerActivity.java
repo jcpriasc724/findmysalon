@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -32,6 +36,16 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
         NavigationView navigationView = findViewById(R.id.nav_view_customer);
         navigationView.setNavigationItemSelectedListener(this);
 
+//        View header = navigationView.getHeaderView(0);
+//        ImageButton editButton = header.findViewById(R.id.btn_edit);
+//
+//        editButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(CustomerActivity.this, "Hello", Toast.LENGTH_LONG).show();
+//            }
+//        });
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -50,6 +64,12 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
                 break;
             case R.id.nav_favorites:
                 Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_list_fav_business);
+                break;
+            case R.id.nav_update_profile:
+                Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_update_customer);
+                break;
+            case R.id.nav_change_password:
+                Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_change_password_customer);
                 break;
 
 

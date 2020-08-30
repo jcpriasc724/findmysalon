@@ -6,11 +6,6 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_account_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/lbl_settings" />
-
-        <item
             android:id="@+id/nav_bookings"
             android:icon="@drawable/ic_appointment"
             android:title="@string/lbl_bookings" />
@@ -29,6 +24,26 @@
             android:id="@+id/nav_roster_staff"
             android:icon="@drawable/ic_time"
             android:title="@string/lbl_roster" />
+
+        <item
+            android:title="@string/lbl_settings">
+
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_update_profile"
+                        android:icon="@drawable/ic_update"
+                        android:title="@string/lbl_update_profile" />
+
+                    <item
+                        android:id="@+id/nav_change_password"
+                        android:icon="@drawable/ic_password"
+                        android:title="@string/lbl_change_password" />
+
+                </group>
+            </menu>
+
+        </item>
 
         <item
             android:id="@+id/nav_log_out"
