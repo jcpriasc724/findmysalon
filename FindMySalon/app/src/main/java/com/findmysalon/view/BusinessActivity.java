@@ -42,8 +42,11 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.nav_account_settings:
-                //Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_list_bookings);
+            case R.id.nav_update_profile:
+                Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_update_business);
+                break;
+            case R.id.nav_change_password:
+                Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_change_password_business);
                 break;
             case R.id.nav_bookings:
                 Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_list_bookings);

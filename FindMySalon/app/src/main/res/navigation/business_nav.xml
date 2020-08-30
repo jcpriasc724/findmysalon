@@ -47,7 +47,17 @@
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_set_roster" />
 
+    <fragment
+        android:id="@+id/nav_update_business"
+        android:name="com.findmysalon.view.fragments.UpdateBusinessFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_update_business" />
 
+    <fragment
+        android:id="@+id/nav_change_password_business"
+        android:name="com.findmysalon.view.fragments.ChangePasswordFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_change_password" />
 
 
 

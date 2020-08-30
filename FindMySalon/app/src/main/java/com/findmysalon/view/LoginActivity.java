@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.findmysalon.R;
 import com.findmysalon.api.UserApi;
+import com.findmysalon.model.Business;
 import com.findmysalon.model.Customer;
 import com.findmysalon.model.Token;
 import com.findmysalon.utils.RetrofitClient;
