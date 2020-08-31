@@ -23,6 +23,8 @@ import com.google.gson.JsonObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -52,6 +54,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingH
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(context.getResources().getString(R.string.pattern));
         String dateBooking = simpleDateFormat.format(list.get(position).getDateBooking());
+        Date curDate=new Date();
 
         holder.txtDateBooking.setText(dateBooking);
         holder.txtTimeBooking.setText(list.get(position).getStartTime()+" - "+list.get(position).getEndTime());
@@ -64,6 +67,13 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingH
         } else {
             holder.textStatus.setText("Approval");
         }
+
+        // if booking date is expired remove the cancel button
+        Calendar c = Calendar.getInstance();
+        c.setTime(list.get(position).getDateBooking());
+        c.add(c.DATE,1);
+        if(c.getTime().compareTo(curDate) < 1)
+            holder.btnDelete.setVisibility(View.GONE);
 
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
