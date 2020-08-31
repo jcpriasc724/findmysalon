@@ -49,31 +49,4 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp">
-
-        <TextView
-            android:id="@+id/txt_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="@string/lbl_password"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-        <ImageButton
-            android:layout_width="@dimen/fab_btn_circle_small"
-            android:layout_height="@dimen/fab_btn_circle_small"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            android:id="@+id/btn_change_password"
-            android:tint="@color/colorPrimary"
-            android:src="@drawable/ic_edit"
-            android:background="@drawable/bg_btn_circle2"
-            android:textAlignment="center"/>
-
-    </LinearLayout>
-
 </LinearLayout>

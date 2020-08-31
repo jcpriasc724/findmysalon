@@ -24,16 +24,25 @@ import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.findmysalon.R;
+import com.findmysalon.api.UserApi;
+import com.findmysalon.model.CustomerProfile;
+import com.findmysalon.utils.RetrofitClient;
 import com.findmysalon.view.fragments.RegisterCustomerFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.UUID;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+import static com.findmysalon.utils.abcConstants.ACCESS_TOKEN;
 
 public class CustomerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawer;
     private int userId;
     private Uri profilePhoto;
+    private UserApi userApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +56,12 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
         NavigationView navigationView = findViewById(R.id.nav_view_customer);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Accessing the navigation header
+        View header = navigationView.getHeaderView(0);
+        ImageView imgView = header.findViewById(R.id.img_profile_photo);
 
         // Accessing intent passed from LoginActivity
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
 
         if (extras != null)
         {
@@ -57,35 +69,42 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
             String pPhoto = (String) extras.get("profile_photo");
             // Parsing URL of profile photo in string to Uri type
             profilePhoto = Uri.parse(pPhoto);
-        }
+        }*/
 
-        // Accessing the navigation header
-        View header = navigationView.getHeaderView(0);
-        ImageView imgView = header.findViewById(R.id.img_profile_photo);
-        // Plugin to display profile photo
-        Glide.with(getApplicationContext())
-                .load(profilePhoto)
-                .circleCrop()
-                .placeholder(R.drawable.photos_default)
-                .into(imgView);
+        // retrofit
+        Retrofit retrofit = RetrofitClient.getInstance(getApplicationContext());
+        userApi = retrofit.create(UserApi.class);
+        Call<CustomerProfile> call = userApi.getUserDetails();
+        call.enqueue(new Callback<CustomerProfile>() {
+            @Override
+            public void onResponse(Call<CustomerProfile> call, Response<CustomerProfile> response) {
+                if(response.isSuccessful()){
+                    profilePhoto = Uri.parse(response.body().getProfilePhoto());
+                    // Plugin to display profile photo
+                    Glide.with(getApplicationContext())
+                            .load(profilePhoto)
+                            .circleCrop()
+                            .placeholder(R.drawable.photos_default)
+                            .into(imgView);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CustomerProfile> call, Throwable t) {
+                Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
         // Accessing the profile edit button
-        ImageButton editButton = header.findViewById(R.id.btn_edit);
+        /*ImageButton editButton = header.findViewById(R.id.btn_edit);
         editButton.setOnClickListener(v -> {
             Intent intent = new Intent(CustomerActivity.this, CustomerProfileActivity.class);
             intent.putExtra(RegisterCustomerFragment.EXTRAS_USER_ID, userId);
             startActivity(intent);
-        });
-
-//        View header = navigationView.getHeaderView(0);
-//        ImageButton editButton = header.findViewById(R.id.btn_edit);
-//
-//        editButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(CustomerActivity.this, "Hello", Toast.LENGTH_LONG).show();
-//            }
-//        });
-
+        });*/
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -106,17 +125,12 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
             case R.id.nav_favorites:
                 Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_list_fav_business);
                 break;
-<<<<<<< HEAD
-=======
             case R.id.nav_update_profile:
                 Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_update_customer);
                 break;
             case R.id.nav_change_password:
                 Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_change_password_customer);
                 break;
-
-
->>>>>>> 62b77e3a685a394b01018056fc5323440f2a121f
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
