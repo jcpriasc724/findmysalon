@@ -41,8 +41,8 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffHolder>
     public void onBindViewHolder(@NonNull StaffHolder holder, int position) {
 
         holder.txtNameStaff.setText(list.get(position).getName());
-        holder.txtEmail.setText(list.get(position).getEmail());
-        holder.txtPhoneNumber.setText(list.get(position).getPhoneNumber());
+        holder.txtCategory.setText("Service type: " + list.get(position).getCategory().getNameCategory());
+        holder.txtPhoneNumber.setText("Contact: " + list.get(position).getPhoneNumber());
 
         if(list.get(position).getImage() != null) {
             Glide.with(holder.imgAvatar.getContext())
@@ -72,13 +72,13 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffHolder>
 
     class StaffHolder extends RecyclerView.ViewHolder {
 
-        TextView txtNameStaff, txtEmail, txtPhoneNumber, txtEdit;
+        TextView txtNameStaff, txtCategory, txtPhoneNumber, txtEdit;
         ImageView imgAvatar;
 
         public StaffHolder(@NonNull View itemView) {
             super(itemView);
             txtNameStaff = (TextView) itemView.findViewById(R.id.txt_name_staff);
-            txtEmail = (TextView) itemView.findViewById(R.id.txt_email);
+            txtCategory = (TextView) itemView.findViewById(R.id.txt_category);
             txtPhoneNumber = (TextView) itemView.findViewById(R.id.txt_phone_number);
             txtEdit = (TextView) itemView.findViewById(R.id.txt_edit);
             imgAvatar = (ImageView) itemView.findViewById(R.id.img_profile_photo);
