@@ -78,6 +78,7 @@
     <string name="lbl_apply">Apply</string>
 
     <string name="lbl_submit">Submit</string>
+    <string name="lbl_update">Update</string>
 
     <string name="lbl_description_service">Description Service</string>
     <string name="lbl_price_service">Price Service</string>
@@ -191,10 +192,12 @@
     <string name="invalid_credentials"> Invalid credentials</string>
     <string name="network_error"> Network error. Please, try again later</string>
     <string name="response_error"> Request could not be processed. Please, try again later</string>
+    <string name="incorrect_current_password"> The current password is incorrect</string>
     <string name="camera_not_supported"> Sorry, your device does not support camera</string>
     <string name="ok">OK</string>
     <string name="api_key">AIzaSyArTaAe7YfAZn_ylMk-nGWWRfueTseIV3Q</string>
     <string name="title_activity_business">BusinessActivity</string>
+    <string name="customer_profile_activity">CustomerProfileActivity</string>
 
     <string name="invalid_service_name"> Service name is invalid</string>
     <string name="invalid_service_price"> Service price is invalid</string>
@@ -215,6 +218,7 @@
 
     <string name="search">Search</string>
     <string name="advanced_search">Advanced search</string>
+    <string name="profile">Profile</string>
 
     <string-array name="photo_options">
         <item>Take Photo</item>
