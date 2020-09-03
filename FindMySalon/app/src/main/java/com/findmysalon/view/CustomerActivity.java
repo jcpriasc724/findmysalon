@@ -131,6 +131,9 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
             case R.id.nav_change_password:
                 Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_change_password_customer);
                 break;
+            case R.id.nav_log_out:
+                Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_logout_user);
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
