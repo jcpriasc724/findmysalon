@@ -154,6 +154,7 @@ public class UpdateCustomerFragment extends Fragment {
         else if(currentAddress.equals(mAddress.getText().toString())){
             address = mAddress.getText().toString();
         }
+        Log.d("Address ", ""+currentAddress.equals(mAddress.getText().toString()));
 
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String phonePattern = "^[0-9]{10}$";
