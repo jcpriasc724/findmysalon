@@ -59,7 +59,9 @@
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_change_password" />
 
-
-
+    <fragment
+        android:id="@+id/nav_logout_user"
+        android:name="com.findmysalon.view.fragments.LogoutFragment"
+        android:label="@string/sign_up" />
 
 </navigation>

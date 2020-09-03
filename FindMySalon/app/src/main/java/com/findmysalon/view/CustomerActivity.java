@@ -35,8 +35,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static com.findmysalon.utils.abcConstants.ACCESS_TOKEN;
-
 public class CustomerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawer;
