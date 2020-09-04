@@ -2,12 +2,12 @@ package com.findmysalon.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CustomerProfile {
+public class BusinessProfile {
 
-    @SerializedName("first_name")
-    private String firstName;
-    @SerializedName("last_name")
-    private String lastName;
+    @SerializedName("store_name")
+    private String businessName;
+    @SerializedName("business_type")
+    private String businessType;
     @SerializedName("email")
     private String email;
     @SerializedName("address")
@@ -23,9 +23,9 @@ public class CustomerProfile {
     @SerializedName("profile_photo")
     private String profilePhoto;
 
-    public CustomerProfile(String firstName, String lastName, String email, String address, double latitude, double longitude, String phone, String userType) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public BusinessProfile(String businessName, String businessType, String email, String address, double latitude, double longitude, String phone, String userType) {
+        this.businessName = businessName;
+        this.businessType = businessType;
         this.email = email;
         this.address = address;
         this.latitude = latitude;
@@ -34,12 +34,12 @@ public class CustomerProfile {
         this.userType = userType;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getBusinessName() {
+        return businessName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getBusinessType() {
+        return businessType;
     }
 
     public String getEmail() {
