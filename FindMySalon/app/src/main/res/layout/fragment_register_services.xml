@@ -125,6 +125,7 @@
                 <Switch
                     android:id="@+id/stc_status"
                     android:layout_marginTop="20dp"
+                    android:theme="@style/SwitchTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/lbl_enable_disable" />
