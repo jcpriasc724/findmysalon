@@ -76,7 +76,7 @@ public class AppiontmentConfirmationFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                Navigation.findNavController(v).navigate(R.id.nav_type_business);
-                simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 // retrofit
                 Retrofit retrofit = RetrofitClient.getInstance(getActivity());
                 appointmentApi = retrofit.create(AppointmentApi.class);

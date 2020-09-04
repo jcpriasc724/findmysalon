@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class StaffFragment extends Fragment {
 
-    TextView txtNameStaff, txtEmail, txtPhoneNumber, txtNoStaff;
+    TextView txtNameStaff, txtCategory, txtPhoneNumber, txtNoStaff;
 
     RecyclerView recStaff;
     ArrayList<Staff> list;
@@ -49,7 +49,7 @@ public class StaffFragment extends Fragment {
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         txtNameStaff = view.findViewById(R.id.txt_name_staff);
-        txtEmail = view.findViewById(R.id.txt_email);
+        txtCategory = view.findViewById(R.id.txt_category);
         txtPhoneNumber = view.findViewById(R.id.txt_phone_number);
         txtNoStaff = view.findViewById(R.id.txt_no_staff);
 
@@ -69,12 +69,12 @@ public class StaffFragment extends Fragment {
             }
         });
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Navigation.findNavController(v).navigate(R.id.nav_reg_business_staff);
-            }
-        });
+//        btnNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Navigation.findNavController(v).navigate(R.id.nav_reg_business_staff);
+//            }
+//        });
 
         list = new ArrayList<Staff>();
 
