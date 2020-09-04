@@ -54,7 +54,7 @@
         tools:layout="@layout/fragment_update_business" />
 
     <fragment
-        android:id="@+id/nav_change_password_business"
+        android:id="@+id/nav_change_password_user"
         android:name="com.findmysalon.view.fragments.ChangePasswordFragment"
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_change_password" />
