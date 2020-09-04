@@ -24,37 +24,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
-import com.bumptech.glide.Glide;
 import com.findmysalon.R;
-import com.findmysalon.api.AppointmentApi;
 import com.findmysalon.api.UserApi;
 import com.findmysalon.helpers.PlaceApi;
-import com.findmysalon.model.Booking;
 import com.findmysalon.model.CustomerProfile;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.utils.RetrofitClient;
 import com.findmysalon.view.CustomerActivity;
-import com.findmysalon.view.LoginActivity;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.app.Activity.RESULT_OK;
-import static com.findmysalon.utils.abcConstants.BASE_URL;
 
 public class UpdateCustomerFragment extends Fragment {
 
@@ -174,7 +155,7 @@ public class UpdateCustomerFragment extends Fragment {
         else{
             Retrofit retrofit = RetrofitClient.getInstance(getActivity());
             userApi = retrofit.create(UserApi.class);
-            CustomerProfile customerProfile = new CustomerProfile(firstName, lastName, email, address, latitude, longitude, phone);
+            CustomerProfile customerProfile = new CustomerProfile(firstName, lastName, email, address, latitude, longitude, phone,"C");
             Call<CustomerProfile> call =  userApi.customerUpdate(customerProfile);
             call.enqueue(new Callback<CustomerProfile>() {
                 @Override

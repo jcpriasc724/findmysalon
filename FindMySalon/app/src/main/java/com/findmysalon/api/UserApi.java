@@ -3,6 +3,7 @@ import android.database.Observable;
 
 import com.findmysalon.model.Booking;
 import com.findmysalon.model.Business;
+import com.findmysalon.model.BusinessProfile;
 import com.findmysalon.model.Customer;
 import com.findmysalon.model.CustomerProfile;
 import com.findmysalon.model.Service;
@@ -89,8 +90,14 @@ public interface UserApi {
     @GET("api/user/details/")
     Call<CustomerProfile> getUserDetails();
 
+    @GET("api/user/details/")
+    Call<BusinessProfile> getBusinessDetails();
+
     @PATCH("api/user/update/")
     Call<CustomerProfile> customerUpdate(@Body CustomerProfile customerProfile);
+
+    @PATCH("api/user/update/")
+    Call<BusinessProfile> businessUpdate(@Body BusinessProfile businessProfile);
 
     @FormUrlEncoded
     @PATCH("api/user/change_password/")
