@@ -43,7 +43,7 @@ import retrofit2.Retrofit;
 public class StaffBookingFragment extends Fragment {
 
     TextView txtNameStaff;
-    RatingBar rtbStaff;
+    //RatingBar rtbStaff;
 
     RecyclerView recStaff;
     ArrayList<StaffAvailable> list;
@@ -59,7 +59,7 @@ public class StaffBookingFragment extends Fragment {
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         txtNameStaff = view.findViewById(R.id.txt_name_staff);
-        rtbStaff = view.findViewById(R.id.rtb_staff);
+        //rtbStaff = view.findViewById(R.id.rtb_staff);
 
         recStaff = view.findViewById(R.id.rec_staff_booking);
         recStaff.setLayoutManager(new LinearLayoutManager(getActivity()));

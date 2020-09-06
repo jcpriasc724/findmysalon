@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGray"
+    android:background="@color/colorGreen"
     tools:context=".view.LoginActivity">
 
 
     <ImageView
         android:id="@+id/img_logo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
-        app:srcCompat="@drawable/logo_find_my_salon" />
+        app:srcCompat="@drawable/fms_logo1" />
 
     <EditText
         android:id="@+id/etx_email"
@@ -23,7 +23,7 @@
         android:layout_height="45dp"
         android:layout_below="@id/img_logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:background="@color/colorGrayMid"
         android:ems="10"
         android:drawableLeft="@drawable/ic_action_user"
@@ -37,7 +37,7 @@
         android:layout_height="45dp"
         android:layout_below="@id/etx_email"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="20dp"
         android:background="@color/colorGrayMid"
         android:drawableLeft="@drawable/ic_action_lock"
         android:ems="10"
@@ -51,7 +51,7 @@
         android:layout_marginTop="60dp"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="@color/colorSecondary"
         app:cardCornerRadius="25dp"
         app:cardElevation="10dp"
         android:layout_centerHorizontal="true">
@@ -66,7 +66,7 @@
                 android:text="@string/sign_in"
                 android:textSize="@dimen/text_size"
                 android:layout_centerInParent="true"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorPrimary"/>
 
         </RelativeLayout>
 
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/lbl_signUp"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/colorSecondary"/>
 
 
 </RelativeLayout>

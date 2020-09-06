@@ -40,10 +40,10 @@ public class StaffRosterAdapter extends RecyclerView.Adapter<StaffRosterAdapter.
     @Override
     public void onBindViewHolder(@NonNull StaffHolder holder, int position) {
 
-        holder.txtNameStaff.setText(list.get(position).getName());
+        holder.txtFirstNameStaff.setText(list.get(position).getName());
 //        holder.rtbStaff.setRating(list.get(position).getRating());
 
-        holder.rtbStaff.setVisibility(View.GONE);
+        //holder.rtbStaff.setVisibility(View.GONE);
         if(list.get(position).getImage() != null) {
             holder.staffProfile.setImageTintMode(null);
             Glide.with(holder.staffProfile.getContext())
@@ -75,15 +75,17 @@ public class StaffRosterAdapter extends RecyclerView.Adapter<StaffRosterAdapter.
 
     class StaffHolder extends RecyclerView.ViewHolder {
 
-        TextView txtNameStaff;
-        RatingBar rtbStaff;
+        TextView txtFirstNameStaff;
+        TextView txtLastNameStaff;
+        //RatingBar rtbStaff;
         LinearLayout containerStaff;
         ImageView staffProfile;
 
         public StaffHolder(@NonNull View itemView) {
             super(itemView);
-            txtNameStaff = (TextView) itemView.findViewById(R.id.txt_name_staff);
-            rtbStaff = (RatingBar) itemView.findViewById(R.id.rtb_staff);
+            txtFirstNameStaff = (TextView) itemView.findViewById(R.id.txt_first_name_staff);
+            //txtLastNameStaff = (TextView) itemView.findViewById(R.id.txt_last_name_staff);
+            //rtbStaff = (RatingBar) itemView.findViewById(R.id.rtb_staff);
             containerStaff = itemView.findViewById(R.id.container_staff);
             staffProfile = (ImageView) itemView.findViewById(R.id.img_staff);
         }

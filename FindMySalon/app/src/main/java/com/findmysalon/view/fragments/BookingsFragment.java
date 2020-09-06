@@ -39,7 +39,7 @@ public class BookingsFragment extends Fragment {
     ArrayList<Booking> list;
     BookingAdapter bookingAdapter;
     AppointmentApi appointmentApi;
-    TextView txtNoServices;
+    TextView txtNoBookings;
 
     @Nullable
     @Override
@@ -47,7 +47,7 @@ public class BookingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_bookings, container, false);
 
         recBookings = view.findViewById(R.id.rec_bookings);
-        txtNoServices = view.findViewById(R.id.txt_no_bookings);
+        txtNoBookings = view.findViewById(R.id.txt_no_bookings);
         recBookings.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 //        Customer customer1 = new Customer("Juan Camilo","Puente");
@@ -80,7 +80,7 @@ public class BookingsFragment extends Fragment {
                     Log.i("appointment_LIT", new Date().toString());
                     bookingAdapter.notifyDataSetChanged();
                     if(list.size() > 0){
-                        txtNoServices.setVisibility(View.GONE);
+                        txtNoBookings.setVisibility(View.GONE);
                     }
                 }
             }

@@ -35,7 +35,7 @@ import retrofit2.Retrofit;
 public class StaffRosterFragment extends Fragment {
 
     TextView txtNameStaff, txtNoStaff;
-    RatingBar rtbStaff;
+    //RatingBar rtbStaff;
 
     RecyclerView recStaff;
     ArrayList<Staff> list;
@@ -49,7 +49,7 @@ public class StaffRosterFragment extends Fragment {
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         txtNameStaff = view.findViewById(R.id.txt_name_staff);
-        rtbStaff = view.findViewById(R.id.rtb_staff);
+        //rtbStaff = view.findViewById(R.id.rtb_staff);
         txtNoStaff = view.findViewById(R.id.txt_no_staff);
         recStaff = view.findViewById(R.id.rec_staff_roster);
 //        recStaff.setLayoutManager(new LinearLayoutManager(getActivity()));
