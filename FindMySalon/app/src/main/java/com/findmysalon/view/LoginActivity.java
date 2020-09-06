@@ -137,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
+                Helper.errorMsgDialog(LoginActivity.this, R.string.network_error);
             }
         });
         // retrofit End
