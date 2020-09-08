@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
     android:background="@drawable/bg_item_service"
+    android:id="@+id/container_staff"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -66,15 +67,12 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
-        <ImageButton
-            android:id="@+id/btn_edit"
-            android:layout_width="@dimen/fab_btn_circle_small"
-            android:layout_height="@dimen/fab_btn_circle_small"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/bg_btn_circle_edit"
-            android:src="@drawable/ic_edit"
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_arrow_forward"
             android:textAlignment="center"
-            android:tint="@color/colorSecondary" />
+            android:tint="@color/colorGrayDark" />
 
 
     </LinearLayout>

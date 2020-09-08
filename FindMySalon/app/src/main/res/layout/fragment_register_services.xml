@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -149,28 +150,92 @@
                         android:hint="@string/lbl_order"
                         android:inputType="number" />
 
-                <Button
+                <androidx.cardview.widget.CardView
                     android:id="@+id/btn_save"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:background="@color/colorPrimary"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/lbl_save"
+                    android:layout_marginTop="30dp"
                     android:layout_gravity="center"
-                    />
+                    android:layout_width="280dp"
+                    android:layout_height="50dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="10dp">
 
-                <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
-                android:background="@color/colorBtnRed"
-                android:layout_marginTop="40dp"
-                android:text="@string/lbl_delete"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lbl_save"
+                            android:textSize="@dimen/text_size"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/colorWhite"/>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:id="@+id/btn_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btn_delete"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        app:cardBackgroundColor="@color/colorBtnRed"
+                        app:cardCornerRadius="25dp"
+                        app:cardElevation="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_delete"
+                                android:textSize="@dimen/text_size"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/colorWhite"/>
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btn_edit"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="20dp"
+                        app:cardBackgroundColor="@color/colorWhite"
+                        app:cardCornerRadius="25dp"
+                        app:cardElevation="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_save"
+                                android:textSize="@dimen/text_size"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/colorPrimary"/>
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

@@ -11,6 +11,7 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -32,8 +33,9 @@ import java.util.List;
 
 public class RegisterServiceFragment extends Fragment {
 
-    Button btnSave;
-    Button btnDelete;
+    CardView btnSave, btnEdit, btnDelete;
+    //ImageButton btnImgUpload;
+    LinearLayout btnContainer;
     ServiceApi serviceApi;
     ArrayList<Category> servicesCategoryList;
     ArrayAdapter<String> dataAdapter;
@@ -63,8 +65,10 @@ public class RegisterServiceFragment extends Fragment {
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         editId = getArguments().getInt("id", 0);
         v = view;
+        btnContainer = view.findViewById(R.id.btn_container);
         btnSave = view.findViewById(R.id.btn_save);
         btnDelete = view.findViewById(R.id.btn_delete);
+        btnEdit = view.findViewById(R.id.btn_edit);
         categorySpinner = view.findViewById(R.id.spr_category);
         txtName = view.findViewById(R.id.etx_service_name);
         txtDescription = view.findViewById(R.id.etx_description_service);
@@ -75,6 +79,7 @@ public class RegisterServiceFragment extends Fragment {
         txtOrder = view.findViewById(R.id.etx_order);
 
         btnSave.setOnClickListener(v1 -> submit());
+        btnEdit.setOnClickListener(v1 -> submit());
 
         // 1. set up category spinner
         categorySpinnerSetting();
@@ -274,7 +279,8 @@ public class RegisterServiceFragment extends Fragment {
      */
     private void deleteBtnSetting(){
         if(editId > 0 ){
-            btnDelete.setVisibility(View.VISIBLE);
+            btnContainer.setVisibility(View.VISIBLE);
+            btnSave.setVisibility(View.GONE);
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
