@@ -428,7 +428,7 @@ public class RegisterStaffFragment extends Fragment {
                     Glide.with(getContext())
                             .load(staffObject.getImage())
                             .circleCrop()
-                            .placeholder(R.drawable.photos_default)
+                            .placeholder(R.drawable.add_photo)
                             .into(imgProfile);
                 }
             }

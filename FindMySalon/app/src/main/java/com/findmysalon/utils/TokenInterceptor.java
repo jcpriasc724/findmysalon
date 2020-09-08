@@ -117,9 +117,10 @@ public class TokenInterceptor implements Interceptor {
 //        Log.i(null, String.valueOf( request.header("NonAuthentication")));
         if(request.header("NonAuthentication") == null) {
             // validate the token is expired or not
-            if (tokenManager.getToken() == "") {
+            if (tokenManager.getToken().equals("")) {
                 tokenManager.clearToken();
                 tokenManager.refreshToken();
+//                Log.i(null, "refresh is here");
             }
             request = request.newBuilder()
                     .addHeader("Authorization", JWT_TOKEN_PREFIX + " " + tokenManager.getToken())
