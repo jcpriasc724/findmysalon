@@ -96,11 +96,9 @@
                         >
                         <ImageView
                             android:id="@+id/img_profile_photo"
-                            android:layout_width="85dp"
-                            android:layout_height="85dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/photos_default"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/add_photo"/>
                     </LinearLayout>
 
                     <!--<androidx.cardview.widget.CardView
@@ -152,7 +150,7 @@
                         android:id="@+id/rb_hair_salon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimary"
+                        android:buttonTint="@color/colorGreen"
                         android:checked="true"
                         android:text="@string/lbl_salons"
                         android:textSize="@dimen/text_size"/>
@@ -161,6 +159,7 @@
                         android:id="@+id/rb_barbershop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorGreen"
                         android:layout_marginLeft="30dp"
                         android:text="@string/lbl_barbershop"
                         android:textSize="@dimen/text_size"/>

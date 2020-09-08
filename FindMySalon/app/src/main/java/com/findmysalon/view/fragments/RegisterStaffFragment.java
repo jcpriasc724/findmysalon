@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -61,7 +64,9 @@ import static com.findmysalon.utils.abcConstants.MAXIMUM_IMAGE_SIZE;
 
 public class RegisterStaffFragment extends Fragment {
 
-    Button btnSave, btnDelete, btnImgUpload;
+    CardView btnSave, btnEdit, btnDelete;
+    //ImageButton btnImgUpload;
+    LinearLayout btnContainer;
     Spinner categorySpinner;
     ProgressBar progress;
     TextView txtFullName, txtPhoneNumber;
@@ -92,9 +97,11 @@ public class RegisterStaffFragment extends Fragment {
         editId = getArguments().getInt("id", 0);
         v = view;
 
+        btnContainer = view.findViewById(R.id.btn_container);
         btnSave = view.findViewById(R.id.btn_save);
         btnDelete = view.findViewById(R.id.btn_delete);
-        btnImgUpload = view.findViewById(R.id.btn_upload_photo);
+        btnEdit = view.findViewById(R.id.btn_edit);
+        //btnImgUpload = view.findViewById(R.id.btn_upload_photo);
         categorySpinner = view.findViewById(R.id.spr_category);
         txtFullName = view.findViewById(R.id.etx_staff_name);
         txtPhoneNumber = view.findViewById(R.id.etx_phone);
@@ -104,7 +111,8 @@ public class RegisterStaffFragment extends Fragment {
         btnSave = view.findViewById(R.id.btn_save);
 
         btnSave.setOnClickListener(v1 -> submit());
-        btnImgUpload.setOnClickListener(v1->imageUpload());
+        btnEdit.setOnClickListener(v1 -> submit());
+        imgProfile.setOnClickListener(v1->imageUpload());
 
         // 1. set up category spinner
         categorySpinnerSetting();
@@ -438,7 +446,8 @@ public class RegisterStaffFragment extends Fragment {
      */
     private void deleteBtnSetting(){
         if(editId > 0 ){
-            btnDelete.setVisibility(View.VISIBLE);
+            btnContainer.setVisibility(View.VISIBLE);
+            btnSave.setVisibility(View.GONE);
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

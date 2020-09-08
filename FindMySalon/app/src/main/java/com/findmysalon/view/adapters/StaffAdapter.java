@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,8 +55,8 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffHolder>
             Glide.with(holder.imgAvatar.getContext()).clear(holder.imgAvatar);
         }
         // edit clicking
-        holder.txtEdit.setClickable(true);
-        holder.txtEdit.setOnClickListener(new View.OnClickListener() {
+        //holder.btnEdit.setClickable(true);
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -72,7 +73,8 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffHolder>
 
     class StaffHolder extends RecyclerView.ViewHolder {
 
-        TextView txtNameStaff, txtCategory, txtPhoneNumber, txtEdit;
+        TextView txtNameStaff, txtCategory, txtPhoneNumber;
+        ImageButton btnEdit, btnDelete;
         ImageView imgAvatar;
 
         public StaffHolder(@NonNull View itemView) {
@@ -80,7 +82,8 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffHolder>
             txtNameStaff = (TextView) itemView.findViewById(R.id.txt_name_staff);
             txtCategory = (TextView) itemView.findViewById(R.id.txt_category);
             txtPhoneNumber = (TextView) itemView.findViewById(R.id.txt_phone_number);
-            txtEdit = (TextView) itemView.findViewById(R.id.txt_edit);
+            btnEdit = itemView.findViewById(R.id.btn_edit);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
             imgAvatar = (ImageView) itemView.findViewById(R.id.img_profile_photo);
         }
     }
