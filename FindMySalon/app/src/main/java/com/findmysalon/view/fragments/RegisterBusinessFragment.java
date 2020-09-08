@@ -202,7 +202,7 @@ public class RegisterBusinessFragment extends Fragment {
             Glide.with(getContext())
                     .load(imageUri)
                     .circleCrop()
-                    .placeholder(R.drawable.photos_default)
+                    .placeholder(R.drawable.add_photo)
                     .into(mImgView);
         }
     }

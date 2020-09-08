@@ -49,7 +49,7 @@ public class StaffRosterAdapter extends RecyclerView.Adapter<StaffRosterAdapter.
             Glide.with(holder.staffProfile.getContext())
                     .load(list.get(position).getImage())
                     .circleCrop()
-                    .placeholder(R.drawable.photos_default)
+                    .placeholder(R.drawable.add_photo)
                     .into(holder.staffProfile);
         }else {
             Glide.with(holder.staffProfile.getContext()).clear(holder.staffProfile);

@@ -111,7 +111,7 @@ public class UpdateCustomerFragment extends Fragment {
                     Glide.with(getActivity())
                             .load(profilePhoto)
                             .circleCrop()
-                            .placeholder(R.drawable.photos_default)
+                            .placeholder(R.drawable.add_photo)
                             .into(mImgView);
                     mFirstName.setText(response.body().getFirstName());
                     mLastName.setText(response.body().getLastName());
@@ -211,7 +211,7 @@ public class UpdateCustomerFragment extends Fragment {
             Glide.with(getContext())
                     .load(imageUri)
                     .circleCrop()
-                    .placeholder(R.drawable.photos_default)
+                    .placeholder(R.drawable.add_photo)
                     .into(mImgView);
         }
     }
