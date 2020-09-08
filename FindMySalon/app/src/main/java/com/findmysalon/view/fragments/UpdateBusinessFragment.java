@@ -59,10 +59,13 @@ import static com.findmysalon.utils.abcConstants.BASE_URL;
 
 public class UpdateBusinessFragment extends Fragment {
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_GALLERY = 2;
+
     private EditText mBusinessName;
     private EditText mBusinessType;
     private RadioGroup mRadioGroup;
-
+    private ImageView mImgView;
     private RadioButton mRadioButton;
     private AutoCompleteTextView mAddress;
     private EditText mEmail;
@@ -72,6 +75,7 @@ public class UpdateBusinessFragment extends Fragment {
     private double currentLatitude = 0.0;
     private double currentLongitude = 0.0;
     private UserApi userApi;
+    private Uri imageUri;
     private View v;
 
     @Override
@@ -83,6 +87,11 @@ public class UpdateBusinessFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_update_business, container, false);
+
+        mImgView = (ImageView) v.findViewById(R.id.img_profile_photo);
+        mImgView.setOnClickListener(v12 -> {
+            selectImage();
+        });
 
         // Address autocomplete suggestions
         PlaceApi placeApi = new PlaceApi();
@@ -105,6 +114,14 @@ public class UpdateBusinessFragment extends Fragment {
             @Override
             public void onResponse(Call<BusinessProfile> call, Response<BusinessProfile> response) {
                 if(response.isSuccessful()){
+                    // Setting profile photo in edit form
+                    Uri profilePhoto = Uri.parse(response.body().getProfilePhoto());
+                    // Plugin to display profile photo
+                    Glide.with(getActivity())
+                            .load(profilePhoto)
+                            .circleCrop()
+                            .placeholder(R.drawable.photos_default)
+                            .into(mImgView);
                     mBusinessName.setText(response.body().getBusinessName());
                     //mBusinessType.setText(response.body().getBusinessType());
                     if(response.body().getBusinessType().equals("S")){
@@ -136,6 +153,105 @@ public class UpdateBusinessFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    private void selectImage() {
+        final String[] options = getResources().getStringArray(R.array.photo_options);;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("UPDATE PROFILE PHOTO");
+        builder.setItems(options, (dialog, item) -> {
+            Log.d("PHOTO", item+"");
+            switch (item){
+                case 0:
+                    // Check if camera is supported in user's device
+                    if(isDeviceSupportCamera()){
+                        takePhoto();
+                    }
+                    else{// Display message if camera is not supported
+                        Helper.errorMsgDialog(getActivity().getApplication(),R.string.camera_not_supported);
+                        //dialog.dismiss();
+                    }
+                    break;
+                case 1:
+                    chooseFromGallery();
+                    break;
+            }
+        });
+        builder.show();
+    }
+
+    private void chooseFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        /*Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);*/
+        startActivityForResult(intent, REQUEST_GALLERY);
+    }
+
+    private void takePhoto() {
+        // Intent to open camera
+        Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Checking if there any app that can handle the IMAGE_CAPTURE intent to avoid app crash
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null){
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    private boolean isDeviceSupportCamera() {
+        if (getActivity().getApplicationContext().getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_CAMERA_ANY)) {
+            // this device has a camera
+            return true;
+        } else {
+            // no camera on this device
+            return false;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_IMAGE_CAPTURE){
+                /*Bitmap imageBitmap = BitmapFactory.decodeFile(pathToFile);
+                Log.d("Path to file", ""+pathToFile);*/
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                imageUri = getImageUri(getActivity().getApplicationContext(), imageBitmap);
+                mImgView.setImageBitmap(imageBitmap);
+            }
+            else if(requestCode == REQUEST_GALLERY){
+                //Get selected image uri here
+                imageUri = data.getData();
+                mImgView.setImageURI(imageUri);
+            }
+            // Plugin to display image
+            Glide.with(getContext())
+                    .load(imageUri)
+                    .circleCrop()
+                    .placeholder(R.drawable.photos_default)
+                    .into(mImgView);
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        String path = "";
+        if (getActivity().getContentResolver() != null) {
+            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
     }
 
     // Method to handle update for business
@@ -191,7 +307,52 @@ public class UpdateBusinessFragment extends Fragment {
         else{
             Retrofit retrofit = RetrofitClient.getInstance(getActivity());
             userApi = retrofit.create(UserApi.class);
-            BusinessProfile businessProfile = new BusinessProfile(businessName, businessType, email, address, latitude, longitude, phone,"B");
+
+            MultipartBody.Part mProfilePhoto = null;
+            // Process only if image is uploaded
+            if(imageUri != null){
+                File file = new File(getRealPathFromURI(imageUri));
+                //Log.d("Path ", getRealPathFromURI(imageUri)+"");
+                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+                mProfilePhoto = MultipartBody.Part.createFormData(
+                        "profile_photo", file.getName(), requestFile);
+            }
+
+            RequestBody mBusinessName = RequestBody.create(MediaType.parse("text/plain"), businessName);
+            RequestBody mBusinessType = RequestBody.create(MediaType.parse("text/plain"), businessType);
+            RequestBody mEmail = RequestBody.create(MediaType.parse("text/plain"), email);
+            RequestBody mPhone = RequestBody.create(MediaType.parse("text/plain"), phone);
+            RequestBody mAddress = RequestBody.create(MediaType.parse("text/plain"), address);
+            RequestBody mLatitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(latitude));
+            RequestBody mLongitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(longitude));
+            RequestBody mUserType = RequestBody.create(MediaType.parse("text/plain"), "B");
+
+            Call<ResponseBody> call =  userApi.businessUpdate(mBusinessName, mBusinessType, mEmail, mPhone, mAddress, mLatitude, mLongitude, mUserType, mProfilePhoto);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if(response.isSuccessful()){
+                        //Customer resp = response.body();
+                        Log.d("Response: ", ""+response.body());
+                        Intent intent = new Intent(getActivity(), BusinessActivity.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                    else{
+                        Helper.errorMsgDialog(getActivity(), R.string.response_error);
+                        Log.d("Error: ",""+response.message());
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Helper.errorMsgDialog(getActivity(), R.string.network_error);
+                    Log.d("Fail: ", t.getMessage());
+                }
+            });
+
+            /*BusinessProfile businessProfile = new BusinessProfile(businessName, businessType, email, address, latitude, longitude, phone,"B");
             Call<BusinessProfile> call =  userApi.businessUpdate(businessProfile);
             call.enqueue(new Callback<BusinessProfile>() {
                 @Override
@@ -214,7 +375,7 @@ public class UpdateBusinessFragment extends Fragment {
                     Helper.errorMsgDialog(getActivity(), R.string.network_error);
                     Log.d("Fail: ", t.getMessage());
                 }
-            });
+            });*/
 
         }
 
