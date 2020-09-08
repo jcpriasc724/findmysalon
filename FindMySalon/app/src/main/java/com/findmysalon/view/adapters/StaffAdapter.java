@@ -49,7 +49,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffHolder>
             Glide.with(holder.imgAvatar.getContext())
                     .load(list.get(position).getImage())
                     .circleCrop()
-                    .placeholder(R.drawable.photos_default)
+                    .placeholder(R.drawable.add_photo)
                     .into(holder.imgAvatar);
         }else {
             Glide.with(holder.imgAvatar.getContext()).clear(holder.imgAvatar);
