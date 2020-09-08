@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,8 +44,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         holder.txtDuration.setText(servicesList.get(position).getDuration().toString() + " mins");
         holder.txtDescription.setText(servicesList.get(position).getDescription());
         holder.txtStatus.setText(servicesList.get(position).getDisplayStatus().compareTo("S") == 0 ? "Enable" : "Disable");
-        holder.txtEdit.setClickable(true);
-        holder.txtEdit.setOnClickListener(new View.OnClickListener() {
+//        holder.txtEdit.setClickable(true);
+        holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -62,7 +63,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
     class ServiceHolder extends RecyclerView.ViewHolder {
 
-        TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription, txtStatus, txtEdit;
+        TextView txtNameService, txtCategory, txtPrice, txtDuration, txtDescription, txtStatus;
+        LinearLayout container;
 
         public ServiceHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,7 +74,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtDuration = (TextView) itemView.findViewById(R.id.txt_duration);
             txtDescription = (TextView) itemView.findViewById(R.id.txt_description);
             txtStatus = (TextView) itemView.findViewById(R.id.txt_status);
-            txtEdit = (TextView) itemView.findViewById(R.id.txt_edit);
+            container = itemView.findViewById(R.id.container_service);
+            //txtEdit = (TextView) itemView.findViewById(R.id.txt_edit);
         }
     }
 }
