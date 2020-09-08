@@ -36,6 +36,7 @@ import static com.findmysalon.utils.abcConstants.ACCESS_TOKEN;
 import static com.findmysalon.utils.abcConstants.REFRESH_TOKEN;
 import static com.findmysalon.utils.abcConstants.TOKEN_EXPIRED;
 import static com.findmysalon.utils.abcConstants.TOKEN_VALID_TIME;
+import static com.findmysalon.utils.abcConstants.USER_TYPE;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -105,13 +106,6 @@ public class LoginActivity extends AppCompatActivity {
                     Token resp = response.body();
 
                     //Log.d("User type", resp.toString());
-                    final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    // Store access and refresh token along with access token expiry information in shared preference
-                    editor.putString(ACCESS_TOKEN,resp.getAccess());
-                    editor.putString(REFRESH_TOKEN,resp.getRefresh());
-                    editor.putLong(TOKEN_EXPIRED, ((System.currentTimeMillis()/1000) + TOKEN_VALID_TIME * 60) );
-                    editor.commit();
 
                     // If user is business then redirect them to business activity
                     if(resp.getUserType().equals("B")){
@@ -119,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                         //ide .putExtra("hi", "HI");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+
                     }
                     // If user is customer then redirect them to customer activity
                     else if(resp.getUserType().equals("C")){
@@ -126,6 +121,15 @@ public class LoginActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
+
+                    final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    // Store access and refresh token along with access token expiry information in shared preference
+                    editor.putString(ACCESS_TOKEN,resp.getAccess());
+                    editor.putString(REFRESH_TOKEN,resp.getRefresh());
+                    editor.putLong(TOKEN_EXPIRED, ((System.currentTimeMillis()/1000) + TOKEN_VALID_TIME * 60) );
+                    editor.putString(USER_TYPE,resp.getUserType());
+                    editor.commit();
 
                 }
                 else{
@@ -137,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
+                Helper.errorMsgDialog(LoginActivity.this, R.string.network_error);
             }
         });
         // retrofit End

@@ -245,7 +245,7 @@ public class RegisterStaffFragment extends Fragment {
                         Glide.with(getContext())
                                 .load(response.body().get("image").toString().replace("\"",""))
                                 .circleCrop()
-                                .placeholder(R.drawable.photos_default)
+                                .placeholder(R.drawable.add_photo)
                                 .into(imgProfile);
                         mCurrentPhotoPath = response.body().get("save_image").toString().replace("\"","");
                     } else {

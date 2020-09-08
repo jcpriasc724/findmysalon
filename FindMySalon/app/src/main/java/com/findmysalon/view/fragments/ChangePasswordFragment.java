@@ -20,8 +20,14 @@ import com.findmysalon.api.UserApi;
 import com.findmysalon.model.CustomerProfile;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.utils.RetrofitClient;
+import com.findmysalon.view.BusinessActivity;
 import com.findmysalon.view.CustomerActivity;
 import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,14 +72,28 @@ public class ChangePasswordFragment extends Fragment {
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     if(response.isSuccessful()){
                         Log.d("Response: ", ""+response.body());
-                        Intent intent = new Intent(getActivity(), CustomerActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        // Convert String to json object
+                        JsonObject resp = response.body();
+                        String userType = resp.get("user_type").getAsString();
+
+                        Intent intent;
+                        // If user is business then redirect them to their corresponding dashboard
+                        if(userType.equals("B")){
+                            intent = new Intent(getActivity(), BusinessActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                        // If user is customer then redirect them to their corresponding dashboard
+                        if(userType.equals("C")){
+                            intent = new Intent(getActivity(), CustomerActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+
                     }
                     else{
                         Helper.errorMsgDialog(getActivity(), R.string.incorrect_current_password);
                         Log.d("Error: ",""+response.message());
-
                     }
                 }
 

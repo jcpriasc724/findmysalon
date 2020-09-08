@@ -3,6 +3,7 @@ import android.database.Observable;
 
 import com.findmysalon.model.Booking;
 import com.findmysalon.model.Business;
+import com.findmysalon.model.BusinessProfile;
 import com.findmysalon.model.Customer;
 import com.findmysalon.model.CustomerProfile;
 import com.findmysalon.model.Service;
@@ -89,8 +90,42 @@ public interface UserApi {
     @GET("api/user/details/")
     Call<CustomerProfile> getUserDetails();
 
+    @GET("api/user/details/")
+    Call<BusinessProfile> getBusinessDetails();
+
+    /*@PATCH("api/user/update/")
+    Call<CustomerProfile> customerUpdate(@Body CustomerProfile customerProfile);*/
+
+    @Multipart
     @PATCH("api/user/update/")
-    Call<CustomerProfile> customerUpdate(@Body CustomerProfile customerProfile);
+    Call<ResponseBody>  customerUpdate(
+            @Part("first_name") RequestBody firstName,
+            @Part("last_name") RequestBody lastName,
+            @Part("email") RequestBody email,
+            @Part("phone") RequestBody phone,
+            @Part("address") RequestBody address,
+            @Part("latitude") RequestBody latitude,
+            @Part("longitude") RequestBody longitude,
+            @Part("user_type") RequestBody userType,
+            @Part MultipartBody.Part profilePhoto
+    );
+
+    /*@PATCH("api/user/update/")
+    Call<BusinessProfile> businessUpdate(@Body BusinessProfile businessProfile);*/
+
+    @Multipart
+    @PATCH("api/user/update/")
+    Call<ResponseBody> businessUpdate(
+            @Part("store_name") RequestBody storeName,
+            @Part("business_type") RequestBody businessType,
+            @Part("email") RequestBody email,
+            @Part("phone") RequestBody phone,
+            @Part("address") RequestBody address,
+            @Part("latitude") RequestBody latitude,
+            @Part("longitude") RequestBody longitude,
+            @Part("user_type") RequestBody userType,
+            @Part MultipartBody.Part profilePhoto
+    );
 
     @FormUrlEncoded
     @PATCH("api/user/change_password/")
@@ -98,5 +133,9 @@ public interface UserApi {
             @Field("current_password") String currentPassword,
             @Field("new_password") String newPassword
             );
+
+    @Multipart
+    @POST("api/user/update_profile_photo")
+    Call<JsonObject> updateProfilePhoto(@Part MultipartBody.Part image);
 
 }

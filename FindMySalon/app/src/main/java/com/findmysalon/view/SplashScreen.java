@@ -16,10 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.findmysalon.R;
 import com.findmysalon.api.UserApi;
+import com.findmysalon.model.Business;
+import com.findmysalon.model.BusinessProfile;
+import com.findmysalon.model.CustomerProfile;
 import com.findmysalon.model.Token;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.utils.RetrofitClient;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 
@@ -33,6 +37,7 @@ import static com.findmysalon.utils.abcConstants.ACCESS_TOKEN;
 import static com.findmysalon.utils.abcConstants.REFRESH_TOKEN;
 import static com.findmysalon.utils.abcConstants.TOKEN_EXPIRED;
 import static com.findmysalon.utils.abcConstants.TOKEN_VALID_TIME;
+import static com.findmysalon.utils.abcConstants.USER_TYPE;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -42,6 +47,8 @@ public class SplashScreen extends AppCompatActivity {
     ImageView imageView;
 
     private UserApi userApi;
+    SharedPreferences sharedPreferences;
+    String accessToken, userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,60 +85,74 @@ public class SplashScreen extends AppCompatActivity {
         //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        startActivity(intent);
 
-        // data to Json
-        Gson gson=new Gson();
-        HashMap<String,String> paramsMap= new HashMap<>();
-        paramsMap.put("email",  "info@d2mbeauty.com");
-        paramsMap.put("password",   "123456");
-        String obj=gson.toJson(paramsMap);
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),obj);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashScreen.this);
+        accessToken = sharedPreferences.getString(ACCESS_TOKEN, "");
+        userType = sharedPreferences.getString(USER_TYPE, "");
 
-        // retrofit
-        Retrofit retrofit = RetrofitClient.getInstance(SplashScreen.this);
-        userApi = retrofit.create(UserApi.class);
-        Call<Token> call = userApi.oathToken(body);
-        call.enqueue(new Callback<Token>() {
-            @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                if(response.isSuccessful()){
-                    Token resp = response.body();
+        if(accessToken.equals("") || userType.equals("")){
+            Intent intent = new Intent(SplashScreen.this, LoginActivity.class );
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return;
+        }
 
-                    //Log.d("User type", resp.toString());
-                    final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashScreen.this);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    // Store access and refresh token along with access token expiry information in shared preference
-                    editor.putString(ACCESS_TOKEN,resp.getAccess());
-                    editor.putString(REFRESH_TOKEN,resp.getRefresh());
-                    editor.putLong(TOKEN_EXPIRED, ((System.currentTimeMillis()/1000) + TOKEN_VALID_TIME * 60) );
-                    editor.commit();
-
-                    // If user is business then redirect them to business activity
-                    if(resp.getUserType().equals("B")){
+        if(userType.equals("B")){
+            // retrofit
+            Retrofit retrofit = RetrofitClient.getInstance(SplashScreen.this);
+            userApi = retrofit.create(UserApi.class);
+            Call<BusinessProfile> call = userApi.getBusinessDetails();
+            call.enqueue(new Callback<BusinessProfile>() {
+                @Override
+                public void onResponse(Call<BusinessProfile> call, Response<BusinessProfile> response) {
+                    if(response.isSuccessful()){
+                        BusinessProfile resp = response.body();
+                        // If user is business then redirect them to business activity
                         Intent intent = new Intent(SplashScreen.this, BusinessActivity.class);
                         //ide .putExtra("hi", "HI");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
-                    // If user is customer then redirect them to customer activity
-                    else if(resp.getUserType().equals("C")){
+                    else{
+                        Log.d("Error: ",""+response.errorBody());
+                        Helper.errorMsgDialog(SplashScreen.this, R.string.invalid_credentials);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BusinessProfile> call, Throwable t) {
+                    Log.d("Fail: ", t.getMessage());
+                }
+            });
+            // retrofit End
+        } else {
+            // retrofit
+            Retrofit retrofit = RetrofitClient.getInstance(SplashScreen.this);
+            userApi = retrofit.create(UserApi.class);
+            Call<CustomerProfile> call = userApi.getUserDetails();
+            call.enqueue(new Callback<CustomerProfile>() {
+                @Override
+                public void onResponse(Call<CustomerProfile> call, Response<CustomerProfile> response) {
+                    if(response.isSuccessful()){
+                        CustomerProfile resp = response.body();
+                        // If user is business then redirect them to business activity
                         Intent intent = new Intent(SplashScreen.this, CustomerActivity.class);
+                        //ide .putExtra("hi", "HI");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
-
+                    else{
+                        Log.d("Error: ",""+response.errorBody());
+                        Helper.errorMsgDialog(SplashScreen.this, R.string.invalid_credentials);
+                    }
                 }
-                else{
-                    Log.d("Error: ",""+response.errorBody());
-                    Helper.errorMsgDialog(SplashScreen.this, R.string.invalid_credentials);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                Log.d("Fail: ", t.getMessage());
-            }
-        });
-        // retrofit End
+                @Override
+                public void onFailure(Call<CustomerProfile> call, Throwable t) {
+                    Log.d("Fail: ", t.getMessage());
+                }
+            });
+            // retrofit End
+        }
 
     }
 }
