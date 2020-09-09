@@ -9,7 +9,7 @@ public final class abcConstants {
     public final static Integer TOKEN_VALID_TIME = 3; // minutes
     public final static String JWT_TOKEN_PREFIX = "Bearer";
     public final static String ACCESS_TOKEN = "accessToken";
-    public final static String REFRESH_TOKEN = "refreshToken";
+    public final static String REFRESH_TOKEN = "refreshToken"; 
     public final static String TOKEN_EXPIRED = "expired_time";
     public final static String USER_TYPE = "user_type";
 
