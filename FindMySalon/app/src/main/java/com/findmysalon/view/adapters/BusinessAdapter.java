@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
 import com.findmysalon.model.Business;
+import com.findmysalon.model.BusinessProfile;
 import com.findmysalon.model.Staff;
 
 import java.util.ArrayList;
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.BusinessHolder> {
 
     Context context;
-    ArrayList<Business> list;
+    ArrayList<BusinessProfile> list;
 
-    public BusinessAdapter(Context context, ArrayList<Business> list) {
+    public BusinessAdapter(Context context, ArrayList<BusinessProfile> list) {
         this.context = context;
         this.list = list;
     }
@@ -36,7 +37,7 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
     @Override
     public void onBindViewHolder(@NonNull BusinessHolder holder, int position) {
 
-        holder.txtNameBusiness.setText(list.get(position).getStoreName());
+        holder.txtNameBusiness.setText(list.get(position).getBusinessName());
         holder.txtAddress.setText(list.get(position).getAddress());
         holder.txtPhoneNumber.setText(list.get(position).getPhone());
         holder.rtbBusiness.setRating(list.get(position).getRating());

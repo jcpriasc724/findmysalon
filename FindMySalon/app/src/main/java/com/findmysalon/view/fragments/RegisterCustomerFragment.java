@@ -105,11 +105,7 @@ public class RegisterCustomerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_register_customer, container, false);
-        
-        /*if(editMode){
-            fillEditForm();
-        }
-        */
+
         mImgView = (ImageView) v.findViewById(R.id.img_profile_photo);
         mImgView.setOnClickListener(v12 -> {
             selectImage();
@@ -131,10 +127,6 @@ public class RegisterCustomerFragment extends Fragment {
         mSubmitButton.setOnClickListener(v1 -> customerSignUp());
 
         return v;
-    }
-
-    private void fillEditForm() {
-
     }
 
     @Override

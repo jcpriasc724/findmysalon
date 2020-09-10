@@ -317,7 +317,7 @@
                 android:foregroundTint="@color/colorGreen"
                 android:spinnerMode="dropdown" />
 
-
+            <!--android:entries="@array/categories_arrays"-->
         </LinearLayout>
 
         <View
