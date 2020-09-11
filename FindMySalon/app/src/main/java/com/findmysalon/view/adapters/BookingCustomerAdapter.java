@@ -53,7 +53,7 @@ public class BookingCustomerAdapter extends RecyclerView.Adapter<BookingCustomer
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(context.getResources().getString(R.string.pattern));
         String dateBooking = simpleDateFormat.format(list.get(position).getDateBooking());
         Date curDate=new Date();
-
+        Calendar c = Calendar.getInstance();
         holder.txtDateBooking.setText(dateBooking);
         holder.txtTimeBooking.setText(list.get(position).getStartTime()+" - "+list.get(position).getEndTime());
         holder.txtStaff.setText(list.get(position).getStaff().getName());
@@ -65,10 +65,16 @@ public class BookingCustomerAdapter extends RecyclerView.Adapter<BookingCustomer
             holder.btnDelete.setVisibility(View.GONE);
         } else {
             holder.textStatus.setText("Approval");
+            holder.btnDelete.setVisibility(View.VISIBLE);
+            // if booking date is expired remove the cancel button
+            c.setTime(list.get(position).getDateBooking());
+            c.add(c.DATE,1);
+            if(c.getTime().compareTo(curDate) < 1)
+                holder.btnDelete.setVisibility(View.GONE);
         }
 
         // if booking date is expired remove the cancel button
-        Calendar c = Calendar.getInstance();
+
         c.setTime(list.get(position).getDateBooking());
         c.add(c.DATE,1);
         if(c.getTime().compareTo(curDate) < 1)

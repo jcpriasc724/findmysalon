@@ -82,7 +82,7 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
                     Glide.with(getApplicationContext())
                             .load(profilePhoto)
                             .circleCrop()
-                            .placeholder(R.drawable.photos_default)
+                            .placeholder(R.drawable.add_photo)
                             .into(imgView);
                 }
             }

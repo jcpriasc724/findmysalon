@@ -91,11 +91,9 @@
 
                         <ImageView
                             android:id="@+id/img_profile_photo"
-                            android:layout_width="85dp"
-                            android:layout_height="85dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/photos_default"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/add_photo"/>
                     </LinearLayout>
 
                     <!--<androidx.cardview.widget.CardView

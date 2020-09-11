@@ -202,7 +202,7 @@ public class RegisterBusinessFragment extends Fragment {
             Glide.with(getContext())
                     .load(imageUri)
                     .circleCrop()
-                    .placeholder(R.drawable.photos_default)
+                    .placeholder(R.drawable.add_photo)
                     .into(mImgView);
         }
     }
@@ -239,7 +239,7 @@ public class RegisterBusinessFragment extends Fragment {
             longitude = (double) addressApi.get("lng");
         }
 
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z0-9]+\\.+[a-z]+";
         String phonePattern = "^[0-9]{10}$";
         // Validation of empty inputs
         if (businessName.isEmpty() || businessType.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() || password.isEmpty() || rePassword.isEmpty())

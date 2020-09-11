@@ -92,12 +92,9 @@
                         >
                         <ImageView
                             android:id="@+id/img_profile_photo"
-                            android:layout_width="85dp"
-                            android:layout_height="85dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/photos_default"
-                            android:tint="@color/colorGrayDark"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/add_photo"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -134,9 +131,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:progressTint="@color/colorGreen"
                     android:layout_marginBottom="15dp"
                     style="@style/Widget.AppCompat.RatingBar.Indicator"
                     android:numStars="5"
+                    android:rating="4"
                     android:stepSize=".5"/>
 
                 <androidx.cardview.widget.CardView

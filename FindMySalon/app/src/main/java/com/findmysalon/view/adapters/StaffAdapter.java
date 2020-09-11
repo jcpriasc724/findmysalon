@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,14 +50,14 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffHolder>
             Glide.with(holder.imgAvatar.getContext())
                     .load(list.get(position).getImage())
                     .circleCrop()
-                    .placeholder(R.drawable.photos_default)
+                    .placeholder(R.drawable.add_photo)
                     .into(holder.imgAvatar);
         }else {
             Glide.with(holder.imgAvatar.getContext()).clear(holder.imgAvatar);
         }
         // edit clicking
-        holder.txtEdit.setClickable(true);
-        holder.txtEdit.setOnClickListener(new View.OnClickListener() {
+        //holder.btnEdit.setClickable(true);
+        holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -72,7 +74,9 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffHolder>
 
     class StaffHolder extends RecyclerView.ViewHolder {
 
-        TextView txtNameStaff, txtCategory, txtPhoneNumber, txtEdit;
+        TextView txtNameStaff, txtCategory, txtPhoneNumber;
+        //ImageButton btnEdit, btnDelete;
+        LinearLayout container;
         ImageView imgAvatar;
 
         public StaffHolder(@NonNull View itemView) {
@@ -80,7 +84,8 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffHolder>
             txtNameStaff = (TextView) itemView.findViewById(R.id.txt_name_staff);
             txtCategory = (TextView) itemView.findViewById(R.id.txt_category);
             txtPhoneNumber = (TextView) itemView.findViewById(R.id.txt_phone_number);
-            txtEdit = (TextView) itemView.findViewById(R.id.txt_edit);
+            container = itemView.findViewById(R.id.container_staff);
+            //btnDelete = itemView.findViewById(R.id.btn_delete);
             imgAvatar = (ImageView) itemView.findViewById(R.id.img_profile_photo);
         }
     }

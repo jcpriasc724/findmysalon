@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ public class ServicesFragment extends Fragment {
 
     Button btnNext;
     private ServiceApi serviceApi;
-    Button btnAddService;
+    ImageButton btnAddService;
 
 
     @Nullable

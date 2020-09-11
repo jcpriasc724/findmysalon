@@ -20,6 +20,7 @@
             android:id="@+id/swt_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/SwitchTheme"
             android:text="Monday 11, August 2020" />
 
         <LinearLayout

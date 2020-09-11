@@ -75,6 +75,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_subtitles"
         android:text="@string/lbl_no_bookings"
+        android:textColor="@color/colorSecondary"
         android:textAlignment="center"/>
 
 
