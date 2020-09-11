@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,6 +42,7 @@ import com.findmysalon.api.ServiceApi;
 import com.findmysalon.model.Business;
 import com.findmysalon.model.BusinessProfile;
 import com.findmysalon.model.Category;
+import com.findmysalon.model.Language;
 import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
 import com.findmysalon.model.TypeBusiness;
@@ -69,21 +73,32 @@ public class ListBusinessFragment extends Fragment {
     private static final int REQUEST_LOCATION_PERMISSIONS = 0;
 
     private TextView txtNameBusiness, txtAddress, txtPhoneNumber;
+    private EditText txtKeyword;
     private RatingBar rtbBusiness;
     private RecyclerView recBusiness;
     private ArrayList<BusinessProfile> businessList;
     private BusinessAdapter businessAdapter;
-    private int distanceFilter;
-    private int budgetFilter;
+    private int distanceFilter = 5; // Initial distance
+    private int budgetFilter = 10; //  Initial budget
     private ArrayList<TypeBusiness> typeBusinessesFilter;
     private BottomSheetDialog dialogFilters;
     private CardView btnFilters;
+    private LinearLayout tpAll;
+    private TextView txtFilterAll;
+    private SeekBar skbDistance;
+    private TextView txtDistance;
+    private SeekBar skbBudget;
+    private TextView txtBudget;
+
     private BusinessApi businessApi;
     private ServiceApi serviceApi;
+
     private ArrayList<Category> servicesCategoryList;
+    private ArrayList<Language> languageList;
     private ArrayAdapter<String> dataAdapter;
+    private ArrayAdapter<String> languageAdapter;
     private Spinner categorySpinner;
-    //int categoryId = 0;
+    private Spinner languageSpinner;
     private String businessType;
     private double latitude;
     private double longitude;
@@ -91,6 +106,8 @@ public class ListBusinessFragment extends Fragment {
     private int budget;
     private String language;
     private int categoryId = 0;
+    private int categorySpinnerVal = 0;
+    private int languageSpinnerVal = 0;
     private String keyword;
 
     @Override
@@ -115,6 +132,18 @@ public class ListBusinessFragment extends Fragment {
         typeBusinessesFilter.add(new TypeBusiness("B", false));
         typeBusinessesFilter.add(new TypeBusiness("H", false));
 
+        txtKeyword = view.findViewById(R.id.txt_keyword);
+        txtKeyword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("TextWatcherTest", "afterTextChanged:\t" +s.toString());
+                loadBusinessList();
+            }
+        });
         btnFilters = view.findViewById(R.id.btn_filters);
         txtNameBusiness = view.findViewById(R.id.txt_name_business);
         txtAddress = view.findViewById(R.id.txt_address);
@@ -145,6 +174,7 @@ public class ListBusinessFragment extends Fragment {
         }
     }
 
+    // Check if app has permission to access user's location
     private boolean hasLocationPermission() {
         int result = ContextCompat
                 .checkSelfPermission(getActivity(), LOCATION_PERMISSIONS[0]);
@@ -205,10 +235,11 @@ public class ListBusinessFragment extends Fragment {
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
         businessApi = retrofit.create(BusinessApi.class);
 
+        keyword = txtKeyword.getText().toString();
         distance = distanceFilter;
         budget = budgetFilter;
 
-        Log.d("API Call ", "Apply click "+ businessType);
+        Log.d("Lat lng ", " "+ latitude+ longitude);
         Call<ArrayList<BusinessProfile>> call = businessApi.businessList(businessType, latitude, longitude, distance, budget, language, categoryId, keyword);
         call.enqueue(new Callback<ArrayList<BusinessProfile>>() {
             @Override
@@ -264,6 +295,7 @@ public class ListBusinessFragment extends Fragment {
                 setupFullHeight(bottomSheetDialog);
             }
         });
+
         View viewBottomSheet = LayoutInflater.from(getContext())
                 .inflate(
                         R.layout.popup_filters,
@@ -271,21 +303,22 @@ public class ListBusinessFragment extends Fragment {
                 );
 
 
-        LinearLayout tpAll = viewBottomSheet.findViewById(R.id.tp_all);
+        tpAll = viewBottomSheet.findViewById(R.id.tp_all);
         LinearLayout tpBarbershop = viewBottomSheet.findViewById(R.id.tp_barbershop);
         LinearLayout tpHairSalon = viewBottomSheet.findViewById(R.id.tp_hair_salon);
 
         ImageView imgFilterBarbershop = viewBottomSheet.findViewById(R.id.img_filter_barbershop);
         ImageView imgFilterHairSalon = viewBottomSheet.findViewById(R.id.img_filter_hair_salon);
 
-        TextView txtFilterAll = viewBottomSheet.findViewById(R.id.txt_filter_all);
+        txtFilterAll = viewBottomSheet.findViewById(R.id.txt_filter_all);
         TextView txtFilterBarbershop = viewBottomSheet.findViewById(R.id.txt_filter_barbershop);
         TextView txtFilterHairSalon = viewBottomSheet.findViewById(R.id.txt_filter_hair_salon);
 
-        SeekBar skbDistance = viewBottomSheet.findViewById(R.id.skb_distance);
-        TextView txtDistance = viewBottomSheet.findViewById(R.id.txt_distance);
+        skbDistance = viewBottomSheet.findViewById(R.id.skb_distance);
+        txtDistance = viewBottomSheet.findViewById(R.id.txt_distance);
 
-        txtDistance.setText(skbDistance.getProgress()+" Km");
+        skbDistance.setProgress(distanceFilter);
+        txtDistance.setText(distanceFilter+" Km");
 
         skbDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -306,13 +339,17 @@ public class ListBusinessFragment extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 txtDistance.setText(progressValue+" Km");
                 distanceFilter = progressValue;
+
+                Log.d("Final SeekBar",""+distanceFilter);
             }
         });
 
-        SeekBar skbBudget = viewBottomSheet.findViewById(R.id.skb_budget);
-        TextView txtBudget = viewBottomSheet.findViewById(R.id.txt_budget);
+        skbBudget = viewBottomSheet.findViewById(R.id.skb_budget);
+        txtBudget = viewBottomSheet.findViewById(R.id.txt_budget);
 
-        txtBudget.setText("Max $ "+skbBudget.getProgress());
+        //txtBudget.setText("Max $ "+skbBudget.getProgress());
+        skbBudget.setProgress(budgetFilter);
+        txtBudget.setText("Max $ "+budgetFilter);
 
         skbBudget.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressValue;
@@ -431,6 +468,38 @@ public class ListBusinessFragment extends Fragment {
             }
         });
 
+        languageSpinner = (Spinner) viewBottomSheet.findViewById(R.id.spr_language);
+        // set up language spinner
+        languageSpinnerSetting();
+
+        categorySpinner = (Spinner) viewBottomSheet.findViewById(R.id.spr_categories);
+        // set up category spinner
+        categorySpinnerSetting();
+
+        // Reset filter button
+        CardView btnReset = (CardView) viewBottomSheet.findViewById(R.id.btn_reset);
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Call to reset filter
+                resetPopUpFilter(viewBottomSheet);
+                // Dismiss the filter
+                dialogFilters.dismiss();
+            }
+        });
+
+        // Apply filter button
+        CardView btnConfirm = (CardView) viewBottomSheet.findViewById(R.id.btn_confirm);
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Load business list by making HTTP request to server
+                loadBusinessList();
+                // Dismiss the filter
+                dialogFilters.dismiss();
+            }
+        });
+
         viewBottomSheet.findViewById(R.id.img_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -438,25 +507,43 @@ public class ListBusinessFragment extends Fragment {
             }
         });
 
-        Spinner mLanguage = (Spinner) viewBottomSheet.findViewById(R.id.spr_language);
-        language = mLanguage.getSelectedItem().toString();
-
-        categorySpinner = (Spinner) viewBottomSheet.findViewById(R.id.spr_categories);
-        // set up category spinner
-        categorySpinnerSetting();
-
-        CardView btnConfirm = (CardView) viewBottomSheet.findViewById(R.id.btn_confirm);
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadBusinessList();
-                Log.d("Clicked ", "Apply click "+ businessType);
-            }
-        });
-
         dialogFilters.setContentView(viewBottomSheet);
         dialogFilters.show();
 
+    }
+
+    /**
+     *  language Spinner Set up
+     */
+    private void languageSpinnerSetting() {
+        List<String> items = new ArrayList<String>();
+        items.add("Choose a language");
+        items.add("English");
+        items.add("Spanish");
+        items.add("Nepali");
+        items.add("Chinese");
+        items.add("Japanese");
+
+        languageAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+        languageAdapter.notifyDataSetChanged();
+        languageSpinner.setAdapter(languageAdapter);
+        languageSpinner.setSelection(languageSpinnerVal);
+
+        // listener
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //String info = (String) categorySpinner.getSelectedItem();
+                //categoryId = languageList.get(position).getId();
+                languageSpinnerVal = position;
+                language = languageSpinner.getSelectedItem().toString();
+                //Toast.makeText(getActivity(), String.valueOf(categoryId), Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     /**
@@ -476,13 +563,14 @@ public class ListBusinessFragment extends Fragment {
                 if(response.isSuccessful()){
                     servicesCategoryList.addAll(response.body());
                     List<String> items = new ArrayList<String>();
+                    //items.add("Choose a category");
                     for(int i = 0; i < servicesCategoryList.size(); i++){
                         items.add(servicesCategoryList.get(i).getNameCategory());
                     }
                     dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
                     dataAdapter.notifyDataSetChanged();
                     categorySpinner.setAdapter(dataAdapter);
-                    categorySpinner.setSelection(categoryId);
+                    categorySpinner.setSelection(categorySpinnerVal);
 
                     // listener
                     categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -490,7 +578,8 @@ public class ListBusinessFragment extends Fragment {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             //String info = (String) categorySpinner.getSelectedItem();
                             categoryId = servicesCategoryList.get(position).getId();
-                            Toast.makeText(getActivity(), String.valueOf(categoryId), Toast.LENGTH_LONG).show();
+                            categorySpinnerVal = position;
+                            //Toast.makeText(getActivity(), String.valueOf(categoryId), Toast.LENGTH_LONG).show();
                         }
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
@@ -506,5 +595,43 @@ public class ListBusinessFragment extends Fragment {
             }
         });
         // retrofit End
+    }
+
+    /**
+     *  Reset filters of popup
+     */
+
+    private void resetPopUpFilter(View viewBottomSheet) {
+
+        // Reset business type to all
+        for (TypeBusiness typeBusiness : typeBusinessesFilter) {
+            if (typeBusiness.getTypeBusinessID().equals("A")) {
+                typeBusiness.setSelected(true);
+                businessType = "A";
+                tpAll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bg_tb_circle_black));
+                txtFilterAll.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
+            }
+        }
+
+        // Reset distance to 5km
+        distanceFilter = 5;
+        txtDistance.setText(distanceFilter+" Km");
+        skbDistance.setProgress(distanceFilter);
+        // Reset budget to $10
+        budgetFilter = 10;
+        skbBudget.setProgress(budgetFilter);
+        txtBudget.setText("Max $ "+budgetFilter);
+        // Reset category to first choice
+        categorySpinnerVal = 0;
+        categoryId = 0;
+        categorySpinner.setSelection(categorySpinnerVal);
+
+        // Reset language to first choice
+        languageSpinnerVal = 0;
+        language = "";
+        languageSpinner.setSelection(languageSpinnerVal);
+
+        // Load business after filter reset
+        loadBusinessList();
     }
 }

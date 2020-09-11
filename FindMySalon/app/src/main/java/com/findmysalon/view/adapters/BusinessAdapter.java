@@ -1,16 +1,21 @@
 package com.findmysalon.view.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.findmysalon.R;
 import com.findmysalon.model.Business;
 import com.findmysalon.model.BusinessProfile;
@@ -41,6 +46,16 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
         holder.txtAddress.setText(list.get(position).getAddress());
         holder.txtPhoneNumber.setText(list.get(position).getPhone());
         holder.rtbBusiness.setRating(list.get(position).getRating());
+        // Plugin to display image
+        if(list.get(position).getProfilePhoto() != null) {
+            Glide.with(holder.imgAvatar.getContext())
+                    .load(list.get(position).getProfilePhoto())
+                    .circleCrop()
+                    .placeholder(R.drawable.photos_default)
+                    .into(holder.imgAvatar);
+        }else {
+            Glide.with(holder.imgAvatar.getContext()).clear(holder.imgAvatar);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,20 +74,25 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
 
         TextView txtNameBusiness, txtAddress, txtPhoneNumber;
         RatingBar rtbBusiness;
+        ImageView imgAvatar;
 
         public BusinessHolder(@NonNull View itemView) {
             super(itemView);
-
             txtNameBusiness = (TextView) itemView.findViewById(R.id.txt_name_business);
             txtAddress = (TextView) itemView.findViewById(R.id.txt_address);
             txtPhoneNumber = (TextView) itemView.findViewById(R.id.txt_phone_number);
             rtbBusiness = (RatingBar) itemView.findViewById(R.id.rtb_business);
+            imgAvatar = (ImageView) itemView.findViewById(R.id.img_profile_photo);
 
         }
 
         @Override
         public void onClick(View v) {
+            Log.d("Business clicked","");
+            /*Intent intent = new Intent(getActivity(), VenueDetailsActivity.class);
+            intent.putExtra(VenueDetailsFragment.EXTRAS_VENUE_ID, mVenue.getId());
 
+            startActivity(intent);*/
         }
     }
 }

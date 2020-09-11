@@ -21,8 +21,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/photos_default"
-            android:tint="@color/colorGrayDark"/>
+            android:src="@drawable/photos_default"/>
     </LinearLayout>
 
     <LinearLayout
