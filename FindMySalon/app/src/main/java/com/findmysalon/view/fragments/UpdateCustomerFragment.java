@@ -263,9 +263,12 @@ public class UpdateCustomerFragment extends Fragment {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String phonePattern = "^[0-9]{10}$";
         // Validation of empty inputs
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty())
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty())
         {
             Helper.errorMsgDialog(getActivity(), R.string.incomplete);
+        }
+        else if(address.isEmpty()){
+            Helper.errorMsgDialog(getActivity(), R.string.address_incomplete);
         }
         // Validation of email
         else if(!email.matches(emailPattern)){
