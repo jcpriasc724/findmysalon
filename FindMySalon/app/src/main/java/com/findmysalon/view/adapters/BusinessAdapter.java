@@ -2,6 +2,7 @@ package com.findmysalon.view.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
 
     Context context;
     ArrayList<BusinessProfile> list;
+    BusinessProfile currentBusiness;
 
     public BusinessAdapter(Context context, ArrayList<BusinessProfile> list) {
         this.context = context;
@@ -56,10 +58,14 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
         }else {
             Glide.with(holder.imgAvatar.getContext()).clear(holder.imgAvatar);
         }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_business_detail);
+                Bundle bundle = new Bundle();
+                currentBusiness = list.get(position);
+                bundle.putSerializable("business", currentBusiness);
+                Navigation.findNavController(v).navigate(R.id.nav_business_detail, bundle);
             }
         });
 

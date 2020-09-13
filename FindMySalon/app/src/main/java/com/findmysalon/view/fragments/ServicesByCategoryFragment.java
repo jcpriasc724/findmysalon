@@ -64,7 +64,7 @@ public class ServicesByCategoryFragment extends Fragment {
         categoryList = new ArrayList<Category>();
         servicesList =  new ArrayList<Service>();
         ArrayList<Service> servicesList1 = new ArrayList<Service>();
-        businessId = getArguments().getInt("id", 1);
+        businessId = (int) getArguments().getInt("id");
 
         categoryAdapter = new CategoryAdapter(getActivity(), categoryList);
         recServicesByCategory.setAdapter(categoryAdapter);

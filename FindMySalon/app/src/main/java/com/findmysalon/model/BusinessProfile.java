@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class BusinessProfile implements Serializable {
 
+    @SerializedName("id")
+    private int businessId;
     @SerializedName("store_name")
     private String businessName;
     @SerializedName("business_type")
@@ -27,6 +29,18 @@ public class BusinessProfile implements Serializable {
     @SerializedName("rating")
     private float rating;
 
+    public BusinessProfile(int businessId, String businessName, String businessType, String email, String address, double latitude, double longitude, String phone, String userType) {
+        this.businessId = businessId;
+        this.businessName = businessName;
+        this.businessType = businessType;
+        this.email = email;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.phone = phone;
+        this.userType = userType;
+    }
+
     public BusinessProfile(String businessName, String businessType, String email, String address, double latitude, double longitude, String phone, String userType) {
         this.businessName = businessName;
         this.businessType = businessType;
@@ -44,6 +58,10 @@ public class BusinessProfile implements Serializable {
         this.phone = phone;
         this.rating = rating;
         this.profilePhoto = profilePhoto;
+    }
+
+    public int getBusinessId() {
+        return businessId;
     }
 
     public String getBusinessName() {
