@@ -125,7 +125,8 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_subtitles"
         android:text="@string/lbl_no_businesses"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textColor="@color/colorSecondary"/>
 
 
 </LinearLayout>
