@@ -2,22 +2,30 @@ package com.findmysalon.view.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.findmysalon.R;
 import com.findmysalon.api.StaffApi;
@@ -31,6 +39,7 @@ import com.findmysalon.view.BusinessActivity;
 import com.findmysalon.view.CustomerActivity;
 import com.findmysalon.view.LoginActivity;
 import com.findmysalon.view.adapters.RosterAdapter;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
@@ -63,12 +72,15 @@ public class SetRosterFragment extends Fragment {
     int editId;
     String editName;
     DateFormat submitDf;
+    BottomSheetDialog dialogSuccess;
     ArrayList<HashMap<String,String>> submitData;
+    View v;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set_roster, container, false);
+        v = view;
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         editId = getArguments().getInt("id", 0);
         editName = getArguments().getString("name", "");
@@ -118,6 +130,7 @@ public class SetRosterFragment extends Fragment {
         });
         // retrofit End
         btnAdd.setOnClickListener(v1 -> submit());
+
         return view;
     }
 
@@ -161,7 +174,8 @@ public class SetRosterFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
 //                    Token resp = response.body();
-                    Toast.makeText(getActivity(), R.string.submit_success, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), R.string.submit_success, Toast.LENGTH_LONG).show();
+                    showPopUp(v);
                 }
                 else{
                     Log.d("Error: ",""+response.errorBody());
@@ -176,6 +190,51 @@ public class SetRosterFragment extends Fragment {
             }
         });
         // retrofit End
+    }
+
+    public void showPopUp(View v) {
+        dialogSuccess = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
+
+        View viewBottomSheet = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.popup_success,
+                        (LinearLayout) v.findViewById(R.id.bottomSheetContainer)
+                );
+
+        CardView btnFinish = (CardView) viewBottomSheet.findViewById(R.id.btn_finish);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ImageView imgDone = viewBottomSheet.findViewById(R.id.img_done);
+
+                Drawable drawable = imgDone.getDrawable();
+
+                if (drawable instanceof AnimatedVectorDrawableCompat){
+                    AnimatedVectorDrawableCompat avdc = (AnimatedVectorDrawableCompat) drawable;
+                    avdc.start();
+                } else if (drawable instanceof AnimatedVectorDrawable){
+                    AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
+                    avd.start();
+                }
+            }
+        }, 1000);
+
+
+
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+                //Navigation.findNavController(v).popBackStack();
+                dialogSuccess.dismiss();
+                Navigation.findNavController(getActivity(), R.id.nav_business_host_fragment).navigate(R.id.nav_roster_staff);
+            }
+        });
+
+        dialogSuccess.setContentView(viewBottomSheet);
+        dialogSuccess.show();
+
     }
 
 

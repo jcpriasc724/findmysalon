@@ -1,7 +1,10 @@
 package com.findmysalon.view.fragments;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.findmysalon.R;
 import com.findmysalon.api.ServiceApi;
@@ -21,6 +25,8 @@ import com.findmysalon.model.Category;
 import com.findmysalon.model.Service;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.utils.RetrofitClient;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +55,7 @@ public class RegisterServiceFragment extends Fragment {
     Switch switchDisplayStatus;
     TextView txtTags;
     TextView txtOrder;
-
+    BottomSheetDialog dialogSuccess;
 
     int categorySpinnerVal = 0;
     String statusSwitchVal = "H";
@@ -79,6 +85,14 @@ public class RegisterServiceFragment extends Fragment {
         txtOrder = view.findViewById(R.id.etx_order);
 
         btnSave.setOnClickListener(v1 -> submit());
+
+//                btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showPopUp(v);
+//            }
+//        });
+
         btnEdit.setOnClickListener(v1 -> submit());
 
         // 1. set up category spinner
@@ -191,8 +205,9 @@ public class RegisterServiceFragment extends Fragment {
             @Override
             public void onResponse(Call<Service> call, Response<Service> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(getActivity(), R.string.submit_success, Toast.LENGTH_LONG).show();
-                    Navigation.findNavController(v).popBackStack();
+//                    Toast.makeText(getActivity(), R.string.submit_success, Toast.LENGTH_LONG).show();
+//                    Navigation.findNavController(v).popBackStack();
+                    showPopUp(v);
                 } else {
                     Toast.makeText(getActivity(), R.string.submit_fail, Toast.LENGTH_LONG).show();
                 }
@@ -204,6 +219,51 @@ public class RegisterServiceFragment extends Fragment {
             }
         });
         // retrofit End
+
+    }
+
+    public void showPopUp(View v) {
+        dialogSuccess = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
+
+        View viewBottomSheet = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.popup_success,
+                        (LinearLayout) v.findViewById(R.id.bottomSheetContainer)
+                );
+
+        CardView btnFinish = (CardView) viewBottomSheet.findViewById(R.id.btn_finish);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ImageView imgDone = viewBottomSheet.findViewById(R.id.img_done);
+
+                Drawable drawable = imgDone.getDrawable();
+
+                if (drawable instanceof AnimatedVectorDrawableCompat){
+                    AnimatedVectorDrawableCompat avdc = (AnimatedVectorDrawableCompat) drawable;
+                    avdc.start();
+                } else if (drawable instanceof AnimatedVectorDrawable){
+                    AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
+                    avd.start();
+                }
+            }
+        }, 1000);
+
+
+
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+                //Navigation.findNavController(v).popBackStack();
+                dialogSuccess.dismiss();
+                Navigation.findNavController(getActivity(), R.id.nav_business_host_fragment).navigate(R.id.nav_service_list_services);
+            }
+        });
+
+        dialogSuccess.setContentView(viewBottomSheet);
+        dialogSuccess.show();
 
     }
 
