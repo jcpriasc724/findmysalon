@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Business extends User{
 
-    @SerializedName("id")
+    @SerializedName("user_id")
     private int id;
     @SerializedName("store_name")
     private String storeName;
