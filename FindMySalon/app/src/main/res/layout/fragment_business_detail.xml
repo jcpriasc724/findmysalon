@@ -40,7 +40,7 @@
                 android:layout_height="@dimen/fab_btn_circle"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
-                android:id="@+id/btn_next"
+                android:id="@+id/btn_favourite"
                 android:src="@android:drawable/btn_star"
                 android:background="@drawable/bg_btn_circle"/>
 
