@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +21,15 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.findmysalon.R;
@@ -34,6 +40,7 @@ import com.findmysalon.utils.Helper;
 import com.findmysalon.utils.RetrofitClient;
 import com.findmysalon.view.CustomerActivity;
 import com.findmysalon.view.LoginActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -67,6 +74,7 @@ public class UpdateCustomerFragment extends Fragment {
     private HashMap<String, Object> addressApi;
     private View v;
     private Uri imageUri = null;
+    BottomSheetDialog dialogSuccess;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -245,6 +253,51 @@ public class UpdateCustomerFragment extends Fragment {
         return path;
     }
 
+    public void showPopUp(View v) {
+        dialogSuccess = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
+
+        View viewBottomSheet = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.popup_success,
+                        (LinearLayout) v.findViewById(R.id.bottomSheetContainer)
+                );
+
+        CardView btnFinish = (CardView) viewBottomSheet.findViewById(R.id.btn_finish);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ImageView imgDone = viewBottomSheet.findViewById(R.id.img_done);
+
+                Drawable drawable = imgDone.getDrawable();
+
+                if (drawable instanceof AnimatedVectorDrawableCompat){
+                    AnimatedVectorDrawableCompat avdc = (AnimatedVectorDrawableCompat) drawable;
+                    avdc.start();
+                } else if (drawable instanceof AnimatedVectorDrawable){
+                    AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
+                    avd.start();
+                }
+            }
+        }, 1000);
+
+
+
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+                //Navigation.findNavController(v).popBackStack();
+                dialogSuccess.dismiss();
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_list_business);
+            }
+        });
+
+        dialogSuccess.setContentView(viewBottomSheet);
+        dialogSuccess.show();
+
+    }
+
     // Method to handle customer signUp
     public void customerUpdate(){
         String firstName = mFirstName.getText().toString();
@@ -268,8 +321,6 @@ public class UpdateCustomerFragment extends Fragment {
         }
         Log.d("Address ", ""+currentAddress.equals(mAddress.getText().toString()));
 
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        String phonePattern = "^[0-9]{10}$";
         // Validation of empty inputs
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty())
         {
@@ -279,11 +330,11 @@ public class UpdateCustomerFragment extends Fragment {
             Helper.errorMsgDialog(getActivity(), R.string.address_incomplete);
         }
         // Validation of email
-        else if(!email.matches(emailPattern)){
+        else if(!email.matches(getContext().getResources().getString(R.string.email_pattern))){
             Helper.errorMsgDialog(getActivity(), R.string.invalid_email);
         }
         // Validation of phone
-        else if(!phone.matches(phonePattern)){
+        else if(!phone.matches(getContext().getResources().getString(R.string.phone_pattern))){
             Helper.errorMsgDialog(getActivity(), R.string.invalid_phone);
         }
         else{
@@ -315,10 +366,12 @@ public class UpdateCustomerFragment extends Fragment {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(response.isSuccessful()){
                         //Customer resp = response.body();
-                        Log.d("Response: ", ""+response.body());
-                        Intent intent = new Intent(getActivity(), CustomerActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+//                        Log.d("Response: ", ""+response.body());
+//                        Intent intent = new Intent(getActivity(), CustomerActivity.class);
+//                        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+
+                        showPopUp(v);
                     }
                     else{
                         Helper.errorMsgDialog(getActivity(), R.string.response_error);
