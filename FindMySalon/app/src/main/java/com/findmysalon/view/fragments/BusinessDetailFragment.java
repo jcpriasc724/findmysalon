@@ -71,7 +71,7 @@ public class BusinessDetailFragment extends Fragment {
             Glide.with(imgAvatar.getContext())
                     .load(business.getProfilePhoto())
                     .circleCrop()
-                    .placeholder(R.drawable.photos_default)
+                    .placeholder(R.drawable.add_photo)
                     .into(imgAvatar);
         }else {
             Glide.with(imgAvatar.getContext()).clear(imgAvatar);
