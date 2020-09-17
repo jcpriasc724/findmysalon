@@ -22,8 +22,9 @@ import androidx.navigation.Navigation;
 import com.bumptech.glide.Glide;
 import com.findmysalon.R;
 import com.findmysalon.api.BusinessApi;
-import com.findmysalon.api.FavouriteApi;
+import com.findmysalon.api.FavouriteBusinessApi;
 import com.findmysalon.model.BusinessProfile;
+import com.findmysalon.model.FavouriteBusinessProfile;
 import com.findmysalon.model.Service;
 import com.findmysalon.utils.RetrofitClient;
 
@@ -38,12 +39,13 @@ import retrofit2.Retrofit;
 public class BusinessDetailFragment extends Fragment {
 
     private CardView btnBook;
-    private BusinessProfile business;
+    private FavouriteBusinessProfile business;
     private TextView txtNameBusiness, txtAddress, txtPhoneNumber;
     private RatingBar rtbBusiness;
     private ImageView imgAvatar;;
     private ImageButton btnFavBusiness;
-    private FavouriteApi favouriteApi;
+    private FavouriteBusinessApi favouriteBusinessApi;
+    private boolean isFavourite;
 
     @Nullable
     @Override
@@ -51,7 +53,8 @@ public class BusinessDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_business_detail, container, false);
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         // Get bundle arguments sent from BusinessAdapter
-        business = (BusinessProfile) getArguments().getSerializable("business");
+        business = (FavouriteBusinessProfile) getArguments().getSerializable("business");
+        //isFavourite = (boolean) getArguments().getSerializable("is_favourite");
 
         txtNameBusiness = (TextView) view.findViewById(R.id.txt_name_business);
         txtNameBusiness.setText(business.getBusinessName());
@@ -86,14 +89,21 @@ public class BusinessDetailFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.nav_list_services_by_category, bundle);
             }
         });
-
+        isFavourite = business.isFavourite();
         // Make favourite business
         btnFavBusiness = (ImageButton) view.findViewById(R.id.btn_favourite);
         btnFavBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Working here"," FAV "+business.getBusinessId());
-                addFavouriteBusiness(business.getBusinessId());
+                // If the business is not set favourite then make it favourite on button click
+                if(!isFavourite){
+                    addFavouriteBusiness(business.getBusinessId());
+                }
+                // Remove it from favourite other
+                else{
+                    removeFavouriteBusiness(business.getBusinessId());
+                }
             }
         });
 
@@ -103,9 +113,9 @@ public class BusinessDetailFragment extends Fragment {
     private void addFavouriteBusiness(int businessId) {
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
-        favouriteApi = retrofit.create(FavouriteApi.class);
-
-        Call<ResponseBody> call = favouriteApi.addFavouriteBusiness(businessId);
+        favouriteBusinessApi = retrofit.create(FavouriteBusinessApi.class);
+        Log.d("Business id",""+businessId);
+        Call<ResponseBody> call = favouriteBusinessApi.addFavouriteBusiness(businessId);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -114,6 +124,32 @@ public class BusinessDetailFragment extends Fragment {
                 }
                 else{
                     Toast.makeText(getActivity(), "Could not add to Favourite List", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        // retrofit End
+    }
+
+    private void removeFavouriteBusiness(int businessId) {
+        // retrofit
+        Retrofit retrofit = RetrofitClient.getInstance(getActivity());
+        favouriteBusinessApi = retrofit.create(FavouriteBusinessApi.class);
+        Log.d("Business id",""+businessId);
+        Call<ResponseBody> call = favouriteBusinessApi.deleteFavouriteBusiness(businessId);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getActivity(), "Successfully removed from Favourite List", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Could not remove from Favourite List", Toast.LENGTH_LONG).show();
                 }
             }
 

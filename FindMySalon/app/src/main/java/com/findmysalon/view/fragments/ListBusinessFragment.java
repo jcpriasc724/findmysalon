@@ -246,14 +246,9 @@ public class ListBusinessFragment extends Fragment {
             public void onResponse(Call<ArrayList<BusinessProfile>> call, Response<ArrayList<BusinessProfile>> response) {
                 if(response.code() == 200){
                     businessList.addAll(response.body());
-                    Log.i("SERVICE_LIST", businessList.toString());
                     businessAdapter.notifyDataSetChanged();
 
-                    /*if(businessList.size() > 0){
-                        txtNoServices.setVisibility(View.GONE);
-                    }*/
                 }
-//
             }
 
             @Override

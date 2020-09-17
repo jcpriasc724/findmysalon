@@ -52,6 +52,15 @@ public class BusinessProfile implements Serializable {
         this.userType = userType;
     }
 
+    public BusinessProfile(int businessId, String businessName, String address, String phone, float rating, String profilePhoto) {
+        this.businessId = businessId;
+        this.businessName = businessName;
+        this.address = address;
+        this.phone = phone;
+        this.rating = rating;
+        this.profilePhoto = profilePhoto;
+    }
+
     public BusinessProfile(String businessName, String address, String phone, float rating, String profilePhoto) {
         this.businessName = businessName;
         this.address = address;

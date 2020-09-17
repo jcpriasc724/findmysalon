@@ -1,11 +1,13 @@
 package com.findmysalon.view.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,20 +16,29 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
+import com.findmysalon.api.BusinessApi;
+import com.findmysalon.api.FavouriteBusinessApi;
 import com.findmysalon.model.Business;
 import com.findmysalon.model.BusinessProfile;
+import com.findmysalon.utils.RetrofitClient;
 import com.findmysalon.view.adapters.BusinessAdapter;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ListFavBusinessFragment extends Fragment {
 
     TextView txtNameBusiness, txtAddress, txtPhoneNumber;
     RatingBar rtbBusiness;
 
-    RecyclerView recBusiness;
-    ArrayList<BusinessProfile> list;
-    BusinessAdapter businessAdapter;
+    private RecyclerView recBusiness;
+    private ArrayList<BusinessProfile> favBusinessList;
+    private BusinessAdapter businessAdapter;
+    private FavouriteBusinessApi favouriteBusinessApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,8 +62,6 @@ public class ListFavBusinessFragment extends Fragment {
         recBusiness = view.findViewById(R.id.rec_business);
         recBusiness.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        list = new ArrayList<BusinessProfile>();
-
         /*Business business1 = new Business("Business 1", "Salon", "business@gmail.com","1234","1234567890","Address Number 1", 43.98888,  -23.09888, "B");
         Business business2 = new Business("Business 1234", "Barbershop", "business@gmail.com","1234","1234567890","Address Number 1", 43.98888,  -23.09888, "B");
         Business business3 = new Business("Business 1888", "Salon", "business@gmail.com","1234","1234567890","Address Number 1", 43.98888,  -23.09888, "B");
@@ -62,9 +71,37 @@ public class ListFavBusinessFragment extends Fragment {
         list.add(business2);
         list.add(business3);*/
 
-        businessAdapter = new BusinessAdapter(getActivity(), list);
-        recBusiness.setAdapter(businessAdapter);
+        loadFavBusinessList();
 
         return view;
+    }
+
+    private void loadFavBusinessList() {
+        favBusinessList = new ArrayList<BusinessProfile>();
+
+        businessAdapter = new BusinessAdapter(getActivity(), favBusinessList);
+        recBusiness.setAdapter(businessAdapter);
+
+        // retrofit
+        Retrofit retrofit = RetrofitClient.getInstance(getActivity());
+        favouriteBusinessApi = retrofit.create(FavouriteBusinessApi.class);
+
+        Call<ArrayList<BusinessProfile>> call = favouriteBusinessApi.getFavouriteBusiness();
+        call.enqueue(new Callback<ArrayList<BusinessProfile>>() {
+            @Override
+            public void onResponse(Call<ArrayList<BusinessProfile>> call, Response<ArrayList<BusinessProfile>> response) {
+                if(response.isSuccessful()){
+                    favBusinessList.addAll(response.body());
+                    businessAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<BusinessProfile>> call, Throwable t) {
+                Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        // retrofit End
     }
 }
