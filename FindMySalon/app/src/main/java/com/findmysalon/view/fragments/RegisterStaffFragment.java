@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,6 +37,9 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
@@ -43,12 +47,14 @@ import com.findmysalon.R;
 import com.findmysalon.api.ServiceApi;
 import com.findmysalon.api.StaffApi;
 import com.findmysalon.model.Category;
+import com.findmysalon.model.Language;
 import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
 import com.findmysalon.utils.FilePath;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.utils.RetrofitClient;
 import com.findmysalon.view.BusinessActivity;
+import com.findmysalon.view.adapters.LanguagesAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.JsonObject;
 
@@ -76,6 +82,7 @@ public class RegisterStaffFragment extends Fragment {
     Spinner categorySpinner;
     ProgressBar progress;
     TextView txtFullName, txtPhoneNumber;
+    AutoCompleteTextView actvLanguages;
     ImageView imgProfile;
     View v;
     StaffApi staffApi;
@@ -88,6 +95,9 @@ public class RegisterStaffFragment extends Fragment {
     Uri photoUri = null;
     File photoPath = null;
     File uploadPhotoPath = null;
+    ArrayList<String> languageList;
+    RecyclerView recLanguages;
+    LanguagesAdapter languagesAdapter;
 
     BottomSheetDialog dialogSuccess;
 
@@ -97,12 +107,16 @@ public class RegisterStaffFragment extends Fragment {
 
     String TAG = "Staff_fragment";
 
+    private static final String[] LANGUAGES = new String[]{
+        "English","Spanish", "Italian","Nepali","Chinese","Japanese"
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register_staff, container, false);
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-
+        languageList = new ArrayList<>();
         editId = getArguments().getInt("id", 0);
         v = view;
 
@@ -116,6 +130,25 @@ public class RegisterStaffFragment extends Fragment {
         txtPhoneNumber = view.findViewById(R.id.etx_phone);
         imgProfile = view.findViewById(R.id.img_profile_photo);
         progress = view.findViewById(R.id.progress);
+        actvLanguages = view.findViewById(R.id.actv_languages);
+        ArrayAdapter<String> adapterLanguages = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LANGUAGES);
+        actvLanguages.setAdapter(adapterLanguages);
+
+        recLanguages = view.findViewById(R.id.rec_languages);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recLanguages.setLayoutManager(layoutManager);
+
+        languagesAdapter = new LanguagesAdapter(getContext(), languageList);
+        recLanguages.setAdapter(languagesAdapter);
+
+        actvLanguages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                languageList.add(actvLanguages.getText().toString());
+                adapterLanguages.notifyDataSetChanged();
+                actvLanguages.setText("");
+            }
+        });
 
         btnSave = view.findViewById(R.id.btn_save);
 

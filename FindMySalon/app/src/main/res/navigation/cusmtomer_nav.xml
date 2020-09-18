@@ -15,7 +15,12 @@
         android:id="@+id/nav_list_business"
         android:name="com.findmysalon.view.fragments.ListBusinessFragment"
         android:label="@string/sign_up"
-        tools:layout="@layout/fragment_list_business" />
+        tools:layout="@layout/fragment_list_business" >
+        <action
+            android:id="@+id/action_nav_list_business_to_nav_filters"
+            app:destination="@id/nav_filters"
+            app:enterAnim="@anim/slide_up" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_business_detail"
@@ -68,5 +73,16 @@
         android:id="@+id/nav_logout_user"
         android:name="com.findmysalon.view.fragments.LogoutFragment"
         android:label="@string/sign_up" />
+
+    <fragment
+        android:id="@+id/nav_filters"
+        android:name="com.findmysalon.view.fragments.FiltersFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_filters" >
+        <action
+            android:id="@+id/action_nav_filters_to_nav_list_business"
+            app:destination="@id/nav_list_business"
+            app:enterAnim="@anim/slide_down" />
+    </fragment>
 
 </navigation>

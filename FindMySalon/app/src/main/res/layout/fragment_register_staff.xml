@@ -158,6 +158,26 @@
                     android:prompt="@string/category_prompt"
                     android:entries="@array/categories_arrays"/>
 
+                <AutoCompleteTextView
+                    android:id="@+id/actv_languages"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lbl_languages"
+                    android:completionThreshold="1"
+                    android:completionHint="@string/lbl_languages"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rec_languages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_save"
                     android:layout_marginTop="30dp"
@@ -245,7 +265,10 @@
 
                 </LinearLayout>
 
+
+
             </LinearLayout>
+
         </LinearLayout>
 
 

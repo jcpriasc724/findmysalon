@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="max_distance">50</integer>
+    <integer name="min_distance">5</integer>
+    <integer name="max_budget">1000</integer>
+    <integer name="min_budget">10</integer>
+</resources>
