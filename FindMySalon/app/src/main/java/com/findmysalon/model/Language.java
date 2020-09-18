@@ -21,4 +21,10 @@ public class Language {
     public String getName() {
         return name;
     }
+
+    //to display object as a string in spinner
+    @Override
+    public String toString() {
+        return name;
+    }
 }

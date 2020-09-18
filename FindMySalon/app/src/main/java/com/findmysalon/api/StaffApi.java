@@ -1,6 +1,7 @@
 package com.findmysalon.api;
 
 import com.findmysalon.model.Category;
+import com.findmysalon.model.Language;
 import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
 import com.findmysalon.model.StaffRoster;
@@ -56,5 +57,8 @@ public interface StaffApi {
             @Path("id") int staffId,
             @Body RequestBody timeList
     );
+
+    @GET("staff/languages/")
+    Call<ArrayList<Language>> languageList();
 
 }

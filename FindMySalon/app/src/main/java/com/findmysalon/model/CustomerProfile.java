@@ -2,7 +2,9 @@ package com.findmysalon.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CustomerProfile {
+import java.io.Serializable;
+
+public class CustomerProfile implements Serializable {
 
     @SerializedName("first_name")
     private String firstName;

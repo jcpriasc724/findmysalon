@@ -21,6 +21,11 @@ public class Category {
     private Date updatedAt;
     private ArrayList<Service> listServices;
 
+    public Category(int id, String nameCategory) {
+        this.id = id;
+        this.nameCategory = nameCategory;
+    }
+
     public Category(String nameCategory, String order, String description, ArrayList<Service> listServices) {
         this.nameCategory = nameCategory;
         this.order = order;
@@ -91,5 +96,11 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    //to display object as a string in spinner
+    @Override
+    public String toString() {
+        return nameCategory;
     }
 }

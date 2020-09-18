@@ -18,17 +18,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.findmysalon.R;
+import com.findmysalon.api.FavouriteBusinessApi;
 import com.findmysalon.model.Business;
 import com.findmysalon.model.BusinessProfile;
+import com.findmysalon.model.FavouriteBusinessProfile;
 import com.findmysalon.model.Staff;
+import com.findmysalon.utils.RetrofitClient;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.BusinessHolder> {
 
-    Context context;
-    ArrayList<BusinessProfile> list;
-    BusinessProfile currentBusiness;
+    private Context context;
+    private ArrayList<BusinessProfile> list;
+    private BusinessProfile currentBusiness;
+    private FavouriteBusinessApi favouriteBusinessApi;
+    private boolean isFavourite;
+    private FavouriteBusinessProfile favouriteBusinessProfile;
 
     public BusinessAdapter(Context context, ArrayList<BusinessProfile> list) {
         this.context = context;
@@ -64,8 +76,45 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 currentBusiness = list.get(position);
-                bundle.putSerializable("business", currentBusiness);
-                Navigation.findNavController(v).navigate(R.id.nav_business_detail, bundle);
+
+                // retrofit
+                Retrofit retrofit = RetrofitClient.getInstance(holder.itemView.getContext());
+                favouriteBusinessApi = retrofit.create(FavouriteBusinessApi.class);
+
+                Call<FavouriteBusinessProfile> call = favouriteBusinessApi.isFavouriteBusiness(currentBusiness.getBusinessId());
+                call.enqueue(new Callback<FavouriteBusinessProfile>() {
+                    @Override
+                    public void onResponse(Call<FavouriteBusinessProfile> call, Response<FavouriteBusinessProfile> response) {
+                        //
+                        if(response.code() == 200){
+                            isFavourite = true;
+                            Log.d("Response code 200: ", ""+response.code());
+
+                        }
+                        else{
+                            isFavourite = false;
+                        }
+                        favouriteBusinessProfile = new FavouriteBusinessProfile(
+                                currentBusiness.getBusinessId(),
+                                currentBusiness.getBusinessName(),
+                                currentBusiness.getAddress(),
+                                currentBusiness.getPhone(),
+                                currentBusiness.getRating(),
+                                currentBusiness.getProfilePhoto(),
+                                isFavourite);
+                        bundle.putSerializable("business", favouriteBusinessProfile);
+                        Navigation.findNavController(v).navigate(R.id.nav_business_detail, bundle);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<FavouriteBusinessProfile> call, Throwable t) {
+                        Log.d("Fail: ", t.getMessage());
+                        Toast.makeText(holder.itemView.getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+                // retrofit End
+
             }
         });
 

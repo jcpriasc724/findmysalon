@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,8 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
     private int userId;
     private Uri profilePhoto;
     private UserApi userApi;
+    private ImageView imgView;
+    private TextView txtUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +59,8 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
 
         // Accessing the navigation header
         View header = navigationView.getHeaderView(0);
-        ImageView imgView = header.findViewById(R.id.img_profile_photo);
-
-        // Accessing intent passed from LoginActivity
-        /*Bundle extras = getIntent().getExtras();
-
-        if (extras != null)
-        {
-            userId = (int) extras.get("user_id");
-            String pPhoto = (String) extras.get("profile_photo");
-            // Parsing URL of profile photo in string to Uri type
-            profilePhoto = Uri.parse(pPhoto);
-        }*/
+        imgView = header.findViewById(R.id.img_profile_photo);
+        txtUserName = header.findViewById(R.id.txt_name_user);
 
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getApplicationContext());
@@ -84,6 +77,7 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
                             .circleCrop()
                             .placeholder(R.drawable.add_photo)
                             .into(imgView);
+                    txtUserName.setText(response.body().getFirstName());
                 }
             }
 
@@ -93,16 +87,6 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-        // Accessing the profile edit button
-        /*ImageButton editButton = header.findViewById(R.id.btn_edit);
-        editButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CustomerActivity.this, CustomerProfileActivity.class);
-            intent.putExtra(RegisterCustomerFragment.EXTRAS_USER_ID, userId);
-            startActivity(intent);
-        });*/
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -115,7 +99,7 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
 
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
-                Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_type_business);
+                Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_list_business);
                 break;
             case R.id.nav_bookings:
                 Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_list_customer_bookings);
