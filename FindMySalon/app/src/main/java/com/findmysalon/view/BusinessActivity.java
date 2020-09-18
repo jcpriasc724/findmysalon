@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,8 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
     private DrawerLayout drawer;
     private Uri profilePhoto;
     private UserApi userApi;
+    private ImageView imgView;
+    private TextView txtBusinessName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,8 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
 
         // Accessing the navigation header
         View header = navigationView.getHeaderView(0);
-        ImageView imgView = header.findViewById(R.id.img_profile_photo);
+        imgView = header.findViewById(R.id.img_profile_photo);
+        txtBusinessName = header.findViewById(R.id.txt_name_user);
 
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getApplicationContext());
@@ -69,6 +73,7 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
                             .circleCrop()
                             .placeholder(R.drawable.add_photo)
                             .into(imgView);
+                    txtBusinessName.setText(response.body().getBusinessName());
                 }
             }
 
