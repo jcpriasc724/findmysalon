@@ -65,15 +65,18 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingH
         if (list.get(position).getStatus().equals("C")){
             holder.textStatus.setText("Cancel");
             holder.btnDelete.setVisibility(View.GONE);
+        } else if(list.get(position).getStatus().equals("F")) {
+            holder.textStatus.setText("Finished");
+            holder.btnDelete.setVisibility(View.GONE);
         } else {
             holder.textStatus.setText("Approval");
             holder.btnDelete.setVisibility(View.VISIBLE);
 
             // if booking date is expired remove the cancel button
-            c.setTime(list.get(position).getDateBooking());
-            c.add(c.DATE,1);
-            if(c.getTime().compareTo(curDate) < 1)
-                holder.btnDelete.setVisibility(View.GONE);
+//            c.setTime(list.get(position).getDateBooking());
+//            c.add(c.DATE,1);
+//            if(c.getTime().compareTo(curDate) < 1)
+//                holder.btnDelete.setVisibility(View.GONE);
         }
 
 
@@ -102,6 +105,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingH
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                     if(response.isSuccessful()){
                                         Toast.makeText(context, R.string.cancel_success, Toast.LENGTH_LONG).show();
+                                        holder.textStatus.setText("Cancel");
                                         holder.btnDelete.setVisibility(View.GONE);
                                     } else {
                                         Toast.makeText(context, R.string.cancel_fail, Toast.LENGTH_LONG).show();

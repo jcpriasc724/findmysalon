@@ -7,14 +7,14 @@
     <string name="lbl_upload_photo">Upload photo</string>
     <string name="lbl_book">Book now</string>
     <string name="lbl_type_business">Type of business</string>
-    <string name="lbl_business_name">Business Name</string>
-    <string name="lbl_service_name">Service Name</string>
-    <string name="lbl_first_name">First Name</string>
-    <string name="lbl_last_name">Last Name</string>
+    <string name="lbl_business_name">Business name</string>
+    <string name="lbl_service_name">Service name</string>
+    <string name="lbl_first_name">First name</string>
+    <string name="lbl_last_name">Last name</string>
     <string name="lbl_email">E-mail</string>
     <string name="lbl_name">Full name</string>
     <string name="lbl_address">Address</string>
-    <string name="lbl_phone_number">Phone Number</string>
+    <string name="lbl_phone_number">Phone number</string>
     <string name="lbl_password">Password</string>
     <string name="lbl_current_password">Current password</string>
     <string name="lbl__new_password">New password</string>
@@ -23,7 +23,7 @@
     <string name="lbl_edit">Edit</string>
     <string name="lbl_services">Services</string>
     <string name="lbl_logout">Log out</string>
-    <string name="lbl_roster">Roster Staff</string>
+    <string name="lbl_roster">Roster staff</string>
     <string name="lbl_bookings">Bookings</string>
     <string name="lbl_home">Home</string>
     <string name="lbl_settings">Settings</string>
@@ -43,21 +43,21 @@
     <string name="lbl_location">Location</string>
     <string name="lbl_near_me">Near me</string>
     <string name="lbl_favorites">Favorites</string>
-    <string name="lbl_business_details">Business Details</string>
-    <string name="lbl_customer_details">Customer Details</string>
-    <string name="lbl_staff_details">Staff Details</string>
-    <string name="lbl_appointment_confirmation">Step 3: Confirm Appointment</string>
-    <string name="lbl_no_services">No Services</string>
-    <string name="lbl_no_bookings">No Bookings</string>
-    <string name="lbl_no_staff">No Staff</string>
-    <string name="lbl_no_businesses">No Businesses</string>
-    <string name="lbl_no_fav_businesses">No Favorite Businesses</string>
+    <string name="lbl_business_details">Business details</string>
+    <string name="lbl_customer_details">Customer details</string>
+    <string name="lbl_staff_details">Staff details</string>
+    <string name="lbl_appointment_confirmation">Step 3: Confirm appointment</string>
+    <string name="lbl_no_services">No services</string>
+    <string name="lbl_no_bookings">No bookings</string>
+    <string name="lbl_no_staff">No staff</string>
+    <string name="lbl_no_businesses">No businesses</string>
+    <string name="lbl_no_fav_businesses">No favorite businesses</string>
     <string name="lbl_all">All</string>
-    <string name="lbl_salons">Hair Salon</string>
+    <string name="lbl_salons">Hair salon</string>
     <string name="lbl_barbershop">Barbershop</string>
-    <string name="lbl_current_location">Current Location</string>
+    <string name="lbl_current_location">Current location</string>
     <string name="lbl_filter_services">Key word</string>
-    <string name="lbl_choose_staff">Choose Staff</string>
+    <string name="lbl_choose_staff">Choose staff</string>
     <string name="lbl_cancel">Cancel</string>
     <string name="lbl_confirm">Confirm</string>
     <string name="lbl_monday">Monday</string>
@@ -80,19 +80,25 @@
     <string name="lbl_submit">Submit</string>
     <string name="lbl_update">Update</string>
 
-    <string name="lbl_description_service">Description Service</string>
-    <string name="lbl_price_service">Price Service</string>
-    <string name="lbl_duration_service">Duration Service</string>
+    <string name="lbl_finish">Finish</string>
+    <string name="lbl_done">Done</string>
+
+    <string name="lbl_description_service">Description service</string>
+    <string name="lbl_price_service">Price service</string>
+    <string name="lbl_duration_service">Duration service</string>
     <string name="lbl_enable_disable">Disable / Enable</string>
     <string name="lbl_tags">Tags</string>
     <string name="lbl_save">Save</string>
     <string name="lbl_delete">Delete</string>
-    <string name="lbl_order">Disaply Order e.g. 1 - 9999</string>
+    <string name="lbl_order">Display order e.g. 1 - 9999</string>
     <string name="lbl_image_loading">Waiting image loading</string>
 
     <string name="category_prompt">Choose a category</string>
     <string name="distance_prompt">Distance around</string>
     <string name="pattern">EEE, d MMM yyyy</string>
+
+    <string name="email_pattern">[a-zA-Z0-9._-]+@[a-z0-9]+\\.+[a-z]+</string>
+    <string name="phone_pattern">^[0-9]{10}$</string>
 
     <string-array name="categories_arrays">
         <item>Choose a category</item>

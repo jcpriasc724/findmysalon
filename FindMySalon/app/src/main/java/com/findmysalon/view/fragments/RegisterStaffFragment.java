@@ -7,8 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +36,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.findmysalon.R;
@@ -44,6 +48,8 @@ import com.findmysalon.model.Staff;
 import com.findmysalon.utils.FilePath;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.utils.RetrofitClient;
+import com.findmysalon.view.BusinessActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.JsonObject;
 
 import java.io.File;
@@ -83,11 +89,14 @@ public class RegisterStaffFragment extends Fragment {
     File photoPath = null;
     File uploadPhotoPath = null;
 
+    BottomSheetDialog dialogSuccess;
+
     Staff staffObject;
     // if editing
     int editId = 0;
 
     String TAG = "Staff_fragment";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -111,8 +120,14 @@ public class RegisterStaffFragment extends Fragment {
         btnSave = view.findViewById(R.id.btn_save);
 
         btnSave.setOnClickListener(v1 -> submit());
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showPopUp(v);
+//            }
+//        });
         btnEdit.setOnClickListener(v1 -> submit());
-        imgProfile.setOnClickListener(v1->imageUpload());
+        imgProfile.setOnClickListener(v1 -> imageUpload());
 
         // 1. set up category spinner
         categorySpinnerSetting();
@@ -133,38 +148,39 @@ public class RegisterStaffFragment extends Fragment {
     /**
      * image Upload
      */
-    private void imageUpload(){
-        AlertDialog.Builder builder=new AlertDialog.Builder(getContext())
-        .setTitle("Select picture：")
-        .setItems(new String[]{"Camera","Gallery"}, new android.content.DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                            requestPermissions( new String[]{Manifest.permission.CAMERA}, 100);
-                        } else {
-                            openCamera();
+    private void imageUpload() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Select picture：")
+                .setItems(new String[]{"Camera", "Gallery"}, new android.content.DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
+                                } else {
+                                    openCamera();
+                                }
+                                break;
+                            case 1:
+                                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+                                } else {
+                                    openAlbum();
+                                }
+                                break;
+                            default:
+                                break;
                         }
-                        break;
-                    case 1:
-                        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            requestPermissions( new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
-                        } else {
-                            openAlbum();
-                        }
-                        break;
-                    default:
-                        break;
-                }
 
-            }});
+                    }
+                });
         builder.create().show();
     }
 
-    protected void openCamera(){
+    protected void openCamera() {
 
-        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String fileName = "cameraOutput" + System.currentTimeMillis() + ".jpg";
         File imagePath = new File(getContext().getFilesDir(), "images");
         photoPath = new File(imagePath, fileName);
@@ -180,10 +196,10 @@ public class RegisterStaffFragment extends Fragment {
         startActivityForResult(intent, 100);
     }
 
-    protected void openAlbum(){
+    protected void openAlbum() {
 //        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(intent, 101);
     }
 
@@ -191,21 +207,21 @@ public class RegisterStaffFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri tempUri = null;
-        switch (requestCode){
+        switch (requestCode) {
             case 100:
                 // camera
-                if(resultCode == RESULT_OK ) {
+                if (resultCode == RESULT_OK) {
                     tempUri = photoUri;
                     uploadPhotoPath = photoPath;
                 }
                 break;
             case 101:
                 // photo album
-                if(resultCode == RESULT_OK ) {
+                if (resultCode == RESULT_OK) {
                     tempUri = data.getData();
                     // Uri to file
                     String tp = FilePath.getPath(getContext(), tempUri);
-                    if(tp == null){
+                    if (tp == null) {
                         Toast.makeText(getActivity(), R.string.invalid_upload_file, Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -214,13 +230,13 @@ public class RegisterStaffFragment extends Fragment {
                 }
                 break;
         }
-        if(resultCode == RESULT_OK){
-            if(Helper.toFileSize(uploadPhotoPath.toString()) > MAXIMUM_IMAGE_SIZE){
+        if (resultCode == RESULT_OK) {
+            if (Helper.toFileSize(uploadPhotoPath.toString()) > MAXIMUM_IMAGE_SIZE) {
                 Toast.makeText(getActivity(), R.string.invalid_image_size, Toast.LENGTH_LONG).show();
                 return;
             }
-            if(Helper.checkAndRotateImg(uploadPhotoPath.toString()) == false){
-                Log.i(TAG,"Img rotation change failed ");
+            if (Helper.checkAndRotateImg(uploadPhotoPath.toString()) == false) {
+                Log.i(TAG, "Img rotation change failed ");
             }
             progress.setVisibility(View.VISIBLE);
             RequestBody requestFile =
@@ -238,22 +254,23 @@ public class RegisterStaffFragment extends Fragment {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 //
-                    if(response.isSuccessful()){
-                        Log.i(TAG, response.body().get("image").toString().replace("\"",""));
+                    if (response.isSuccessful()) {
+                        Log.i(TAG, response.body().get("image").toString().replace("\"", ""));
 //                        JsonObject jsonObject = new JsonObject().get(response.body().toString()).getAsJsonObject();
 
                         Glide.with(getContext())
-                                .load(response.body().get("image").toString().replace("\"",""))
+                                .load(response.body().get("image").toString().replace("\"", ""))
                                 .circleCrop()
                                 .placeholder(R.drawable.add_photo)
                                 .into(imgProfile);
-                        mCurrentPhotoPath = response.body().get("save_image").toString().replace("\"","");
+                        mCurrentPhotoPath = response.body().get("save_image").toString().replace("\"", "");
                     } else {
                         Toast.makeText(getActivity(), R.string.submit_fail, Toast.LENGTH_LONG).show();
                     }
                     // Finish remove the progress bar
                     progress.setVisibility(View.GONE);
                 }
+
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.d("Fail: ", t.getMessage());
@@ -269,12 +286,12 @@ public class RegisterStaffFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        Log.i(null,String.valueOf(requestCode));
+        Log.i(null, String.valueOf(requestCode));
         switch (requestCode) {
             case 100:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
-                    Log.i(null,"ww");
+                    Log.i(null, "ww");
                 } else {
                     Toast.makeText(getActivity(), "You denied the permission", Toast.LENGTH_SHORT).show();
                 }
@@ -282,7 +299,7 @@ public class RegisterStaffFragment extends Fragment {
             case 101:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openAlbum();
-                    Log.i(null,"ww");
+                    Log.i(null, "ww");
                 } else {
                     Toast.makeText(getActivity(), "You denied the permission", Toast.LENGTH_SHORT).show();
                 }
@@ -293,19 +310,19 @@ public class RegisterStaffFragment extends Fragment {
 
 
     /**
-     *  date submit
+     * date submit
      */
-    private void submit(){
+    private void submit() {
 //        int categoryId = categorySpinnerVal;
         String staffFullName = txtFullName.getText().toString();
         String staffPhoneNumber = txtPhoneNumber.getText().toString();
 
-        if(staffFullName.isEmpty() || staffFullName.length() < 2 ) {
+        if (staffFullName.isEmpty() || staffFullName.length() < 2) {
             Helper.errorMsgDialog(getActivity(), R.string.invalid_full_name);
             return;
         }
 
-        if(staffPhoneNumber.isEmpty() || !staffPhoneNumber.matches(phonePattern)) {
+        if (staffPhoneNumber.isEmpty() || !staffPhoneNumber.matches(phonePattern)) {
             Helper.errorMsgDialog(getActivity(), R.string.invalid_phone);
             return;
         }
@@ -320,7 +337,7 @@ public class RegisterStaffFragment extends Fragment {
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
         staffApi = retrofit.create(StaffApi.class);
         Call<Staff> call;
-        if(editId > 0 ) {
+        if (editId > 0) {
 //            staffObj.setId(editId);
             call = staffApi.staffUpdate(editId, staffObj);
         } else {
@@ -330,13 +347,17 @@ public class RegisterStaffFragment extends Fragment {
             @Override
             public void onResponse(Call<Staff> call, Response<Staff> response) {
                 Log.i(TAG, String.valueOf(response.errorBody()));
-                if(response.isSuccessful()){
-                    Toast.makeText(getActivity(), R.string.submit_success, Toast.LENGTH_LONG).show();
-                    Navigation.findNavController(v).popBackStack();
+                if (response.isSuccessful()) {
+                    showPopUp(v);
+//                    Toast.makeText(getActivity(), R.string.submit_success, Toast.LENGTH_LONG).show();
+//
+
+
                 } else {
                     Toast.makeText(getActivity(), R.string.submit_fail, Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<Staff> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
@@ -347,10 +368,55 @@ public class RegisterStaffFragment extends Fragment {
 
     }
 
+    public void showPopUp(View v) {
+        dialogSuccess = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
+
+        View viewBottomSheet = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.popup_success,
+                        (LinearLayout) v.findViewById(R.id.bottomSheetContainer)
+                );
+
+        CardView btnFinish = (CardView) viewBottomSheet.findViewById(R.id.btn_finish);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ImageView imgDone = viewBottomSheet.findViewById(R.id.img_done);
+
+                Drawable drawable = imgDone.getDrawable();
+
+                if (drawable instanceof AnimatedVectorDrawableCompat){
+                    AnimatedVectorDrawableCompat avdc = (AnimatedVectorDrawableCompat) drawable;
+                    avdc.start();
+                } else if (drawable instanceof AnimatedVectorDrawable){
+                    AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
+                    avd.start();
+                }
+            }
+        }, 1000);
+
+
+
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+                //Navigation.findNavController(v).popBackStack();
+                dialogSuccess.dismiss();
+                Navigation.findNavController(getActivity(), R.id.nav_business_host_fragment).navigate(R.id.nav_staff_list_business);
+            }
+        });
+
+        dialogSuccess.setContentView(viewBottomSheet);
+        dialogSuccess.show();
+
+    }
+
     /**
-     *  category Spinner Set up
+     * category Spinner Set up
      */
-    private void categorySpinnerSetting(){
+    private void categorySpinnerSetting() {
         // fetch services category list
         servicesCategoryList = new ArrayList<Category>();
         // retrofit
@@ -360,10 +426,10 @@ public class RegisterStaffFragment extends Fragment {
         call.enqueue(new Callback<ArrayList<Category>>() {
             @Override
             public void onResponse(Call<ArrayList<Category>> call, Response<ArrayList<Category>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     servicesCategoryList.addAll(response.body());
                     List<String> items = new ArrayList<String>();
-                    for(int i = 0; i < servicesCategoryList.size(); i++){
+                    for (int i = 0; i < servicesCategoryList.size(); i++) {
                         items.add(servicesCategoryList.get(i).getNameCategory());
                     }
                     dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
@@ -379,16 +445,18 @@ public class RegisterStaffFragment extends Fragment {
                             categorySpinnerVal = position;
 //                            Toast.makeText(getActivity(), String.valueOf(categorySpinnerVal), Toast.LENGTH_LONG).show();
                         }
+
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
 
                         }
                     });
 
-                    if(editId > 0)
+                    if (editId > 0)
                         fillEditForm();
                 }
             }
+
             @Override
             public void onFailure(Call<ArrayList<Category>> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
@@ -399,9 +467,9 @@ public class RegisterStaffFragment extends Fragment {
     }
 
     /**
-     *  fill up form
+     * fill up form
      */
-    private void fillEditForm(){
+    private void fillEditForm() {
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
         staffApi = retrofit.create(StaffApi.class);
@@ -410,12 +478,12 @@ public class RegisterStaffFragment extends Fragment {
             @Override
             public void onResponse(Call<Staff> call, Response<Staff> response) {
 //                Log.i(null,String.valueOf(response.code()));
-                if(response.code() == 200){
+                if (response.code() == 200) {
                     staffObject = response.body();
 
                     // setup spinner
-                    for (int i = 0; i < servicesCategoryList.size(); i++){
-                        if(servicesCategoryList.get(i).getId() == staffObject.getCategory().getId()){
+                    for (int i = 0; i < servicesCategoryList.size(); i++) {
+                        if (servicesCategoryList.get(i).getId() == staffObject.getCategory().getId()) {
                             categorySpinnerVal = i;
                             categorySpinner.setSelection(categorySpinnerVal);
                             break;
@@ -432,6 +500,7 @@ public class RegisterStaffFragment extends Fragment {
                             .into(imgProfile);
                 }
             }
+
             @Override
             public void onFailure(Call<Staff> call, Throwable t) {
                 Log.d("Fail: ", t.getMessage());
@@ -442,60 +511,61 @@ public class RegisterStaffFragment extends Fragment {
     }
 
     /**
-     *  delete btn
+     * delete btn
      */
-    private void deleteBtnSetting(){
-        if(editId > 0 ){
+    private void deleteBtnSetting() {
+        if (editId > 0) {
             btnContainer.setVisibility(View.VISIBLE);
             btnSave.setVisibility(View.GONE);
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     new androidx.appcompat.app.AlertDialog.Builder(getActivity()).setTitle(R.string.delete_confirm)
-                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // retrofit
-                                Retrofit retrofit = RetrofitClient.getInstance(getActivity());
-                                staffApi = retrofit.create(StaffApi.class);
+                            .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // retrofit
+                                    Retrofit retrofit = RetrofitClient.getInstance(getActivity());
+                                    staffApi = retrofit.create(StaffApi.class);
 
-                                Call<ResponseBody> call = staffApi.staffDelete(editId);
-                                call.enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if(response.isSuccessful()){
-                                            Toast.makeText(getActivity(), R.string.delete_success, Toast.LENGTH_LONG).show();
-                                            Navigation.findNavController(v).popBackStack();
-                                        } else {
-                                            Toast.makeText(getActivity(), R.string.delete_fail, Toast.LENGTH_LONG).show();
+                                    Call<ResponseBody> call = staffApi.staffDelete(editId);
+                                    call.enqueue(new Callback<ResponseBody>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                            if (response.isSuccessful()) {
+                                                Toast.makeText(getActivity(), R.string.delete_success, Toast.LENGTH_LONG).show();
+                                                Navigation.findNavController(v).popBackStack();
+                                            } else {
+                                                Toast.makeText(getActivity(), R.string.delete_fail, Toast.LENGTH_LONG).show();
+                                            }
                                         }
-                                    }
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        Log.d("Fail: ", t.getMessage());
-                                        Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                                // retrofit End
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {}
-                        }).show();
+
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                            Log.d("Fail: ", t.getMessage());
+                                            Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                    // retrofit End
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
                 }
             });
         }
     }
 
     /**
-     *
      * @param uri
      * @return
      */
     private String getPath(Uri uri) {
 
-        String[] projection = { MediaStore.Images.Media.DATA };
+        String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();

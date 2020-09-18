@@ -65,7 +65,7 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
             Glide.with(holder.imgAvatar.getContext())
                     .load(list.get(position).getProfilePhoto())
                     .circleCrop()
-                    .placeholder(R.drawable.photos_default)
+                    .placeholder(R.drawable.add_photo)
                     .into(holder.imgAvatar);
         }else {
             Glide.with(holder.imgAvatar.getContext()).clear(holder.imgAvatar);

@@ -239,15 +239,14 @@ public class RegisterBusinessFragment extends Fragment {
             longitude = (double) addressApi.get("lng");
         }
 
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z0-9]+\\.+[a-z]+";
-        String phonePattern = "^[0-9]{10}$";
+
         // Validation of empty inputs
         if (businessName.isEmpty() || businessType.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() || password.isEmpty() || rePassword.isEmpty())
         {
             Helper.errorMsgDialog(getActivity(), R.string.incomplete);
         }
         // Validation of email
-        else if(!email.matches(emailPattern)){
+        else if(!email.matches(getContext().getResources().getString(R.string.email_pattern))){
             Helper.errorMsgDialog(getActivity(), R.string.invalid_email);
         }
         // Validation of address
@@ -255,7 +254,7 @@ public class RegisterBusinessFragment extends Fragment {
             Helper.errorMsgDialog(Objects.requireNonNull(getActivity()), R.string.address_incomplete);
         }
         // Validation of phone
-        else if(!phone.matches(phonePattern)){
+        else if(!phone.matches(getContext().getResources().getString(R.string.phone_pattern))){
             Helper.errorMsgDialog(getActivity(), R.string.invalid_phone);
         }
         else if(!password.equals(rePassword)){

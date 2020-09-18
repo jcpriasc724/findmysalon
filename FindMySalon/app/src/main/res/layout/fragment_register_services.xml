@@ -92,16 +92,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:inputType="textPersonName"
                     android:hint="@string/lbl_service_name" />
-
-                <EditText
-                    android:id="@+id/etx_description_service"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/lbl_description_service" />
 
                 <EditText
                     android:id="@+id/etx_price_service"
@@ -132,6 +124,16 @@
                     android:text="@string/lbl_enable_disable" />
 
                 <EditText
+                    android:id="@+id/etx_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/lbl_order"
+                    android:inputType="number" />
+
+                <EditText
                     android:id="@+id/etx_tags"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,14 +143,13 @@
                     android:hint="@string/lbl_tags" />
 
                 <EditText
-                        android:id="@+id/etx_order"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:hint="@string/lbl_order"
-                        android:inputType="number" />
+                    android:id="@+id/etx_description_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/lbl_description_service" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_save"
