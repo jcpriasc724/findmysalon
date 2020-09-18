@@ -220,14 +220,6 @@ public class ListBusinessFragment extends Fragment {
     private void loadBusinessList() {
         businessList = new ArrayList<>();
 
-        /*Business business1 = new Business("Business 1", "Salon", "business@gmail.com", "1234", "1234567890", "Address Number 1", 43.98888, -23.09888, "B");
-        Business business2 = new Business("Business 1234", "Barbershop", "business@gmail.com", "1234", "1234567890", "Address Number 1", 43.98888, -23.09888, "B");
-        Business business3 = new Business("Business 1888", "Salon", "business@gmail.com", "1234", "1234567890", "Address Number 1", 43.98888, -23.09888, "B");
-
-        list.add(business1);
-        list.add(business2);
-        list.add(business3);*/
-
         businessAdapter = new BusinessAdapter(getActivity(), businessList);
         recBusiness.setAdapter(businessAdapter);
 

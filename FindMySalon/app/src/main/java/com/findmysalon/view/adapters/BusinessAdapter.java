@@ -77,7 +77,6 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
                 Bundle bundle = new Bundle();
                 currentBusiness = list.get(position);
 
-
                 // retrofit
                 Retrofit retrofit = RetrofitClient.getInstance(holder.itemView.getContext());
                 favouriteBusinessApi = retrofit.create(FavouriteBusinessApi.class);
@@ -88,7 +87,6 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
                     public void onResponse(Call<FavouriteBusinessProfile> call, Response<FavouriteBusinessProfile> response) {
                         //
                         if(response.code() == 200){
-                            /*bundle.putSerializable("is_favourite", true);*/
                             isFavourite = true;
                             Log.d("Response code 200: ", ""+response.code());
 
@@ -112,8 +110,6 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
                     @Override
                     public void onFailure(Call<FavouriteBusinessProfile> call, Throwable t) {
                         Log.d("Fail: ", t.getMessage());
-                        //bundle.putSerializable("is_favourite", false);
-                        //isFavourite = false;
                         Toast.makeText(holder.itemView.getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
