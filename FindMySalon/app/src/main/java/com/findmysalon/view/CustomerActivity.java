@@ -99,7 +99,7 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
 
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
-                Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_type_business);
+                Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_list_business);
                 break;
             case R.id.nav_bookings:
                 Navigation.findNavController(CustomerActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_list_customer_bookings);
