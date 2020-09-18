@@ -43,6 +43,8 @@ import com.findmysalon.api.StaffApi;
 import com.findmysalon.model.Business;
 import com.findmysalon.model.BusinessProfile;
 import com.findmysalon.model.Category;
+import com.findmysalon.model.CustomerProfile;
+import com.findmysalon.model.FavouriteBusinessProfile;
 import com.findmysalon.model.Language;
 import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
@@ -65,7 +67,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.Field;
+import static com.findmysalon.utils.abcConstants.INITIAL_DISTANCE;
+import static com.findmysalon.utils.abcConstants.INITIAL_MAX_BUDGET;
 
 public class ListBusinessFragment extends Fragment {
 
@@ -80,8 +83,8 @@ public class ListBusinessFragment extends Fragment {
     private RecyclerView recBusiness;
     private ArrayList<BusinessProfile> businessList;
     private BusinessAdapter businessAdapter;
-    private int distanceFilter = 5; // Initial distance
-    private int budgetFilter = 10; //  Initial budget
+    private int distanceFilter = INITIAL_DISTANCE; // Set initial distance to 20 km
+    private int budgetFilter = INITIAL_MAX_BUDGET; //  Set initial budget to $100
     private ArrayList<TypeBusiness> typeBusinessesFilter;
     private BottomSheetDialog dialogFilters;
     private CardView btnFilters;
@@ -116,11 +119,7 @@ public class ListBusinessFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get default coordinate saved in DB, if user didn't allow location permission
-        // Replace code below with values from DB
-        latitude = -37.77156;
-        longitude = 144.9687;
-        distance = 20;
+        distance = INITIAL_DISTANCE;
         requestPermissions(LOCATION_PERMISSIONS, REQUEST_LOCATION_PERMISSIONS);
     }
 
@@ -234,7 +233,6 @@ public class ListBusinessFragment extends Fragment {
         distance = distanceFilter;
         budget = budgetFilter;
 
-        Log.d("Lat lng ", " "+ latitude+ longitude);
         Call<ArrayList<BusinessProfile>> call = businessApi.businessList(businessType, latitude, longitude, distance, budget, languageId, categoryId, keyword);
         call.enqueue(new Callback<ArrayList<BusinessProfile>>() {
             @Override
@@ -628,12 +626,12 @@ public class ListBusinessFragment extends Fragment {
             }
         }
 
-        // Reset distance to 5km
-        distanceFilter = 5;
+        // Reset distance to initial distance
+        distanceFilter = INITIAL_DISTANCE;
         txtDistance.setText(distanceFilter+" Km");
         skbDistance.setProgress(distanceFilter);
-        // Reset budget to $10
-        budgetFilter = 10;
+        // Reset budget to initial budget
+        budgetFilter = INITIAL_MAX_BUDGET;
         skbBudget.setProgress(budgetFilter);
         txtBudget.setText("Max $ "+budgetFilter);
         // Reset category to first choice

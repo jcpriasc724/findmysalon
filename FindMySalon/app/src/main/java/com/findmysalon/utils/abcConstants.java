@@ -12,5 +12,7 @@ public final class abcConstants {
     public final static String REFRESH_TOKEN = "refreshToken"; 
     public final static String TOKEN_EXPIRED = "expired_time";
     public final static String USER_TYPE = "user_type";
+    public final static int INITIAL_DISTANCE = 20;
+    public final static int INITIAL_MAX_BUDGET = 100;
 
 }
