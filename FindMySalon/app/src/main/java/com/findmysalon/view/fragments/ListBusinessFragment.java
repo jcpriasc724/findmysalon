@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.findmysalon.R;
 import com.findmysalon.api.BusinessApi;
 import com.findmysalon.api.ServiceApi;
+import com.findmysalon.api.StaffApi;
 import com.findmysalon.model.Business;
 import com.findmysalon.model.BusinessProfile;
 import com.findmysalon.model.Category;
@@ -57,6 +58,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -92,11 +94,12 @@ public class ListBusinessFragment extends Fragment {
 
     private BusinessApi businessApi;
     private ServiceApi serviceApi;
+    private StaffApi staffApi;
 
     private ArrayList<Category> servicesCategoryList;
     private ArrayList<Language> languageList;
-    private ArrayAdapter<String> dataAdapter;
-    private ArrayAdapter<String> languageAdapter;
+    private ArrayAdapter<Category> categoryAdapter;
+    private ArrayAdapter<Language> languageAdapter;
     private Spinner categorySpinner;
     private Spinner languageSpinner;
     private String businessType;
@@ -104,7 +107,7 @@ public class ListBusinessFragment extends Fragment {
     private double longitude;
     private int distance;
     private int budget;
-    private String language;
+    private int languageId;
     private int categoryId = 0;
     private int categorySpinnerVal = 0;
     private int languageSpinnerVal = 0;
@@ -232,7 +235,7 @@ public class ListBusinessFragment extends Fragment {
         budget = budgetFilter;
 
         Log.d("Lat lng ", " "+ latitude+ longitude);
-        Call<ArrayList<BusinessProfile>> call = businessApi.businessList(businessType, latitude, longitude, distance, budget, language, categoryId, keyword);
+        Call<ArrayList<BusinessProfile>> call = businessApi.businessList(businessType, latitude, longitude, distance, budget, languageId, categoryId, keyword);
         call.enqueue(new Callback<ArrayList<BusinessProfile>>() {
             @Override
             public void onResponse(Call<ArrayList<BusinessProfile>> call, Response<ArrayList<BusinessProfile>> response) {
@@ -503,34 +506,58 @@ public class ListBusinessFragment extends Fragment {
      *  language Spinner Set up
      */
     private void languageSpinnerSetting() {
-        List<String> items = new ArrayList<String>();
+       /* List<String> items = new ArrayList<String>();
         items.add("Choose a language");
         items.add("English");
         items.add("Spanish");
         items.add("Nepali");
         items.add("Chinese");
-        items.add("Japanese");
+        items.add("Japanese");*/
 
-        languageAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
-        languageAdapter.notifyDataSetChanged();
-        languageSpinner.setAdapter(languageAdapter);
-        languageSpinner.setSelection(languageSpinnerVal);
+        // fetch services category list
+        languageList = new ArrayList<Language>();
+        // retrofit
+        Retrofit retrofit = RetrofitClient.getInstance(getActivity());
+        staffApi = retrofit.create(StaffApi.class);
 
-        // listener
-        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Call<ArrayList<Language>> call = staffApi.languageList();
+        call.enqueue(new Callback<ArrayList<Language>>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //String info = (String) categorySpinner.getSelectedItem();
-                //categoryId = languageList.get(position).getId();
-                languageSpinnerVal = position;
-                language = languageSpinner.getSelectedItem().toString();
-                //Toast.makeText(getActivity(), String.valueOf(categoryId), Toast.LENGTH_LONG).show();
+            public void onResponse(Call<ArrayList<Language>> call, Response<ArrayList<Language>> response) {
+                if(response.isSuccessful()){
+                    languageList.addAll(response.body());
+                    ArrayList<Language> items = new ArrayList<Language>();
+                    items.add(new Language(0,"Any Language"));
+                    for(int i = 0; i < languageList.size(); i++){
+                        items.add(new Language(languageList.get(i).getId(),languageList.get(i).getName()));
+                    }
+                    languageAdapter = new ArrayAdapter<Language>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+                    languageAdapter.notifyDataSetChanged();
+                    languageSpinner.setAdapter(languageAdapter);
+                    languageSpinner.setSelection(languageSpinnerVal);
+
+                    // listener
+                    languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            languageSpinnerVal = position;
+                            Language selectedLanguage = (Language) parent.getSelectedItem();
+                            languageId = selectedLanguage.getId();
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                }
             }
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onFailure(Call<ArrayList<Language>> call, Throwable t) {
+                Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        // retrofit End
     }
 
     /**
@@ -549,14 +576,14 @@ public class ListBusinessFragment extends Fragment {
             public void onResponse(Call<ArrayList<Category>> call, Response<ArrayList<Category>> response) {
                 if(response.isSuccessful()){
                     servicesCategoryList.addAll(response.body());
-                    List<String> items = new ArrayList<String>();
-                    //items.add("Choose a category");
+                    ArrayList<Category> items = new ArrayList<Category>();
+                    items.add(new Category(0,"Any Category"));
                     for(int i = 0; i < servicesCategoryList.size(); i++){
-                        items.add(servicesCategoryList.get(i).getNameCategory());
+                        items.add(new Category(servicesCategoryList.get(i).getId(),servicesCategoryList.get(i).getNameCategory()));
                     }
-                    dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
-                    dataAdapter.notifyDataSetChanged();
-                    categorySpinner.setAdapter(dataAdapter);
+                    categoryAdapter = new ArrayAdapter<Category>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+                    categoryAdapter.notifyDataSetChanged();
+                    categorySpinner.setAdapter(categoryAdapter);
                     categorySpinner.setSelection(categorySpinnerVal);
 
                     // listener
@@ -564,9 +591,10 @@ public class ListBusinessFragment extends Fragment {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             //String info = (String) categorySpinner.getSelectedItem();
-                            categoryId = servicesCategoryList.get(position).getId();
+                            //categoryId = servicesCategoryList.get(position).getId();
+                            Category selectedCategory = (Category) parent.getSelectedItem();
+                            categoryId = selectedCategory.getId();
                             categorySpinnerVal = position;
-                            //Toast.makeText(getActivity(), String.valueOf(categoryId), Toast.LENGTH_LONG).show();
                         }
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
@@ -615,7 +643,7 @@ public class ListBusinessFragment extends Fragment {
 
         // Reset language to first choice
         languageSpinnerVal = 0;
-        language = "";
+        languageId = 0;
         languageSpinner.setSelection(languageSpinnerVal);
 
         // Load business after filter reset

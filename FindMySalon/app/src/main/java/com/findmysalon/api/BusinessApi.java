@@ -20,7 +20,7 @@ public interface BusinessApi {
             @Field("longitude") double longitude,
             @Field("distance") int radius,
             @Field("budget") int price,
-            @Field("language") String language,
+            @Field("language") int languageId,
             @Field("category_id") int categoryId,
             @Field("keyword") String keyword
             );
