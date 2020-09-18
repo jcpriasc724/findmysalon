@@ -5,9 +5,10 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FilterParameters implements Parcelable {
+public class FilterParameters implements Serializable {
 
     private String businessTypeSelected;
     private double lat;
@@ -28,29 +29,6 @@ public class FilterParameters implements Parcelable {
         this.categoryIdSelected = categoryIdSelected;
         this.keywordTyped = keywordTyped;
     }
-
-    protected FilterParameters(Parcel in) {
-        businessTypeSelected = in.readString();
-        lat = in.readDouble();
-        lng = in.readDouble();
-        distanceSelected = in.readInt();
-        budgetSelected = in.readInt();
-        languageSelected = in.createStringArrayList();
-        categoryIdSelected = in.readInt();
-        keywordTyped = in.readString();
-    }
-
-    public static final Creator<FilterParameters> CREATOR = new Creator<FilterParameters>() {
-        @Override
-        public FilterParameters createFromParcel(Parcel in) {
-            return new FilterParameters(in);
-        }
-
-        @Override
-        public FilterParameters[] newArray(int size) {
-            return new FilterParameters[size];
-        }
-    };
 
     public String getBusinessTypeSelected() {
         return businessTypeSelected;
@@ -116,20 +94,4 @@ public class FilterParameters implements Parcelable {
         this.keywordTyped = keywordTyped;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(businessTypeSelected);
-        dest.writeDouble(lat);
-        dest.writeDouble(lng);
-        dest.writeInt(distanceSelected);
-        dest.writeInt(budgetSelected);
-        dest.writeStringList(languageSelected);
-        dest.writeInt(categoryIdSelected);
-        dest.writeString(keywordTyped);
-    }
 }

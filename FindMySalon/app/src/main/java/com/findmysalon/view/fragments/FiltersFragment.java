@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
 import com.findmysalon.api.ServiceApi;
+import com.findmysalon.api.StaffApi;
 import com.findmysalon.model.Category;
 import com.findmysalon.model.FilterParameters;
 import com.findmysalon.model.Language;
@@ -55,6 +56,8 @@ public class FiltersFragment extends Fragment {
     private TextView txtFilterHairSalon;
     private ImageView imgFilterBarbershop;
     private ImageView imgFilterHairSalon;
+    private ImageView imgClose;
+    private StaffApi staffApi;
 
     private SeekBar skbDistance;
     private TextView txtDistance;
@@ -68,7 +71,7 @@ public class FiltersFragment extends Fragment {
     private ArrayList<Category> servicesCategoryList;
     private ArrayList<Language> languageList;
     private ArrayAdapter<String> dataAdapter;
-    private ArrayAdapter<String> languageAdapter;
+    private ArrayAdapter<Language> languageAdapter;
     private Spinner categorySpinner;
     //private Spinner languageSpinner;
     private String businessType;
@@ -127,6 +130,8 @@ public class FiltersFragment extends Fragment {
         languagesAdapter = new LanguagesAdapter(getContext(), languageListStrings);
         recLanguages.setAdapter(languagesAdapter);
 
+        imgClose = view.findViewById(R.id.img_close);
+
         skbDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             int progressValue;
@@ -157,6 +162,13 @@ public class FiltersFragment extends Fragment {
         //txtBudget.setText("Max $ "+skbBudget.getProgress());
         skbBudget.setProgress(budgetFilter);
         txtBudget.setText("Max $ "+budgetFilter);
+
+        imgClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_list_business);
+            }
+        });
 
         skbBudget.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressValue;
@@ -294,18 +306,9 @@ public class FiltersFragment extends Fragment {
                 languages.add(language);
 
                 FilterParameters filterParameters = new FilterParameters(businessType, 0, 0, distanceFilter, budgetFilter, languages, categoryId, "");
-
-                Bundle bundle=new Bundle();
-                //bundle.put
-
-                ListBusinessFragment listBusinessFragment =new ListBusinessFragment();
-                listBusinessFragment.setArguments(bundle);
-
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.nav_host_fragment, listBusinessFragment);
-                ft.addToBackStack(null);
-                ft.commit();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("filterParameters", filterParameters);
+                Navigation.findNavController(v).navigate(R.id.nav_list_business, bundle);
 
             }
         });
@@ -336,26 +339,47 @@ public class FiltersFragment extends Fragment {
      *  language Spinner Set up
      */
     private void languageSpinnerSetting() {
-        List<String> items = new ArrayList<String>();
-        items.add("English");
-        items.add("Spanish");
-        items.add("Nepali");
-        items.add("Chinese");
-        items.add("Japanese");
 
-        languageAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
-        languageAdapter.notifyDataSetChanged();
-        actvLanguages.setAdapter(languageAdapter);
+        // fetch services category list
+        languageList = new ArrayList<Language>();
+        // retrofit
+        Retrofit retrofit = RetrofitClient.getInstance(getActivity());
+        staffApi = retrofit.create(StaffApi.class);
 
-        // listener
-        actvLanguages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Call<ArrayList<Language>> call = staffApi.languageList();
+        call.enqueue(new Callback<ArrayList<Language>>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                languageListStrings.add(actvLanguages.getText().toString());
-                languageAdapter.notifyDataSetChanged();
-                actvLanguages.setText("");
+            public void onResponse(Call<ArrayList<Language>> call, Response<ArrayList<Language>> response) {
+                if(response.isSuccessful()){
+                    languageList.addAll(response.body());
+                    ArrayList<Language> items = new ArrayList<Language>();
+                    items.add(new Language(0,"Any Language"));
+                    for(int i = 0; i < languageList.size(); i++){
+                        items.add(new Language(languageList.get(i).getId(),languageList.get(i).getName()));
+                    }
+
+                    languageAdapter = new ArrayAdapter<Language>(getActivity(), android.R.layout.simple_list_item_1, items);
+                    languageAdapter.notifyDataSetChanged();
+                    actvLanguages.setAdapter(languageAdapter);
+
+                    // listener
+                    actvLanguages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            languageListStrings.add(actvLanguages.getText().toString());
+                            languageAdapter.notifyDataSetChanged();
+                            actvLanguages.setText("");
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onFailure(Call<ArrayList<Language>> call, Throwable t) {
+                Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        // retrofit End
     }
 
     /**
