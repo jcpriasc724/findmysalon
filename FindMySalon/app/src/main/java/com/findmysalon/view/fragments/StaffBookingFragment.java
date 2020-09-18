@@ -42,7 +42,7 @@ import retrofit2.Retrofit;
 
 public class StaffBookingFragment extends Fragment {
 
-    TextView txtNameStaff;
+    TextView txtNameStaff, txtNoStaff;
     //RatingBar rtbStaff;
 
     RecyclerView recStaff;
@@ -59,7 +59,7 @@ public class StaffBookingFragment extends Fragment {
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         txtNameStaff = view.findViewById(R.id.txt_name_staff);
-        //rtbStaff = view.findViewById(R.id.rtb_staff);
+        txtNoStaff = view.findViewById(R.id.txt_no_staff);
 
         recStaff = view.findViewById(R.id.rec_staff_booking);
         recStaff.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -126,6 +126,9 @@ public class StaffBookingFragment extends Fragment {
             public void onResponse(Call<ArrayList<StaffAvailable>> call, Response<ArrayList<StaffAvailable>> response) {
                 if(response.isSuccessful()){
                     list.addAll(response.body());
+                    if(list.size() > 0){
+                        txtNoStaff.setVisibility(View.GONE);
+                    }
                     staffAdapter.notifyDataSetChanged();
                 }
             }

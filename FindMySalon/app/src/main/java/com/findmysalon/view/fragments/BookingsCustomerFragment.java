@@ -77,7 +77,7 @@ public class BookingsCustomerFragment extends Fragment {
             public void onResponse(Call<ArrayList<Booking>> call, Response<ArrayList<Booking>> response) {
                 if(response.isSuccessful()){
                     list.addAll(response.body());
-                    Log.i("appointment_LIT", new Date().toString());
+//                    Log.i("appointment_LIT", new Date().toString());
                     bookingAdapter.notifyDataSetChanged();
                     if(list.size() > 0){
                         txtNoServices.setVisibility(View.GONE);
