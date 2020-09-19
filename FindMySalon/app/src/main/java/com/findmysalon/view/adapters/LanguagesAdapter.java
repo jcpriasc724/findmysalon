@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findmysalon.R;
+import com.findmysalon.model.Language;
 import com.findmysalon.model.Service;
 import com.findmysalon.model.Staff;
 
@@ -24,6 +25,7 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.Lang
 
     Context context;
     ArrayList<String> languageList;
+    SubClickListener subClickListener;
 
     public LanguagesAdapter(Context context, ArrayList<String> languageList) {
         this.context = context;
@@ -45,6 +47,7 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.Lang
             @Override
             public void onClick(View v) {
                 Log.d("imgDelete","Language: "+languageList.get(position));
+                subClickListener.OntopicClickListener(v, languageList.get(position), position);
             }
         });
     }
@@ -64,5 +67,13 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.Lang
             txtLanguage = itemView.findViewById(R.id.txt_language);
             imgDelete = itemView.findViewById(R.id.img_delete);
         }
+    }
+
+    public void setsubClickListener(SubClickListener topicClickListener) {
+        this.subClickListener = topicClickListener;
+    }
+
+    public interface SubClickListener {
+        void OntopicClickListener(View v, String detail, int position);
     }
 }

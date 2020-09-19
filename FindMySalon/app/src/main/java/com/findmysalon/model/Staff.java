@@ -24,6 +24,8 @@ public class Staff implements Serializable {
     private String image;
     @SerializedName("image_path")
     private String imagePath;
+    @SerializedName("languages")
+    private String languages;
     private float rating;
     @SerializedName("created_at")
     private Date createdAt;
@@ -68,11 +70,12 @@ public class Staff implements Serializable {
     /**
      * Create Object
      */
-    public Staff(int category_id, String name,  String phoneNumber,  String imagePath) {
+    public Staff(int category_id, String name,  String phoneNumber,  String imagePath, String languages) {
         this.category_id = category_id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.imagePath = imagePath;
+        this.languages = languages;
     }
 
 
@@ -177,4 +180,11 @@ public class Staff implements Serializable {
     }
 
 
+    public String getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(String languages) {
+        this.languages = languages;
+    }
 }

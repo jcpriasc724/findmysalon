@@ -60,6 +60,7 @@ import com.google.gson.JsonObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -88,6 +89,7 @@ public class RegisterStaffFragment extends Fragment {
     StaffApi staffApi;
     ServiceApi serviceApi;
     ArrayList<Category> servicesCategoryList;
+    ArrayList<Language> languagesSelectList;
     ArrayAdapter<String> dataAdapter;
     int categorySpinnerVal;
     String phonePattern = "^[0-9]{10}$";
@@ -131,40 +133,22 @@ public class RegisterStaffFragment extends Fragment {
         imgProfile = view.findViewById(R.id.img_profile_photo);
         progress = view.findViewById(R.id.progress);
         actvLanguages = view.findViewById(R.id.actv_languages);
-        ArrayAdapter<String> adapterLanguages = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LANGUAGES);
-        actvLanguages.setAdapter(adapterLanguages);
+
 
         recLanguages = view.findViewById(R.id.rec_languages);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recLanguages.setLayoutManager(layoutManager);
 
-        languagesAdapter = new LanguagesAdapter(getContext(), languageList);
-        recLanguages.setAdapter(languagesAdapter);
-
-        actvLanguages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                languageList.add(actvLanguages.getText().toString());
-                adapterLanguages.notifyDataSetChanged();
-                actvLanguages.setText("");
-            }
-        });
-
         btnSave = view.findViewById(R.id.btn_save);
 
         btnSave.setOnClickListener(v1 -> submit());
-//        btnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showPopUp(v);
-//            }
-//        });
         btnEdit.setOnClickListener(v1 -> submit());
         imgProfile.setOnClickListener(v1 -> imageUpload());
-
-        // 1. set up category spinner
+        // 1. set language selecting
+        languageSetting();
+        // 2. set up category spinner
         categorySpinnerSetting();
-        // 2. delete
+        // 3. delete
         deleteBtnSetting();
 
         return view;
@@ -360,11 +344,31 @@ public class RegisterStaffFragment extends Fragment {
             return;
         }
 
+        if(languageList.size() < 1){
+            Helper.errorMsgDialog(getActivity(), R.string.invalid_language_selected);
+            return;
+        }
+
+        String langsStr = ",";
+        int i =0;
+        // convert languages to string
+        for(String s: languageList){
+            for (Language l: languagesSelectList){
+                if(s.equals(l.getName())){
+                    langsStr+= String.valueOf(l.getId()) + ",";
+                    break;
+                }
+            }
+            i++;
+        }
+
+        Log.i(null, langsStr);
         Staff staffObj = new Staff(
                 servicesCategoryList.get(categorySpinnerVal).getId(),
                 staffFullName,
                 staffPhoneNumber,
-                mCurrentPhotoPath
+                mCurrentPhotoPath,
+                langsStr
         );
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
@@ -447,6 +451,69 @@ public class RegisterStaffFragment extends Fragment {
     }
 
     /**
+     * Language setting
+     */
+    private void languageSetting(){
+        // fetch language  list
+        languagesSelectList = new ArrayList<>();
+        // retrofit
+        Retrofit retrofit = RetrofitClient.getInstance(getActivity());
+        staffApi = retrofit.create(StaffApi.class);
+        Call<ArrayList<Language>> call = staffApi.languageList();
+        call.enqueue(new Callback<ArrayList<Language>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Language>> call, Response<ArrayList<Language>> response) {
+                if (response.isSuccessful()) {
+                    languagesSelectList.addAll(response.body());
+                    List<String> items = new ArrayList<String>();
+                    for (int i = 0; i < languagesSelectList.size(); i++) {
+                        items.add(languagesSelectList.get(i).getName());
+                    }
+                    ArrayAdapter<String> adapterLanguages = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, items);
+                    actvLanguages.setAdapter(adapterLanguages);
+
+                    actvLanguages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if(languageList.contains(actvLanguages.getText().toString())){
+                                actvLanguages.setText("");
+                                return;
+                            }
+                            languageList.add(actvLanguages.getText().toString());
+                            adapterLanguages.notifyDataSetChanged();
+                            actvLanguages.setText("");
+                            // refresh list
+                            languageListRefreshAndBindListener();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Language>> call, Throwable t) {
+                Log.d("Fail: ", t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        // retrofit End
+    }
+
+
+    private void languageListRefreshAndBindListener(){
+        languagesAdapter = new LanguagesAdapter(getContext(), languageList);
+        recLanguages.setAdapter(languagesAdapter);
+        languagesAdapter.setsubClickListener(new LanguagesAdapter.SubClickListener() {
+            @Override
+            public void OntopicClickListener(View v, String detail, int position) {
+                languageList.remove(detail);
+                languagesAdapter = new LanguagesAdapter(getContext(), languageList);
+                recLanguages.setAdapter(languagesAdapter);
+            }
+        });
+    }
+
+
+    /**
      * category Spinner Set up
      */
     private void categorySpinnerSetting() {
@@ -522,6 +589,20 @@ public class RegisterStaffFragment extends Fragment {
                             break;
                         }
                     }
+                    // setup languages
+                    String[] langs = staffObject.getLanguages().replaceAll("^,*|,*$", "").split("\\,");
+                    Log.i("Languages List", Arrays.toString(langs));
+                    for(int i = 0; i < langs.length; i++){
+                        for(Language l:languagesSelectList) {
+                            if (l.getId() == Integer.valueOf(langs[i])){
+                                languageList.add(l.getName());
+                                break;
+                            }
+
+                        }
+                    }
+                    // refresh list
+                    languageListRefreshAndBindListener();
 
                     txtFullName.setText(staffObject.getName());
                     txtPhoneNumber.setText(staffObject.getPhoneNumber());
@@ -592,18 +673,18 @@ public class RegisterStaffFragment extends Fragment {
         }
     }
 
-    /**
-     * @param uri
-     * @return
-     */
-    private String getPath(Uri uri) {
-
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-
-        return cursor.getString(column_index);
-    }
+//    /**
+//     * @param uri
+//     * @return
+//     */
+//    private String getPath(Uri uri) {
+//
+//        String[] projection = {MediaStore.Images.Media.DATA};
+//        Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
+//        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//        cursor.moveToFirst();
+//
+//        return cursor.getString(column_index);
+//    }
 
 }

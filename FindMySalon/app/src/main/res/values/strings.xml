@@ -195,6 +195,7 @@
     <string name="address_incomplete"> Invalid address. Please, type and select from suggested list</string>
     <string name="invalid_email"> Email is invalid</string>
     <string name="invalid_phone"> Phone is invalid. Please, enter phone number without country code</string>
+    <string name="invalid_language_selected"> Required to pick at least one Language </string>
     <string name="password_no_match">The password confirmation does not match</string>
     <string name="invalid_credentials"> Invalid credentials</string>
     <string name="network_error"> Network error. Please, try again later</string>
