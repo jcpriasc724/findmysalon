@@ -2,10 +2,11 @@ package com.findmysalon.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Category {
+public class Category implements Serializable {
 
 
     @SerializedName("id")
