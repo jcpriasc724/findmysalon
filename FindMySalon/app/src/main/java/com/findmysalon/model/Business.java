@@ -2,7 +2,9 @@ package com.findmysalon.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Business extends User{
+import java.io.Serializable;
+
+public class Business extends User implements Serializable {
 
     @SerializedName("user_id")
     private int id;
@@ -10,6 +12,8 @@ public class Business extends User{
     private String storeName;
     @SerializedName("business_type")
     private String businessType;
+    @SerializedName("user")
+    private User user;
     private Float rating = 4.5f;
 
     public Business(String storeName, String businessType, String email, String password, String phone, String address, double lat, double lng, String userType) {
@@ -69,5 +73,13 @@ public class Business extends User{
                 ", businessType='" + businessType + '\'' +
                 ", rating=" + rating +
                 '}' + super.toString();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

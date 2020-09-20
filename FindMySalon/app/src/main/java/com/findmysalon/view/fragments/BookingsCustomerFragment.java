@@ -71,7 +71,7 @@ public class BookingsCustomerFragment extends Fragment {
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
         appointmentApi = retrofit.create(AppointmentApi.class);
-        Call<ArrayList<Booking>> call = appointmentApi.appointmentList();
+        Call<ArrayList<Booking>> call = appointmentApi.appointmentList(1);
         call.enqueue(new Callback<ArrayList<Booking>>() {
             @Override
             public void onResponse(Call<ArrayList<Booking>> call, Response<ArrayList<Booking>> response) {

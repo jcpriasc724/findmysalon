@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
 import com.findmysalon.R;
@@ -39,6 +40,7 @@ import retrofit2.Retrofit;
 public class AppiontmentConfirmationFragment extends Fragment {
 
     CardView btnConfirm;
+    CardView btnCancel;
     Service service;
     Staff staff;
     Date selectedDate;
@@ -71,6 +73,7 @@ public class AppiontmentConfirmationFragment extends Fragment {
 
 
         btnConfirm = view.findViewById(R.id.btn_confirm);
+        btnCancel = view.findViewById(R.id.btn_cancel);
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +117,16 @@ public class AppiontmentConfirmationFragment extends Fragment {
             }
         });
 
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                FragmentManager fm = getFragmentManager(); // or 'getSupportFragmentManager();'
+                int count = fm.getBackStackEntryCount();
+                for(int i = 0; i < 3; ++i) {
+                    fm.popBackStack();
+                }
+            }
+        });
         return view;
     }
 

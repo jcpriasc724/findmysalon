@@ -71,13 +71,12 @@ public class BookingsFragment extends Fragment {
         // retrofit
         Retrofit retrofit = RetrofitClient.getInstance(getActivity());
         appointmentApi = retrofit.create(AppointmentApi.class);
-        Call<ArrayList<Booking>> call = appointmentApi.appointmentList();
+        Call<ArrayList<Booking>> call = appointmentApi.appointmentList(0);
         call.enqueue(new Callback<ArrayList<Booking>>() {
             @Override
             public void onResponse(Call<ArrayList<Booking>> call, Response<ArrayList<Booking>> response) {
                 if(response.isSuccessful()){
                     list.addAll(response.body());
-                    Log.i("appointment_LIT", new Date().toString());
                     bookingAdapter.notifyDataSetChanged();
                     if(list.size() > 0){
                         txtNoBookings.setVisibility(View.GONE);

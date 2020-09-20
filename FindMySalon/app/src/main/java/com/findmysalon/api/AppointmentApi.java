@@ -14,7 +14,7 @@ import retrofit2.http.*;
 public interface AppointmentApi {
 
     @GET("appointment/")
-    Call<ArrayList<Booking>> appointmentList();
+    Call<ArrayList<Booking>> appointmentList(@Query("status") int status);
 
     @FormUrlEncoded
     @PUT("/appointment/{id}/status/")

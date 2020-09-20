@@ -209,6 +209,7 @@
     <string name="api_key">AIzaSyArTaAe7YfAZn_ylMk-nGWWRfueTseIV3Q</string>
     <string name="title_activity_business">BusinessActivity</string>
     <string name="customer_profile_activity">CustomerProfileActivity</string>
+    <string name="incorrect_rating">You have not yet reviewed.</string>
 
     <string name="invalid_service_name"> Service name is invalid</string>
     <string name="invalid_service_price"> Service price is invalid</string>

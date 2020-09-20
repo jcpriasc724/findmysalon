@@ -19,6 +19,8 @@ public class User {
     private double lng;
     @SerializedName("user_type")
     private String userType;
+    @SerializedName("profile_photo")
+    private String profilePhoto;
     //private String profilePhoto;
 
 
@@ -117,5 +119,13 @@ public class User {
                 ", lng=" + lng +
                 ", userType='" + userType + '\'' +
                 '}';
+    }
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 }

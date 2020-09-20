@@ -2,6 +2,7 @@ package com.findmysalon.view.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +66,9 @@ public class ClosedAppointmentAdapter extends RecyclerView.Adapter<ClosedAppoint
         holder.btnFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_rate_service);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("business", list.get(position).getBusiness());
+                Navigation.findNavController(v).navigate(R.id.nav_rate_service, bundle);
             }
         });
 
