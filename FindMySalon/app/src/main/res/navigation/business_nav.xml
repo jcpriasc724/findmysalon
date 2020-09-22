@@ -48,6 +48,12 @@
         tools:layout="@layout/fragment_set_roster" />
 
     <fragment
+        android:id="@+id/nav_business_hour"
+        android:name="com.findmysalon.view.fragments.BusinessHourFragment"
+        android:label="@string/lbl_business_hour"
+        tools:layout="@layout/fragment_business_hour" />
+
+    <fragment
         android:id="@+id/nav_update_business"
         android:name="com.findmysalon.view.fragments.UpdateBusinessFragment"
         android:label="@string/sign_up"
