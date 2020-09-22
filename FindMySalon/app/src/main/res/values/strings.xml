@@ -195,6 +195,9 @@
     <string name="warning">Warning</string>
     <string name="incomplete"> Please, fill out all the fields</string>
     <string name="feedback">Your feedback is very important to help us improve our service</string>
+    <string name="warning_confirmation">To make changes to your appointment, you have to delete this one and create a new one</string>
+    <string name="msg_confirmation">%1$s, your %2$s appointment is confirmed for %3$s</string>
+    <string name="msg_staff_hour">%1$s | %2$s</string>
     <string name="address_incomplete"> Invalid address. Please, type and select from suggested list</string>
     <string name="invalid_email"> Email is invalid</string>
     <string name="invalid_phone"> Phone is invalid. Please, enter phone number without country code</string>
