@@ -111,6 +111,9 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
             case R.id.nav_roster_staff:
                 Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_roster_staff);
                 break;
+            case R.id.nav_business_hour:
+                Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_business_hour);
+                break;
             case R.id.nav_log_out:
                 Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_logout_user);
                 break;
