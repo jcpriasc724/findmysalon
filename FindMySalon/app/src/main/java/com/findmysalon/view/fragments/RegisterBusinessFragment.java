@@ -340,9 +340,14 @@ public class RegisterBusinessFragment extends Fragment {
                 if(response.isSuccessful()){
                     //Customer resp = response.body();
                     Log.d("Response: ", ""+response.body());
+                    //Helper.errorMsgDialog(getActivity(), R.string.registration_successful);
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                }
+                // Duplicate email
+                else if(response.code() == 409){
+                    Helper.errorMsgDialog(getActivity(), R.string.duplicate_email);
                 }
                 else{
                     Helper.errorMsgDialog(getActivity(), R.string.response_error);
