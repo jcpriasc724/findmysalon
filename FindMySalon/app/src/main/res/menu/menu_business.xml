@@ -26,6 +26,11 @@
             android:title="@string/lbl_roster" />
 
         <item
+            android:id="@+id/nav_business_hour"
+            android:icon="@drawable/ic_time"
+            android:title="@string/lbl_business_hour" />
+
+        <item
             android:title="@string/lbl_settings">
 
             <menu>

@@ -25,6 +25,7 @@
     <string name="lbl_services">Services</string>
     <string name="lbl_logout">Log out</string>
     <string name="lbl_roster">Roster staff</string>
+    <string name="lbl_business_hour">Business hour</string>
     <string name="lbl_bookings">Bookings</string>
     <string name="lbl_appointment_history">Appointment history</string>
     <string name="lbl_home">Home</string>
@@ -208,8 +209,10 @@
     <string name="invalid_credentials"> Invalid credentials</string>
     <string name="network_error"> Network error. Please, try again later</string>
     <string name="response_error"> Request could not be processed. Please, try again later</string>
+    <string name="duplicate_email"> The email is already registered. Please, use another email</string>
     <string name="incorrect_current_password"> The current password is incorrect</string>
     <string name="camera_not_supported"> Sorry, your device does not support camera</string>
+    <string name="registration_successful"> Bravo, you are successfully registered! Would you like to sign in now?</string>
     <string name="ok">OK</string>
     <string name="api_key">AIzaSyArTaAe7YfAZn_ylMk-nGWWRfueTseIV3Q</string>
     <string name="title_activity_business">BusinessActivity</string>
@@ -232,6 +235,7 @@
     <string name="cancel_success">Cancel successfully</string>
     <string name="cancel_fail">Cancel failure</string>
     <string name="cancel_confirm">Are you sure cancel this booking?</string>
+    <string name="manage_business_hour">Manage business hours</string>
 
     <string name="search">Search</string>
     <string name="advanced_search">Advanced search</string>
