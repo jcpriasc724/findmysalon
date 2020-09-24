@@ -64,12 +64,13 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/txt_no_staff"
+        android:id="@+id/txt_no_business"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_subtitles"
         android:text="@string/lbl_no_fav_businesses"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textColor="@color/colorSecondary"/>
 
 
 </LinearLayout>
