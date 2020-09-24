@@ -89,7 +89,9 @@
 
     <string name="lbl_description_service">Description service</string>
     <string name="lbl_price_service">Price service</string>
+    <string name="lbl_price">Price:</string>
     <string name="lbl_duration_service">Duration service</string>
+    <string name="lbl_duration">Duration:</string>
     <string name="lbl_enable_disable">Disable / Enable</string>
     <string name="lbl_tags">Tags</string>
     <string name="lbl_save">Save</string>
