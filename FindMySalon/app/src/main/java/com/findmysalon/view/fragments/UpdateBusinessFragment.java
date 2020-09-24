@@ -403,6 +403,10 @@ public class UpdateBusinessFragment extends Fragment {
                         //Log.d("Response: ", ""+response.body());
 
                     }
+                    // Duplicate email
+                    else if(response.code() == 409){
+                        Helper.errorMsgDialog(getActivity(), R.string.duplicate_email);
+                    }
                     else{
                         Helper.errorMsgDialog(getActivity(), R.string.response_error);
                         Log.d("Error: ",""+response.message());
