@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -28,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.findmysalon.R;
@@ -38,6 +43,7 @@ import com.findmysalon.model.Customer;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.view.LoginActivity;
 import com.findmysalon.view.RegistrationActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
@@ -78,6 +84,7 @@ public class RegisterBusinessFragment extends Fragment {
     private Uri imageUri;
     private UserApi userApi;
     private View v;
+    BottomSheetDialog dialogSuccess;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -341,9 +348,10 @@ public class RegisterBusinessFragment extends Fragment {
                     //Customer resp = response.body();
                     Log.d("Response: ", ""+response.body());
                     //Helper.errorMsgDialog(getActivity(), R.string.registration_successful);
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+//                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+                    showPopUp(v);
                 }
                 // Duplicate email
                 else if(response.code() == 409){
@@ -364,4 +372,53 @@ public class RegisterBusinessFragment extends Fragment {
         });
     }
 
+
+    public void showPopUp(View v) {
+        dialogSuccess = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
+
+        View viewBottomSheet = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.popup_success,
+                        (LinearLayout) v.findViewById(R.id.bottomSheetContainer)
+                );
+
+        CardView btnFinish = (CardView) viewBottomSheet.findViewById(R.id.btn_finish);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ImageView imgDone = viewBottomSheet.findViewById(R.id.img_done);
+
+                Drawable drawable = imgDone.getDrawable();
+
+                if (drawable instanceof AnimatedVectorDrawableCompat){
+                    AnimatedVectorDrawableCompat avdc = (AnimatedVectorDrawableCompat) drawable;
+                    avdc.start();
+                } else if (drawable instanceof AnimatedVectorDrawable){
+                    AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
+                    avd.start();
+                }
+            }
+        }, 1000);
+
+
+
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+                //Navigation.findNavController(v).popBackStack();
+//                dialogSuccess.dismiss();
+//                Navigation.findNavController(getActivity(), R.id.nav_business_host_fragment).navigate(R.id.nav_roster_staff);
+                //Helper.errorMsgDialog(getActivity(), R.string.registration_successful);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        dialogSuccess.setContentView(viewBottomSheet);
+        dialogSuccess.show();
+
+    }
 }

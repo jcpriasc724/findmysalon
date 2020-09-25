@@ -11,10 +11,13 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -28,12 +31,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.findmysalon.R;
@@ -42,6 +48,7 @@ import com.findmysalon.api.UserApi;
 import com.findmysalon.utils.Helper;
 import com.findmysalon.view.CustomerActivity;
 import com.findmysalon.view.LoginActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -78,6 +85,7 @@ public class RegisterCustomerFragment extends Fragment {
     private View v;
     private int userId;
     private boolean editMode = false;
+    BottomSheetDialog dialogSuccess;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -320,10 +328,12 @@ public class RegisterCustomerFragment extends Fragment {
                 if(response.isSuccessful()){
                     //Customer resp = response.body();
                     Log.d("Response: ", ""+response.body());
-                    //Helper.errorMsgDialog(getActivity(), R.string.registration_successful);
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+//                    //Helper.errorMsgDialog(getActivity(), R.string.registration_successful);
+//                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+//                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+
+                    showPopUp(v);
                 }
                 // Duplicate email
                 else if(response.code() == 409){
@@ -393,5 +403,54 @@ public class RegisterCustomerFragment extends Fragment {
         });*/
     }
 
+
+    public void showPopUp(View v) {
+        dialogSuccess = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
+
+        View viewBottomSheet = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.popup_success,
+                        (LinearLayout) v.findViewById(R.id.bottomSheetContainer)
+                );
+
+        CardView btnFinish = (CardView) viewBottomSheet.findViewById(R.id.btn_finish);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ImageView imgDone = viewBottomSheet.findViewById(R.id.img_done);
+
+                Drawable drawable = imgDone.getDrawable();
+
+                if (drawable instanceof AnimatedVectorDrawableCompat){
+                    AnimatedVectorDrawableCompat avdc = (AnimatedVectorDrawableCompat) drawable;
+                    avdc.start();
+                } else if (drawable instanceof AnimatedVectorDrawable){
+                    AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
+                    avd.start();
+                }
+            }
+        }, 1000);
+
+
+
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+                //Navigation.findNavController(v).popBackStack();
+//                dialogSuccess.dismiss();
+//                Navigation.findNavController(getActivity(), R.id.nav_business_host_fragment).navigate(R.id.nav_roster_staff);
+                //Helper.errorMsgDialog(getActivity(), R.string.registration_successful);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        dialogSuccess.setContentView(viewBottomSheet);
+        dialogSuccess.show();
+
+    }
 
 }
