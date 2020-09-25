@@ -41,7 +41,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
                 android:id="@+id/btn_favourite"
-                android:src="@android:drawable/btn_star"
+                android:src="@android:drawable/btn_star_big_off"
                 android:background="@drawable/bg_btn_circle"/>
 
         </LinearLayout>

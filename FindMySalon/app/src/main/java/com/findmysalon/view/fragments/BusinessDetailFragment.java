@@ -89,13 +89,16 @@ public class BusinessDetailFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.nav_list_services_by_category, bundle);
             }
         });
-        isFavourite = business.isFavourite();
+
+
+
         // Make favourite business
         btnFavBusiness = (ImageButton) view.findViewById(R.id.btn_favourite);
         btnFavBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Working here"," FAV "+business.getBusinessId());
+                isFavourite = business.isFavourite();
+                Log.d("Working here"," bool status: "+isFavourite);
                 // If the business is not set favourite then make it favourite on button click
                 if(!isFavourite){
                     addFavouriteBusiness(business.getBusinessId());
@@ -106,6 +109,14 @@ public class BusinessDetailFragment extends Fragment {
                 }
             }
         });
+
+        // Set the icon based on favourite
+        if(business.isFavourite()){
+            btnFavBusiness.setImageResource(android.R.drawable.btn_star_big_on);
+        }
+        else{
+            btnFavBusiness.setImageResource(android.R.drawable.btn_star_big_off);
+        }
 
         return view;
     }
@@ -120,6 +131,8 @@ public class BusinessDetailFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
+                    business.setFavourite(true);
+                    btnFavBusiness.setImageResource(android.R.drawable.btn_star_big_on);
                     Toast.makeText(getActivity(), "Successfully added in Favourite List", Toast.LENGTH_LONG).show();
                 }
                 else{
@@ -146,6 +159,8 @@ public class BusinessDetailFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
+                    business.setFavourite(false);
+                    btnFavBusiness.setImageResource(android.R.drawable.btn_star_big_off);
                     Toast.makeText(getActivity(), "Successfully removed from Favourite List", Toast.LENGTH_LONG).show();
                 }
                 else{

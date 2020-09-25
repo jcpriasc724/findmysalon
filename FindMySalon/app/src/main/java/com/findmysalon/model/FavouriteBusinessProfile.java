@@ -18,4 +18,8 @@ public class FavouriteBusinessProfile extends BusinessProfile implements Seriali
     public boolean isFavourite() {
         return isFavourite;
     }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+    }
 }
