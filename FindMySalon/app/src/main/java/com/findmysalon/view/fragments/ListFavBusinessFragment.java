@@ -32,7 +32,7 @@ import retrofit2.Retrofit;
 
 public class ListFavBusinessFragment extends Fragment {
 
-    TextView txtNameBusiness, txtAddress, txtPhoneNumber;
+    TextView txtNameBusiness, txtAddress, txtPhoneNumber, txtNoBusinessLabel;
     RatingBar rtbBusiness;
 
     private RecyclerView recBusiness;
@@ -54,6 +54,8 @@ public class ListFavBusinessFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_fav_business, container, false);
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
+        txtNoBusinessLabel = view.findViewById(R.id.txt_no_business);
 
         txtNameBusiness = view.findViewById(R.id.txt_name_business);
         txtAddress = view.findViewById(R.id.txt_address);
@@ -93,6 +95,13 @@ public class ListFavBusinessFragment extends Fragment {
                 if(response.isSuccessful()){
                     favBusinessList.addAll(response.body());
                     businessAdapter.notifyDataSetChanged();
+                    // Hide label if favourite business listed
+                    if(favBusinessList.size() > 0){
+                        txtNoBusinessLabel.setVisibility(View.INVISIBLE);
+                    }
+                    else{
+                        txtNoBusinessLabel.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 

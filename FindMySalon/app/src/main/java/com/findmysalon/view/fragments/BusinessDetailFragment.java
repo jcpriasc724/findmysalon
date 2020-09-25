@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.findmysalon.R;
@@ -26,8 +29,11 @@ import com.findmysalon.api.BusinessApi;
 import com.findmysalon.api.FavouriteBusinessApi;
 import com.findmysalon.model.BusinessProfile;
 import com.findmysalon.model.FavouriteBusinessProfile;
+import com.findmysalon.model.OpeningHoursItem;
 import com.findmysalon.model.Service;
 import com.findmysalon.utils.RetrofitClient;
+import com.findmysalon.view.adapters.BusinessAdapter;
+import com.findmysalon.view.adapters.OpeningHoursAdapter;
 
 import java.util.ArrayList;
 
@@ -47,6 +53,12 @@ public class BusinessDetailFragment extends Fragment {
     private ImageButton btnFavBusiness;
     private FavouriteBusinessApi favouriteBusinessApi;
     private boolean isFavourite;
+    private ArrayList<OpeningHoursItem> openingHoursList;
+    private OpeningHoursAdapter openingHoursAdapter;
+    private RecyclerView recOpeningHours;
+    private LinearLayout hoursContainer;
+    private ImageView imgExpand;
+    private TextView txtOpToday;
 
     @Nullable
     @Override
@@ -69,6 +81,29 @@ public class BusinessDetailFragment extends Fragment {
 
         rtbBusiness = (RatingBar) view.findViewById(R.id.rtb_business);
         rtbBusiness.setRating(business.getRating());
+
+        recOpeningHours = view.findViewById(R.id.rec_opening_hours);
+        recOpeningHours.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recOpeningHours.setNestedScrollingEnabled(false);
+
+        imgExpand = view.findViewById(R.id.img_expand);
+        txtOpToday = view.findViewById(R.id.txt_op_today);
+
+        txtOpToday.setText("Friday 8:00 - 18:00");
+
+        hoursContainer = view.findViewById(R.id.hours_container);
+        hoursContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (recOpeningHours.getVisibility()==View.GONE){
+                    recOpeningHours.setVisibility(View.VISIBLE);
+                    imgExpand.setImageResource(R.drawable.ic_expand_less);
+                } else {
+                    recOpeningHours.setVisibility(View.GONE);
+                    imgExpand.setImageResource(R.drawable.ic_expand);
+                }
+            }
+        });
 
         imgAvatar = (ImageView) view.findViewById(R.id.img_profile_photo);
         // Plugin to display image
@@ -108,6 +143,17 @@ public class BusinessDetailFragment extends Fragment {
                 }
             }
         });
+
+        openingHoursList = new ArrayList<>();
+        openingHoursList.add(new OpeningHoursItem("Saturday", "10:00 - 15:00"));
+        openingHoursList.add(new OpeningHoursItem("Sunday", "10:00 - 15:00"));
+        openingHoursList.add(new OpeningHoursItem("Monday", "10:00 - 18:00"));
+        openingHoursList.add(new OpeningHoursItem("Tuesday", "10:00 - 18:00"));
+        openingHoursList.add(new OpeningHoursItem("Wednesday", "10:00 - 18:00"));
+        openingHoursList.add(new OpeningHoursItem("Thursday", "10:00 - 18:00"));
+
+        openingHoursAdapter = new OpeningHoursAdapter(getActivity(), openingHoursList);
+        recOpeningHours.setAdapter(openingHoursAdapter);
 
         return view;
     }

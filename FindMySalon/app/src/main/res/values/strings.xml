@@ -78,6 +78,7 @@
     <string name="lbl_budget">Budget</string>
     <string name="lbl_language">Language</string>
     <string name="lbl_categories">Categories</string>
+    <string name="lbl_opening_hour">Opening hours:</string>
     <string name="lbl_reset">Reset</string>
     <string name="lbl_apply">Apply</string>
 
