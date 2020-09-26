@@ -88,12 +88,11 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
                         //
                         if(response.code() == 200){
                             isFavourite = true;
-                            Log.d("Response code 200: ", ""+response.code());
-
                         }
                         else{
                             isFavourite = false;
                         }
+                        Log.d("Is Favourite : ", ""+isFavourite);
                         favouriteBusinessProfile = new FavouriteBusinessProfile(
                                 currentBusiness.getBusinessId(),
                                 currentBusiness.getBusinessName(),
