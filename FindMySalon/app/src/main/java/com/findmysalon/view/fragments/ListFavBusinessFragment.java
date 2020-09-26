@@ -95,7 +95,7 @@ public class ListFavBusinessFragment extends Fragment {
                 if(response.isSuccessful()){
                     favBusinessList.addAll(response.body());
                     businessAdapter.notifyDataSetChanged();
-                    // Hide label if favourite business listed
+                    // Hide label if favourite business are fetched from API
                     if(favBusinessList.size() > 0){
                         txtNoBusinessLabel.setVisibility(View.INVISIBLE);
                     }

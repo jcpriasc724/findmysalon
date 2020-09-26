@@ -16,7 +16,11 @@ import retrofit2.http.Path;
 
 public interface BusinessHourApi {
 
-    // business hour
+    // business hour for customers
+    @GET("businesshour/{id}/")
+    Call<ArrayList<BusinessHour>> businessHourList(@Path("id") int id);
+
+    // business hour for business
     @GET("businesshour/")
     Call<ArrayList<BusinessHour>> businessHourList();
 

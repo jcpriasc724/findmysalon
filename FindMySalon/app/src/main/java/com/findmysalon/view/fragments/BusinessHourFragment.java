@@ -60,6 +60,7 @@ public class BusinessHourFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_business_hour, container, false);
         v = view;
+        //businessId = getArguments().getInt("id", 0);
         btnSave = view.findViewById(R.id.btn_save);
         // Access reference of business hour recycler view
         recBusinessHour = view.findViewById(R.id.rec_business_hour);

@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                     // If user is business then redirect them to business activity
                     if(resp.getUserType().equals("B")){
                         Intent intent = new Intent(LoginActivity.this, BusinessActivity.class);
-                        //ide .putExtra("hi", "HI");
+                        //intent.putExtra("id",1);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 

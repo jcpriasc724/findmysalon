@@ -38,6 +38,7 @@ import retrofit2.Retrofit;
 
 public class CustomerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    public static String userNameSession;
     private DrawerLayout drawer;
     private int userId;
     private Uri profilePhoto;
@@ -77,6 +78,8 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
                             .circleCrop()
                             .placeholder(R.drawable.add_photo)
                             .into(imgView);
+
+                    CustomerActivity.userNameSession = response.body().getFirstName();
                     txtUserName.setText(response.body().getFirstName());
                 }
             }

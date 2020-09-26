@@ -1,5 +1,6 @@
 package com.findmysalon.view;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +41,7 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
     private UserApi userApi;
     private ImageView imgView;
     private TextView txtBusinessName;
+    private int businessId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,14 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
+        /*String id;
+        Bundle bundle1 = getIntent().getExtras();
+        if (bundle1 != null) {
+            id = bundle1.getString("id");
+            Log.d("Budiness id", id);
+        }
+        Log.d("Budiness id", "null");*/
+        businessId = 1;
         switch (menuItem.getItemId()) {
             case R.id.nav_update_profile:
                 Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_update_business);
@@ -112,6 +121,8 @@ public class BusinessActivity extends AppCompatActivity implements NavigationVie
                 Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_roster_staff);
                 break;
             case R.id.nav_business_hour:
+                /*Bundle bundle = new Bundle();
+                bundle.putInt("id", businessId);*/
                 Navigation.findNavController(BusinessActivity.this, R.id.nav_business_host_fragment).navigate(R.id.nav_business_hour);
                 break;
             case R.id.nav_log_out:

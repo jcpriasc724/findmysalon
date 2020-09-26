@@ -138,6 +138,56 @@
                     android:rating="4"
                     android:stepSize=".5"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/hours_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@string/lbl_opening_hour"
+                            android:textAlignment="viewStart"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_op_today"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginStart="10dp" />
+
+                        <ImageView
+                            android:id="@+id/img_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_expand"
+                            android:tint="@color/colorGrayDark"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rec_opening_hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:visibility="gone">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_book"
                     android:layout_marginTop="30dp"

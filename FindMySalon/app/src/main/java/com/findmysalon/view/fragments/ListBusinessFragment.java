@@ -94,6 +94,7 @@ public class ListBusinessFragment extends Fragment {
     private TextView txtDistance;
     private SeekBar skbBudget;
     private TextView txtBudget;
+    private TextView txtNoBusinessLabel;
 
     private BusinessApi businessApi;
     private ServiceApi serviceApi;
@@ -150,6 +151,7 @@ public class ListBusinessFragment extends Fragment {
         txtNameBusiness = view.findViewById(R.id.txt_name_business);
         txtAddress = view.findViewById(R.id.txt_address);
         txtPhoneNumber = view.findViewById(R.id.txt_phone_number);
+        txtNoBusinessLabel = view.findViewById(R.id.txt_no_business);
 
         recBusiness = view.findViewById(R.id.rec_business);
         recBusiness.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -240,7 +242,13 @@ public class ListBusinessFragment extends Fragment {
                 if(response.code() == 200){
                     businessList.addAll(response.body());
                     businessAdapter.notifyDataSetChanged();
-
+                    // Hide label if business are fetched from API
+                    if(businessList.size() > 0){
+                        txtNoBusinessLabel.setVisibility(View.INVISIBLE);
+                    }
+                    else{
+                        txtNoBusinessLabel.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
