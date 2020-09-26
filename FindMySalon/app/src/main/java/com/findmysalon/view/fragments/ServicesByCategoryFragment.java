@@ -188,7 +188,8 @@ public class ServicesByCategoryFragment extends Fragment {
                                 ));
                                 sList = new ArrayList<Service>();
                             }
-                            sList.add(servicesList.get(index));
+                            if( servicesList.get(index).getDisplayStatus().equals("S"))
+                                sList.add(servicesList.get(index));
                         }
 
                         categoryList.add(new Category(
