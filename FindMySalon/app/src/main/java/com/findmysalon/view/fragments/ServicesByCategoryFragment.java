@@ -192,6 +192,7 @@ public class ServicesByCategoryFragment extends Fragment {
                                 sList.add(servicesList.get(index));
                         }
 
+                        
                         categoryList.add(new Category(
                                 servicesList.get(servicesList.size() - 1).getCategory().getId(),
                                 servicesList.get(servicesList.size() - 1).getCategory().getNameCategory(),
