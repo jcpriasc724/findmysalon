@@ -222,7 +222,9 @@
 
     <string name="invalid_service_name"> Service name is invalid</string>
     <string name="invalid_service_price"> Service price is invalid</string>
+    <string name="invalid_service_price_at_lease"> Service price need to be larger than $0</string>
     <string name="invalid_service_duration"> Service duration is invalid</string>
+    <string name="invalid_service_duration_at_lease"> Service duration need to be longer than 0 min</string>
     <string name="invalid_first_name"> First name is invalid</string>
     <string name="invalid_last_name"> Last name is invalid</string>
     <string name="invalid_full_name"> Full name is invalid</string>

@@ -176,8 +176,16 @@ public class RegisterServiceFragment extends Fragment {
             Helper.errorMsgDialog(getActivity(), R.string.invalid_service_price);
             return;
         }
+        if(Double.valueOf(servicePrice) < 1) {
+            Helper.errorMsgDialog(getActivity(), R.string.invalid_service_price_at_lease);
+            return;
+        }
         if(serviceDuration.isEmpty()) {
             Helper.errorMsgDialog(getActivity(), R.string.invalid_service_duration);
+            return;
+        }
+        if(Long.valueOf(serviceDuration) < 1) {
+            Helper.errorMsgDialog(getActivity(), R.string.invalid_service_duration_at_lease);
             return;
         }
 
